@@ -1,0 +1,671 @@
+---
+swagger: "2.0"
+info:
+  version: "0.1.0"
+  title: "ECPCRM API"
+basePath: "/restful"
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /user-detail:
+    get:
+      tags:
+        - user
+      description: Gets user details
+      parameters:
+        - name: id
+          in: header
+          description: ID of the user
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              response:
+                $ref: "#/definitions/User"
+        300:
+          $ref: "#/responses/InvalidRequest"
+        302:
+          $ref: "#/responses/InvalidParam"
+        304:
+          $ref: "#/responses/InvalidUser"
+        310:
+          $ref: "#/responses/InvalidAccess"
+  /user-create:
+    post:
+      tags:
+        - user
+      description: Creates a new user
+      parameters:
+        - name: card
+          in: header
+          description: Card number of the new user
+          required: false
+          type: string
+        - name: title
+          in: header
+          description: Title of the new user
+          required: true
+          type: string
+          enum:
+            - mr
+            - mrs
+            - miss
+        - name: first_name
+          in: header
+          description: First name of the new user
+          required: true
+          type: string
+        - name: last_name
+          in: header
+          description: Last name of the new user
+          required: true
+          type: string
+        - name: address
+          in: header
+          description: Address of the new user
+          required: false
+          type: string
+        - name: zipcode
+          in: header
+          description: Zipcode of the new user
+          required: false
+          type: string
+        - name: city
+          in: header
+          description: City of the new user
+          required: false
+          type: string
+        - name: email
+          in: header
+          description: Email address of the new user
+          required: false
+          type: string
+        - name: optin
+          in: header
+          description: Promotional emails optin
+          required: false
+          type: integer
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+        300:
+          $ref: "#/responses/InvalidRequest"
+        302:
+          $ref: "#/responses/InvalidParam"
+        303:
+          $ref: "#/responses/InvalidCard"
+        308:
+          $ref: "#/responses/CardAlreadyBoundAnotherUser"
+        309:
+          $ref: "#/responses/EmailExistsWhenCreatingOrUpdating"
+        310:
+          $ref: "#/responses/InvalidAccess"
+        312:
+          $ref: "#/responses/InvalidCardNumber"
+        314:
+          $ref: "#/responses/FailedUserCardBind"
+        316:
+          $ref: "#/responses/FailedUserUpdateCreate"
+        317: # -- TODO: This is not sent form a specific device/center?
+          $ref: "#/responses/InvalidCenterCard"
+  /user-update:
+    post:
+      tags:
+        - user
+      description: Updates an existing user
+      parameters:
+        - name: card
+          in: header
+          description: Card number of the user
+          required: true
+          type: string
+        - name: title
+          in: header
+          description: Title of the user
+          required: true
+          type: string
+          enum:
+            - mr
+            - mrs
+            - miss
+        - name: first_name
+          in: header
+          description: First name of the user
+          required: true
+          type: string
+        - name: last_name
+          in: header
+          description: Last name of the user
+          required: true
+          type: string
+        - name: address
+          in: header
+          description: Address of the user
+          required: false
+          type: string
+        - name: zipcode
+          in: header
+          description: Zipcode of the user
+          required: false
+          type: string
+        - name: city
+          in: header
+          description: City of the user
+          required: false
+          type: string
+        - name: email
+          in: header
+          description: Email address of the user
+          required: true
+          type: string
+        - name: optin
+          in: header
+          description: Promotional emails optin
+          required: false
+          type: integer
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+        300:
+          $ref: "#/responses/InvalidRequest"
+        302:
+          $ref: "#/responses/InvalidParam"
+        303:
+          $ref: "#/responses/InvalidCard"
+        308:
+          $ref: "#/responses/CardAlreadyBoundAnotherUser"
+        309:
+          $ref: "#/responses/EmailExistsWhenCreatingOrUpdating"
+        310:
+          $ref: "#/responses/InvalidAccess"
+        312:
+          $ref: "#/responses/InvalidCardNumber"
+        314:
+          $ref: "#/responses/FailedUserCardBind"
+        316:
+          $ref: "#/responses/FailedUserUpdateCreate"
+        317: # -- TODO: This is not sent form a specific device/center?
+          $ref: "#/responses/InvalidCenterCard"
+  /user-authentication:
+    post:
+      tags:
+        - user
+      description: Authenticate a user
+      parameters:
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+  /card-check:
+    get:
+      tags:
+        - card
+      description: Checks if a card exists, and is valid
+      parameters:
+        - name: card
+          in: header
+          description: Card Number to be checked
+          required: true
+          type: string
+        - name: origin
+          in: header
+          description: Origin of the request?
+          required: true
+          type: string
+          enum:
+            - borne
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              response:
+                $ref: "#/definitions/CardCheck"
+        300:
+          $ref: "#/responses/InvalidRequest"
+        301:
+          $ref: "#/responses/InvalidDevice"
+        302:
+          $ref: "#/responses/InvalidParam"
+        303:
+          $ref: "#/responses/InvalidCard"
+        304:
+          $ref: "#/responses/InvalidUser"
+        312:
+          $ref: "#/responses/InvalidCardNumber"
+        313:
+          $ref: "#/responses/FailedUserUpdateCreate"
+        314:
+          $ref: "#/responses/FailedUserCardBind"
+        317:
+          $ref: "#/responses/InvalidCenterCard"
+        319:
+          $ref: "#/responses/CardOutdated"
+  /card-game:
+    post:
+      tags:
+        - card
+      description: Plays a card game if it is possible
+      parameters:
+        - name: card
+          in: header
+          description: Card to play a card game with
+          required: true
+          type: string
+        - name: win
+          in: header
+          description: "?"
+          required: false
+          type: string
+        - name: desc
+          in: header
+          description: "?"
+          required: false
+          type: string
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+        300:
+          $ref: "#/responses/InvalidRequest"
+        301:
+          $ref: "#/responses/InvalidDevice"
+        302:
+          $ref: "#/responses/InvalidParam"
+        303:
+          $ref: "#/responses/InvalidCard"
+        304:
+          $ref: "#/responses/InvalidUser"
+        315:
+          $ref: "#/responses/UserAlreadyPlayed"
+  /card-request:
+    post:
+      tags:
+        - card
+      description: Requests a card for a user
+      parameters:
+        - name: origin
+          in: header
+          description: Origin of the request?
+          required: true
+          type: string
+          enum:
+            - borne
+            - site
+        - name: hostess
+          in: header
+          description: "?"
+          required: false
+          type: string
+        - name: title
+          in: header
+          description: Title of the user
+          required: true
+          type: string
+          enum:
+            - mr
+            - mrs
+            - miss
+        - name: first_name
+          in: header
+          description: First name of the user
+          required: true
+          type: string
+        - name: last_name
+          in: header
+          description: Last name of the user
+          required: true
+          type: string
+        - name: email
+          in: header
+          description: Email address of the user
+          required: true
+          type: string
+        - name: birthdate
+          in: header
+          description: Birthdate of the user
+          required: false
+          type: string
+          format: date
+        - name: children
+          in: header
+          description: "?"
+          required: false
+          type: string
+        - name: nb_children
+          in: header
+          description: Number of children
+          required: false
+          type: integer
+        - name: car
+          in: header
+          description: Does the user have a car
+          required: false
+          type: string
+        - name: address
+          in: header
+          description: Address of the user
+          required: false
+          type: string
+        - name: zipcode
+          in: header
+          description: Zipcode of the user
+          required: false
+          type: string
+        - name: city
+          in: header
+          description: City of the user
+          required: false
+          type: string
+        - name: phone
+          in: header
+          description: Phone number of the user
+          required: true
+          type: string
+        - name: optin
+          in: header
+          description: Promotional emails optin
+          required: false
+          type: integer
+        - name: check_item
+          in: header
+          description: User validation check item
+          required: false
+          type: string
+        - name: lost
+          in: header
+          description: Is the card lost?
+          required: false
+          type: boolean
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+        300:
+          $ref: "#responses/InvalidRequest"
+        301:
+          $ref: "#/responses/InvalidDevice"
+        302:
+          $ref: "#/responses/InvalidParam"
+        304:
+          $ref: "#/responses/InvalidUser"
+        305:
+          $ref: "#/responses/EmailExists"
+        306:
+          $ref: "#/responses/EmailExistsInvalidCheck"
+        307:
+          $ref: "#/responses/CardRequestHandled"
+        316:
+          $ref: "#/responses/FailedUserUpdateCreate"
+        318:
+          $ref: "#/responses/CardLost"
+
+definitions:
+  Error:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+  User:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      email:
+        type: string
+      title:
+        type: string
+        enum:
+          - mr
+          - mrs
+          - miss
+          - unknown
+      first_name:
+        type: string
+      last_name:
+        type: string
+      birthdate:
+        type: string
+        # format: date
+      optin:
+        type: string
+        # type: boolean
+      car:
+        type: string
+        # type: boolean
+      boutiques:
+        type: array
+        items:
+          type: string
+      address:
+        type: string
+      zipcode:
+        type: string
+      city:
+        type: string
+      full_address:
+        type: string
+      phone:
+        type: string
+      haschildren:
+        type: string
+        # type: boolean
+      nb_children:
+        type: string
+        # type: integer
+      children:
+        type: array
+        items:
+          type: object
+          $ref: "#/definitions/Child"
+      cards:
+        type: array
+        items:
+          $ref: "#/definitions/Card"
+      child_cares:
+        type: array
+        items:
+          $ref: "#/definitions/ChildCare"
+    description: User
+  Card:
+    type: object
+    properties:
+      number:
+        type: string
+        # type: integer
+      status:
+        type: string
+        enum:
+          - enabled
+          - disabled
+          - lost
+          - tochange
+      created_at:
+        type: string
+        # format: date
+      given_at:
+        type: string
+        # format: date
+      sent_at:
+        type: string
+        # format: date
+    description: Card
+  CardCheck:
+    type: object
+    properties:
+      id:
+        type: string
+        # type: integer
+        # format: int64
+      name:
+        type: string
+      email:
+        type: string
+      title:
+        type: string
+        enum:
+          - mr
+          - mrs
+          - miss
+      first_name:
+        type: string
+      last_name:
+        type: string
+      birthdate:
+        type: string
+        # format: date
+      optin:
+        type: string
+        # type: boolean
+      game:
+        type: boolean
+      card_image:
+        type: string
+  Child:
+    type: object
+    properties:
+      age:
+        type: string
+        # type: integer
+      birthdate:
+        type: string
+        # format: date
+      genre:
+        type: string
+        enum:
+          - m
+          - f
+          - unknown
+    description: Child
+  ChildCare:
+    type: object
+    properties:
+      names:
+        type: string
+      count:
+        type: integer
+    description: ChildCare
+
+responses:
+  InvalidRequest: # 300
+    description: Invalid request
+    schema:
+      $ref: "#/definitions/Error"
+  InvalidDevice: # 301
+    description: Invalid device
+    schema:
+      $ref: "#/definitions/Error"
+  InvalidParam: # 302
+    description: A required parameter is missing or invalid
+    schema:
+      $ref: "#/definitions/Error"
+  InvalidCard: # 303
+    description: Invalid card
+    schema:
+      $ref: "#/definitions/Error"
+  InvalidUser: # 304
+    description: Invalid user
+    schema:
+      $ref: "#/definitions/Error"
+  EmailExists: # 305, 309, (306)
+    description: Email already exists in our system
+    schema:
+      $ref: "#/definitions/Error"
+  EmailExistsInvalidCheck: # 306 -- TODO: This seems duplicate
+    description: Email already exists in our system, user doesn't match
+    schema:
+      $ref: "#/definitions/Error"
+  CardRequestHandled: # 307
+    description: User already requested a card, which has been handled
+    schema:
+      $ref: "#/definitions/Error"
+  CardAlreadyBoundAnotherUser: # 308
+    description: Card is already bound to another user
+    schema:
+      $ref: "#/definitions/Error"
+  EmailExistsWhenCreatingOrUpdating: # 309 -- TODO: This seems duplicate
+    description: Email already exists in our system
+    schema:
+      $ref: "#/definitions/Error"
+  InvalidAccess: # 310
+    description: Invalid access
+    schema:
+      $ref: "#/definitions/Error"
+  InvalidCardRequest: # 311
+    description: Invalid card request
+    schema:
+      $ref: "#/definitions/Error"
+  InvalidCardNumber: # 312
+    description: Invalid card number
+    schema:
+      $ref: "#/definitions/Error"
+  FailedUserCardCreate: # 313
+    description: Failed to create user for card
+    schema:
+      $ref: "#/definitions/Error"
+  FailedUserCardBind: # 314
+    description: Failed to bind user to card
+    schema:
+      $ref: "#/definitions/Error"
+  UserAlreadyPlayed: # 315
+    description: User has already played
+    schema:
+      $ref: "#/definitions/Error"
+  FailedUserUpdateCreate: # 316
+    description: Failed to create or update user
+    schema:
+      $ref: "#/definitions/Error"
+  InvalidCenterCard: # 317
+    description: This card is not valid for this center
+    schema:
+      $ref: "#/definitions/Error"
+  CardLost: # 318
+    description: Email exists, and is linked to this user, perhaps the card is lost
+    schema:
+      $ref: "#/definitions/Error"
+  CardOutdated: # 319
+    description: This card is outdated, it needs to be replaced
+    schema:
+      $ref: "#/definitions/Error"
+  CardAlreadyBound: # 320 -- TODO: This seems duplicate
+    description: This card is already bound
+    schema:
+      $ref: "#/definitions/Error"
