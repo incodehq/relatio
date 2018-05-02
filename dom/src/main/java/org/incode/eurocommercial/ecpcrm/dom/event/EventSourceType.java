@@ -50,6 +50,9 @@ public enum EventSourceType {
         return source;
     }
 
+
+
+
     public interface EventParser {
 
         Map<AspectType, String> toMap(String data);
@@ -85,8 +88,12 @@ public enum EventSourceType {
                 map.put(AspectType.FirstAccess, values[2]);
                 map.put(AspectType.EmailAccount, values[3]);
                 map.put(AspectType.PhoneNumber, values[4]);
-                final SocialAccount socialAccount = SocialAccount.valueOfNormalised(values[5]);
-                map.putAll(socialAccount.toMap(values[6]));
+                try {
+                    final SocialAccount socialAccount = SocialAccount.valueOfNormalised(values[5]);
+                    map.putAll(socialAccount.toMap(values[6]));
+                } catch (Exception e){
+                    //
+                }
             } catch (ArrayIndexOutOfBoundsException e){
 
             }
@@ -96,6 +103,11 @@ public enum EventSourceType {
 
         @AllArgsConstructor
         public enum SocialAccount{
+            Twitter(AspectType.TwitterAccount) {
+                @Override Map<AspectType, String> toMap(final String input) {
+                    return new HashMap<>();
+                }
+            },
             Facebook(AspectType.FacebookAccount) {
                 @Override Map<AspectType, String> toMap(final String input) {
                     final Map<String, String> stringMap = Splitter.on('&').withKeyValueSeparator('=').split(input);

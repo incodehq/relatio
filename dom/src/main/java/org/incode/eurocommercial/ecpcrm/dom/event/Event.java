@@ -18,8 +18,6 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.Queries;
 import javax.jdo.annotations.Query;
 
-import org.joda.time.LocalDateTime;
-
 import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
@@ -43,7 +41,7 @@ import lombok.Setter;
         @Query(
                 name = "find", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incode.eurocommercial.ecpcrm.dom.event.Event "),
+                         + "FROM org.incode.eurocommercial.ecpcrm.dom.event.Event "),
         @Query(
                 name = "findByDataContains", language = "JDOQL",
                 value = "SELECT "
@@ -70,11 +68,7 @@ import lombok.Setter;
 )
 public class Event implements Comparable<Event> {
 
-    @Column(allowsNull = "false")
-    @Getter @Setter
-    private LocalDateTime createdOn;
-
-    @Column(allowsNull = "false")
+    @Column(allowsNull = "false", jdbcType = "CLOB")
     @Getter @Setter
     private String data;
 

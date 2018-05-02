@@ -52,7 +52,7 @@ public enum AspectType {
     },
     GooglePlusAccount(true),
 
-    MacAddress(false);
+    MacAddress(false), TwitterAccount(true);
 
     @Getter
     private boolean key;
