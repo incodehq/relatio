@@ -71,7 +71,7 @@ public class EventSourceRepository {
     ) {
         final EventSource eventSource = repositoryService.instantiate(EventSource.class);
         eventSource.setType(type);
-        eventSource.setCreatedOn(dateTime);
+        eventSource.setDateTime(dateTime);
         repositoryService.persist(eventSource);
         return eventSource;
     }

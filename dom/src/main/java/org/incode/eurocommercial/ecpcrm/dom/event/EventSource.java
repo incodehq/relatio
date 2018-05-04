@@ -48,7 +48,7 @@ import lombok.Setter;
 public class EventSource implements Comparable<EventSource> {
 
     public String title() {
-        return "[" + type + "]" + " - " + createdOn;
+        return "[" + type + "]" + " - " + dateTime;
     }
 
     @Column(allowsNull = "false")
@@ -57,7 +57,7 @@ public class EventSource implements Comparable<EventSource> {
 
     @Column(allowsNull = "false")
     @Getter @Setter
-    private LocalDateTime createdOn;
+    private LocalDateTime dateTime;
 
     @Column(allowsNull = "false")
     @Getter @Setter
@@ -72,7 +72,7 @@ public class EventSource implements Comparable<EventSource> {
     @Override
     public int compareTo(final EventSource other) {
         // For now, would be better to compare using a key
-        return Comparator.comparing(EventSource::getType).thenComparing(EventSource::getCreatedOn).compare(this, other);
+        return Comparator.comparing(EventSource::getType).thenComparing(EventSource::getDateTime).compare(this, other);
     }
 
     public enum Status {
