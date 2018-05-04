@@ -34,12 +34,12 @@ import lombok.Setter;
                 name = "findByDateTimeRange", language = "JDOQL",
                 value = "SELECT "
                         + "FROM org.incode.eurocommercial.ecpcrm.dom.event.EventSource "
-                        + "WHERE dateTime >= :begin && dateTime <= :end "),
+                        + "WHERE createdAt >= :begin && createdAt <= :end "),
         @Query(
-                name = "findByTypeAndDateTime", language = "JDOQL",
+                name = "findByTypeAndCreatedAt", language = "JDOQL",
                 value = "SELECT "
                         + "FROM org.incode.eurocommercial.ecpcrm.dom.event.EventSource "
-                        + "WHERE dateTime == :dateTime "
+                        + "WHERE createdAt == :createdAt "
                         + "&& type == :type ")
 })
 @DomainObject(
@@ -48,7 +48,7 @@ import lombok.Setter;
 public class EventSource implements Comparable<EventSource> {
 
     public String title() {
-        return "[" + type + "]" + " - " + dateTime;
+        return "[" + type + "]" + " - " + createdAt;
     }
 
     @Column(allowsNull = "false")
@@ -57,7 +57,7 @@ public class EventSource implements Comparable<EventSource> {
 
     @Column(allowsNull = "false")
     @Getter @Setter
-    private LocalDateTime dateTime;
+    private LocalDateTime createdAt;
 
     @Column(allowsNull = "false")
     @Getter @Setter
@@ -72,7 +72,7 @@ public class EventSource implements Comparable<EventSource> {
     @Override
     public int compareTo(final EventSource other) {
         // For now, would be better to compare using a key
-        return Comparator.comparing(EventSource::getType).thenComparing(EventSource::getDateTime).compare(this, other);
+        return Comparator.comparing(EventSource::getType).thenComparing(EventSource::getCreatedAt).compare(this, other);
     }
 
     public enum Status {

@@ -1,9 +1,6 @@
 package org.incode.eurocommercial.ecpcrm.dom.event;
 
-import java.util.AbstractMap;
 import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -18,10 +15,13 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.Queries;
 import javax.jdo.annotations.Query;
 
+import com.google.common.collect.Sets;
+
 import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Where;
 
@@ -78,38 +78,12 @@ public class Event implements Comparable<Event> {
     private EventSource source;
 
     public void createAspects() {
+        Map<AspectType, String> aspectMap = getAspectMap();
+        Map<AspectType, String> keyAspectMap = getKeyAspectsFromAspectMap(aspectMap);
+        Set<Profile> matchedProfiles = getProfilesFromKeyAspects(keyAspectMap);
 
-        // Filter the empty aspects
-        Map<AspectType, String> aspectMap =
-                source.getType().getParser().toMap(getData()).entrySet()
-                        .stream()
-                        .map( e -> new AbstractMap.SimpleEntry<>(e.getKey(), e.getValue()))
-                        .filter(e -> e.getValue() != null && e.getValue().length() > 0)
-                        .collect(Collectors.toMap(
-                                p -> p.getKey(),
-                                p -> p.getValue()));
-        // Go search for the profile
-        Set<Profile> matchedProfiles = new HashSet<>();
-
-        // Filter key aspects
-        Map<AspectType, String> keyAspectMap =
-                aspectMap.entrySet()
-                        .stream()
-                        .map( e -> new AbstractMap.SimpleEntry<>(e.getKey(), e.getValue()))
-                        .filter(e -> e.getKey().isKey())
-                        .collect(Collectors.toMap(
-                                e -> e.getKey(),
-                                e -> e.getValue()));
-        // lop up key aspects
-        for (Map.Entry<AspectType, String> entry : keyAspectMap.entrySet()) {
-            final List<Aspect> existingSimilarAspects = aspectRepository.findByTypeAndValue(entry.getKey(), entry.getValue());
-            if (existingSimilarAspects.size() > 1){
-                throw new IllegalStateException("OMG we found more then one profile with the same aspect");
-            }
-            if (existingSimilarAspects.size() == 1) {
-                matchedProfiles.add(existingSimilarAspects.get(0).getProfile());
-            }
-
+        if (matchedProfiles.size() > 1) {
+            return;
         }
 
         Profile profile = matchedProfiles.size() == 0 ? profileRepository.create() : matchedProfiles.iterator().next();
@@ -117,6 +91,45 @@ public class Event implements Comparable<Event> {
         for (Map.Entry<AspectType, String> entry : aspectMap.entrySet()) {
             aspectRepository.findOrCreate(this, entry.getKey(), entry.getValue(), profile);
         }
+    }
+
+    @Programmatic
+    private Map<AspectType, String> getAspectMap() {
+        /* Retrieve all aspects from event data and filter all empty aspects */
+        return source.getType().getParser().toMap(getData()).entrySet().stream()
+                .filter(e -> e.getValue() != null && e.getValue().length() > 0)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    @Programmatic
+    private Map<AspectType, String> getKeyAspectsFromAspectMap(Map<AspectType, String> aspectMap) {
+        /* Filter all key aspects from existing aspect map */
+        return aspectMap.entrySet().stream()
+                .filter(e -> e.getKey().isKey())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    @Programmatic
+    private Set<Profile> getProfilesFromKeyAspects(Map<AspectType, String> keyAspectMap) {
+        /* Retrieve all profiles related to key aspects */
+        return keyAspectMap.entrySet().stream()
+                .flatMap(entry -> aspectRepository.findByTypeAndValue(entry.getKey(), entry.getValue()).stream())
+                .map(Aspect::getProfile)
+                .collect(Collectors.toSet());
+    }
+
+    public Set<Profile> getConflictingProfiles() {
+        if (aspects.size() > 0) {
+            return Sets.newHashSet();
+        }
+        Map<AspectType, String> aspectMap = getAspectMap();
+        Map<AspectType, String> keyAspectMap = getKeyAspectsFromAspectMap(aspectMap);
+
+        return getProfilesFromKeyAspects(keyAspectMap);
+    }
+
+    public boolean hideConflictingProfiles() {
+        return aspects.size() == 0;
     }
 
     @Override
@@ -131,9 +144,7 @@ public class Event implements Comparable<Event> {
     @Getter @Setter
     private SortedSet<Aspect> aspects = new TreeSet<>();
 
-
     @Inject private AspectRepository aspectRepository;
 
     @Inject private ProfileRepository profileRepository;
-
 }

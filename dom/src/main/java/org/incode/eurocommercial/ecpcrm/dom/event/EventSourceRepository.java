@@ -53,25 +53,25 @@ public class EventSourceRepository {
     @Programmatic
     public EventSource findByTypeAndDateTime(
             final EventSourceType type,
-            final LocalDateTime dateTime
+            final LocalDateTime createdAt
     ) {
         return repositoryService.uniqueMatch(
                 new QueryDefault<>(
                         EventSource.class,
-                        "findByTypeAndDateTime",
+                        "findByTypeAndCreatedAt",
                         "type", type,
-                        "dateTime", dateTime
+                        "createdAt", createdAt
                 ));
     }
 
     @Programmatic
     public EventSource create(
             final EventSourceType type,
-            final LocalDateTime dateTime
+            final LocalDateTime createdAt
     ) {
         final EventSource eventSource = repositoryService.instantiate(EventSource.class);
         eventSource.setType(type);
-        eventSource.setDateTime(dateTime);
+        eventSource.setCreatedAt(createdAt);
         repositoryService.persist(eventSource);
         return eventSource;
     }
@@ -86,11 +86,11 @@ public class EventSourceRepository {
     @Programmatic
     public EventSource findOrCreate(
             final EventSourceType type,
-            final LocalDateTime dateTime
+            final LocalDateTime createdAt
     ) {
-        EventSource eventSource = findByTypeAndDateTime(type, dateTime);
+        EventSource eventSource = findByTypeAndDateTime(type, createdAt);
         if (eventSource == null) {
-            eventSource = create(type, dateTime);
+            eventSource = create(type, createdAt);
         }
         return eventSource;
     }
