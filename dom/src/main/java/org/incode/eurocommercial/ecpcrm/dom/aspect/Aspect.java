@@ -13,7 +13,7 @@ import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Where;
 
-import org.incode.eurocommercial.ecpcrm.dom.Profile.Profile;
+import org.incode.eurocommercial.ecpcrm.dom.profile.Profile;
 import org.incode.eurocommercial.ecpcrm.dom.event.Event;
 
 import lombok.Getter;
@@ -45,7 +45,11 @@ import lombok.Setter;
 )
 public class Aspect implements Comparable<Aspect> {
 
-    @Column(allowsNull = "false", name = "profileId")
+    public String title() {
+        return "[" + getProfile().title() + "] " + getType() + ": " + getValue();
+    }
+
+    @Column(allowsNull = "true", name = "profileId")
     @Getter @Setter
     @Property(hidden = Where.REFERENCES_PARENT)
     private Profile profile;
@@ -63,7 +67,7 @@ public class Aspect implements Comparable<Aspect> {
     @Property(hidden = Where.REFERENCES_PARENT)
     private Event event;
 
-    public Aspect(){};
+    public Aspect(){}
 
     public Aspect(final Event event, final AspectType type, final String value) {
         this.event = event;
@@ -75,11 +79,6 @@ public class Aspect implements Comparable<Aspect> {
     @Override
     public int compareTo(final Aspect other) {
         return Comparator.comparing(Aspect::getEvent).thenComparing(Aspect::getType).thenComparing(Aspect::getValue).compare(this, other);
-    }
-
-    @Override
-    public String toString() {
-        return getValue();
     }
     //endregion
 

@@ -24,13 +24,13 @@ import javax.inject.Inject;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
-import org.incode.eurocommercial.ecpcrm.dom.childcare.ChildCare;
+import org.incode.eurocommercial.ecpcrm.dom.event.Event;
 
 public class EventTearDown extends FixtureScript {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
-        isisJdoSupport.deleteAll(ChildCare.class);
+        isisJdoSupport.deleteAll(Event.class);
     }
 
     @Inject private IsisJdoSupport isisJdoSupport;

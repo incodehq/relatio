@@ -68,7 +68,4 @@ public class EventIntegTest extends EcpCrmIntegTest {
         }
     }
 
-
-
-
 }

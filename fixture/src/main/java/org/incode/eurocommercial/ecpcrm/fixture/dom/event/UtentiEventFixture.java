@@ -39,5 +39,4 @@ public class UtentiEventFixture extends FixtureScript {
 
     @Inject EventRepository eventRepository;
     @Inject EventSourceRepository eventSourceRepository;
-
 }

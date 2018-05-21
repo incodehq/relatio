@@ -1,6 +1,8 @@
-package org.incode.eurocommercial.ecpcrm.dom.Profile;
+package org.incode.eurocommercial.ecpcrm.dom.profile;
 
 import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -45,11 +47,11 @@ import lombok.Setter;
         @Query(
                 name = "find", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incode.eurocommercial.ecpcrm.dom.Profile.Profile "),
+                        + "FROM org.incode.eurocommercial.ecpcrm.dom.profile.Profile "),
         @Query(
                 name = "findByFullNameContains", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incode.eurocommercial.ecpcrm.dom.Profile.Profile "
+                        + "FROM org.incode.eurocommercial.ecpcrm.dom.profile.Profile "
                         + "WHERE lastName.indexOf(:lastName) >= 0 ")
 })
 @Unique(name = "Profile_fullName_UNQ", members = { "uuid" })
@@ -60,6 +62,13 @@ import lombok.Setter;
         bookmarking = BookmarkPolicy.AS_ROOT
 )
 public class Profile implements Comparable<Profile> {
+
+    public String title() {
+        String keyAspect = Optional.ofNullable(emailAccount)
+                .orElse(Optional.ofNullable(phoneNumber)
+                        .orElse(facebookAccount));
+        return "[" + keyAspect + "] " + firstName + " " + lastName;
+    }
 
     @Column(allowsNull = "false")
     @Property(hidden = Where.ALL_TABLES)
@@ -110,13 +119,12 @@ public class Profile implements Comparable<Profile> {
     //region > compareTo, toString
     @Override
     public int compareTo(final Profile other) {
-        return org.apache.isis.applib.util.ObjectContracts.compare(this, other, "fullName");
+        return Comparator.comparing(Profile::getEmailAccount)
+                .thenComparing(Profile::getPhoneNumber)
+                .thenComparing(Profile::getFacebookAccount)
+                .compare(this, other);
     }
 
-    @Override
-    public String toString() {
-        return org.apache.isis.applib.util.ObjectContracts.toString(this, "fullName");
-    }
     //endregion
 
     public Profile updateFromAspects(){
@@ -127,20 +135,9 @@ public class Profile implements Comparable<Profile> {
         return this;
     }
 
-
-
-    public enum Gender{
+    public enum Gender {
         MALE,
         FEMALE,
-        UNKONW;
+        UNKNOWN;
     }
-
-
-
-
-
-
-
-
-
 }

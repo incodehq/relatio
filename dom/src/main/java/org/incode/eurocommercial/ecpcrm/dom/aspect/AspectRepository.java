@@ -10,7 +10,7 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
-import org.incode.eurocommercial.ecpcrm.dom.Profile.Profile;
+import org.incode.eurocommercial.ecpcrm.dom.profile.Profile;
 import org.incode.eurocommercial.ecpcrm.dom.event.Event;
 
 @DomainService(

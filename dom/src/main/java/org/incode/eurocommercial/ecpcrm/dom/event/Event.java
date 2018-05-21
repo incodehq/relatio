@@ -25,8 +25,8 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Where;
 
-import org.incode.eurocommercial.ecpcrm.dom.Profile.Profile;
-import org.incode.eurocommercial.ecpcrm.dom.Profile.ProfileRepository;
+import org.incode.eurocommercial.ecpcrm.dom.profile.Profile;
+import org.incode.eurocommercial.ecpcrm.dom.profile.ProfileRepository;
 import org.incode.eurocommercial.ecpcrm.dom.aspect.Aspect;
 import org.incode.eurocommercial.ecpcrm.dom.aspect.AspectRepository;
 import org.incode.eurocommercial.ecpcrm.dom.aspect.AspectType;
@@ -41,7 +41,7 @@ import lombok.Setter;
         @Query(
                 name = "find", language = "JDOQL",
                 value = "SELECT "
-                         + "FROM org.incode.eurocommercial.ecpcrm.dom.event.Event "),
+                        + "FROM org.incode.eurocommercial.ecpcrm.dom.event.Event "),
         @Query(
                 name = "findByDataContains", language = "JDOQL",
                 value = "SELECT "

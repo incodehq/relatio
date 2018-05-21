@@ -1,5 +1,9 @@
 package org.incode.eurocommercial.ecpcrm.dom.event;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
@@ -8,8 +12,8 @@ import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.value.Blob;
 
-import org.incode.eurocommercial.ecpcrm.dom.Profile.Profile;
-import org.incode.eurocommercial.ecpcrm.dom.Profile.ProfileRepository;
+import org.incode.eurocommercial.ecpcrm.dom.profile.Profile;
+import org.incode.eurocommercial.ecpcrm.dom.profile.ProfileRepository;
 
 @DomainService(
         nature = NatureOfService.VIEW_MENU_ONLY
@@ -24,7 +28,7 @@ public class EventMenu {
             semantics = SemanticsOf.SAFE,
             restrictTo = RestrictTo.PROTOTYPING
     )
-    public java.util.List<Profile> allUpdatedProfiles() {
+    public List<Profile> allUpdatedProfiles() {
 
         for (Profile profile : profileRepository.listAll()) {
             profile.updateFromAspects();
@@ -37,7 +41,7 @@ public class EventMenu {
             semantics = SemanticsOf.SAFE,
             restrictTo = RestrictTo.PROTOTYPING
     )
-    public java.util.List<Profile> allProfiles() {
+    public List<Profile> allProfiles() {
         return profileRepository.listAll();
     }
 
@@ -45,7 +49,7 @@ public class EventMenu {
             semantics = SemanticsOf.SAFE,
             restrictTo = RestrictTo.PROTOTYPING
     )
-    public java.util.List<Event> allEvents() {
+    public List<Event> allEvents() {
         return eventRepository.listAll();
     }
 
@@ -53,7 +57,7 @@ public class EventMenu {
             semantics = SemanticsOf.SAFE,
             restrictTo = RestrictTo.PROTOTYPING
     )
-    public java.util.List<EventSource> allEventSources() {
+    public List<EventSource> allEventSources() {
         return eventSourceRepository.listAll();
     }
 
@@ -69,13 +73,8 @@ public class EventMenu {
         return type.parseBlob(blob, eventRepository, eventSourceRepository);
     }
 
-    @javax.inject.Inject
-    EventRepository eventRepository;
-
-    @javax.inject.Inject
-    EventSourceRepository eventSourceRepository;
-
-    @javax.inject.Inject
-    ProfileRepository profileRepository;
+    @Inject EventRepository eventRepository;
+    @Inject EventSourceRepository eventSourceRepository;
+    @Inject ProfileRepository profileRepository;
 
 }

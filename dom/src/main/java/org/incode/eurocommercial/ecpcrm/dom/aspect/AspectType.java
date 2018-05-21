@@ -2,7 +2,7 @@ package org.incode.eurocommercial.ecpcrm.dom.aspect;
 
 import java.time.LocalDate;
 
-import org.incode.eurocommercial.ecpcrm.dom.Profile.Profile;
+import org.incode.eurocommercial.ecpcrm.dom.profile.Profile;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,17 +35,17 @@ public enum AspectType {
     FirstAccess(false),
     LastAccess(false),
 
-    EmailAccount(true){
+    EmailAccount(true) {
         @Override public void updateProfile(final Aspect aspect) {
             aspect.getProfile().setEmailAccount(aspect.getValue());
         }
     },
-    PhoneNumber(true){
+    PhoneNumber(true) {
         @Override public void updateProfile(final Aspect aspect) {
             aspect.getProfile().setPhoneNumber(aspect.getValue());
         }
     },
-    FacebookAccount(true){
+    FacebookAccount(true) {
         @Override public void updateProfile(final Aspect aspect) {
             aspect.getProfile().setFacebookAccount(aspect.getValue());
         }

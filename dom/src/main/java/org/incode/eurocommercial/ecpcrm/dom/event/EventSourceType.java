@@ -25,7 +25,7 @@ public enum EventSourceType {
 
     public EventParser getParser() {
         try {
-            return  cls.newInstance();
+            return cls.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
             return null;
@@ -51,20 +51,13 @@ public enum EventSourceType {
     }
 
 
-
-
     public interface EventParser {
-
         Map<AspectType, String> toMap(String data);
-
     }
 
     public interface EventParserForCsv extends EventParser {
-
         String header();
-
         String separator();
-
     }
 
 
