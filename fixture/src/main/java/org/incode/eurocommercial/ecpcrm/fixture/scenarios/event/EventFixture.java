@@ -22,6 +22,7 @@ package org.incode.eurocommercial.ecpcrm.fixture.scenarios.event;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 import org.incode.eurocommercial.ecpcrm.fixture.dom.event.AccessiEventFixture;
+import org.incode.eurocommercial.ecpcrm.fixture.dom.event.ConflictingUtentiEventFixture;
 import org.incode.eurocommercial.ecpcrm.fixture.dom.event.UtentiEventFixture;
 
 public class EventFixture extends FixtureScript {
@@ -33,5 +34,6 @@ public class EventFixture extends FixtureScript {
     protected void execute(final ExecutionContext ec) {
         ec.executeChild(EventFixture.this, new AccessiEventFixture());
         ec.executeChild(EventFixture.this, new UtentiEventFixture());
+        ec.executeChild(EventFixture.this, new ConflictingUtentiEventFixture());
     }
 }

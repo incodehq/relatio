@@ -61,10 +61,13 @@ public class EventMenu {
         return eventSourceRepository.listAll();
     }
 
+    public List<Event> allEventsWithoutAspects() {
+        return eventRepository.allEventsWithoutAspects();
+    }
+
     @Action(
             semantics = SemanticsOf.SAFE
     )
-
     public EventSource uploadData(
             final EventSourceType type,
             final Blob blob,

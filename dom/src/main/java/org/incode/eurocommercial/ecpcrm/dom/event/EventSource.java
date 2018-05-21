@@ -1,8 +1,10 @@
 package org.incode.eurocommercial.ecpcrm.dom.event;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
@@ -10,6 +12,8 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.Queries;
 import javax.jdo.annotations.Query;
+
+import com.google.common.collect.Lists;
 
 import org.joda.time.LocalDateTime;
 
@@ -69,6 +73,17 @@ public class EventSource implements Comparable<EventSource> {
     @Getter @Setter
     private SortedSet<Event> events = new TreeSet<>();
 
+    @CollectionLayout(defaultView = "table")
+    public List<Event> getEventsWithConflicts() {
+        return Lists.newArrayList(events).stream()
+                .filter(event -> event.getAspects().size() == 0)
+                .collect(Collectors.toList());
+    }
+
+    public boolean hideEventsWithConflicts() {
+        return getEventsWithConflicts().size() == 0;
+    }
+
     @Override
     public int compareTo(final EventSource other) {
         // For now, would be better to compare using a key
@@ -79,7 +94,5 @@ public class EventSource implements Comparable<EventSource> {
         SUCCESS,
         FAILURE
     }
-
-
 
 }

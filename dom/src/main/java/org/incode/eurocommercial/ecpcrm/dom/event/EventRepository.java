@@ -69,6 +69,16 @@ public class EventRepository {
     }
 
     @Programmatic
+    public List<Event> allEventsWithoutAspects() {
+        return repositoryService.allMatches(
+                new QueryDefault<>(
+                        Event.class,
+                        "finByAspectCount",
+                        "count", 0
+                ));
+    }
+
+    @Programmatic
     public Event create(
             final EventSource source,
             final String data

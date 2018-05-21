@@ -61,12 +61,21 @@ import lombok.Setter;
                 name = "findBySourceAndData", language = "JDOQL",
                 value = "SELECT "
                         + "FROM org.incode.eurocommercial.ecpcrm.dom.event.Event "
-                        + "WHERE source == :source && data == :data ")
+                        + "WHERE source == :source && data == :data "),
+        @Query(
+                name = "finByAspectCount", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM org.incode.eurocommercial.ecpcrm.dom.event.Event "
+                        + "WHERE aspects.size() == :count ")
 })
 @DomainObject(
         editing = Editing.DISABLED
 )
 public class Event implements Comparable<Event> {
+
+    public String title() {
+        return source.title();
+    }
 
     @Column(allowsNull = "false", jdbcType = "CLOB")
     @Getter @Setter
@@ -81,15 +90,21 @@ public class Event implements Comparable<Event> {
         Map<AspectType, String> aspectMap = getAspectMap();
         Map<AspectType, String> keyAspectMap = getKeyAspectsFromAspectMap(aspectMap);
         Set<Profile> matchedProfiles = getProfilesFromKeyAspects(keyAspectMap);
+        Profile profile = null;
 
         if (matchedProfiles.size() > 1) {
             return;
+        } else if (matchedProfiles.size() == 1) {
+            profile = matchedProfiles.iterator().next();
+        } else {
+            if (keyAspectMap.size() > 0) {
+                profile = profileRepository.create();
+            }
         }
 
-        Profile profile = matchedProfiles.size() == 0 ? profileRepository.create() : matchedProfiles.iterator().next();
-
         for (Map.Entry<AspectType, String> entry : aspectMap.entrySet()) {
-            aspectRepository.findOrCreate(this, entry.getKey(), entry.getValue(), profile);
+            Aspect aspect = aspectRepository.findOrCreate(this, entry.getKey(), entry.getValue(), profile);
+            aspects.add(aspect);
         }
     }
 
@@ -118,6 +133,7 @@ public class Event implements Comparable<Event> {
                 .collect(Collectors.toSet());
     }
 
+    @CollectionLayout(defaultView = "table")
     public Set<Profile> getConflictingProfiles() {
         if (aspects.size() > 0) {
             return Sets.newHashSet();
@@ -129,13 +145,7 @@ public class Event implements Comparable<Event> {
     }
 
     public boolean hideConflictingProfiles() {
-        return aspects.size() == 0;
-    }
-
-    @Override
-    public int compareTo(final Event other) {
-        // For now, would be better to compare using a key
-        return Comparator.comparing(Event::getSource).thenComparing(Event::getData).compare(this, other);
+        return aspects.size() > 0;
     }
 
     @Persistent(mappedBy = "event", dependentElement = "false")
@@ -143,6 +153,12 @@ public class Event implements Comparable<Event> {
     @CollectionLayout(defaultView = "table")
     @Getter @Setter
     private SortedSet<Aspect> aspects = new TreeSet<>();
+
+    @Override
+    public int compareTo(final Event other) {
+        // For now, would be better to compare using a key
+        return Comparator.comparing(Event::getSource).thenComparing(Event::getData).compare(this, other);
+    }
 
     @Inject private AspectRepository aspectRepository;
 
