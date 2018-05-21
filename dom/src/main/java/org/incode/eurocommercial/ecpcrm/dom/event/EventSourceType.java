@@ -38,7 +38,7 @@ public enum EventSourceType {
         String data = null;
         try {
             data = new String(blob.getBytes(), "UTF-8");
-            String[] records = data.split("\n");
+            String[] records = data.split("[\r?\n]+");
             for (int i = 1; i < records.length; i++) {
                 final Event event = eventRepository.create(source, records[i]);
             }
