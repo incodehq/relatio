@@ -10,6 +10,7 @@ import com.google.common.collect.Maps;
 
 import org.apache.isis.applib.value.Blob;
 
+import org.incode.eurocommercial.ecpcrm.dom.aspect.Aspect;
 import org.incode.eurocommercial.ecpcrm.dom.aspect.AspectType;
 
 import lombok.AllArgsConstructor;
@@ -35,12 +36,15 @@ public enum EventSourceType {
     public EventSource parseBlob(final Blob blob, final EventRepository eventRepository, final EventSourceRepository eventSourceRepository) {
         EventSource source = eventSourceRepository.create(this);
 
-        String data = null;
+        String data;
         try {
             data = new String(blob.getBytes(), "UTF-8");
             String[] records = data.split("[\r?\n]+");
             for (int i = 1; i < records.length; i++) {
                 final Event event = eventRepository.create(source, records[i]);
+                for (Aspect aspect : event.getAspects()) {
+                    aspect.getType().updateProfile(aspect);
+                }
             }
             source.setStatus(EventSource.Status.SUCCESS);
         } catch (UnsupportedEncodingException e) {
