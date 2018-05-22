@@ -64,7 +64,7 @@ public class EventIntegTest extends EcpCrmIntegTest {
 
             // then
             assertThat(event).isNotNull();
-            assertThat(event.getAspects()).hasSize(5);
+            assertThat(event.getAspects()).hasSize(6);
         }
     }
 
