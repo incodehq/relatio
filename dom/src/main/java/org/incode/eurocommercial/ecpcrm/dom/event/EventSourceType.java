@@ -20,7 +20,8 @@ import lombok.Getter;
 public enum EventSourceType {
 
     WifiProjects_Utenti_Csv(WifiProjectsUtentiCsv.class),
-    WifiProjects_Accessi_Csv(WifiProjectsAccessiCsv.class);
+    WifiProjects_Accessi_Csv(WifiProjectsAccessiCsv.class),
+    ContestOnline_2017_Csv(ContestOnline2017Csv.class);
 
     private Class<? extends EventParser> cls;
 
@@ -43,7 +44,9 @@ public enum EventSourceType {
             for (int i = 1; i < records.length; i++) {
                 final Event event = eventRepository.create(source, records[i]);
                 for (Aspect aspect : event.getAspects()) {
-                    aspect.getType().updateProfile(aspect);
+                    if (aspect.getProfile() != null) {
+                        aspect.getType().updateProfile(aspect);
+                    }
                 }
             }
             source.setStatus(EventSource.Status.SUCCESS);
@@ -182,7 +185,6 @@ public enum EventSourceType {
                 }
             };
 
-
             abstract Map<AspectType, String> toMap(String[] input);
 
             public static Map<AspectType, String> from(final String[] values) {
@@ -196,4 +198,33 @@ public enum EventSourceType {
         }
     }
 
+    public static class ContestOnline2017Csv implements EventParserForCsv {
+        public String header() {
+            return "nome;cognome;sesso;nascita;email;cellulare;via;citta;civico;cap;provincia;stato_famiglia;hafigli;privacy;data_ins;data_conferma_mail;data_conferma_cell;stato_mail;facebook_id;accetta comunicazioni marketing;accetta profilazione";
+        }
+
+        @Override public String separator() {
+            return ";";
+        }
+
+        @Override
+        public Map<AspectType, String> toMap(String data) {
+            Map<AspectType, String> map = Maps.newHashMap();
+
+            try {
+                final String[] values = data.replaceAll("\\[NULL]", "").replaceAll("\\{ }", "").split(separator());
+                map.put(AspectType.FirstName, values[0]);
+                map.put(AspectType.LastName, values[1]);
+                map.put(AspectType.EmailAccount, values[4]);
+                map.put(AspectType.PhoneNumber, values[5]);
+                map.put(AspectType.City, values[7]);
+                map.put(AspectType.RegisteredAt, values[14]);
+                map.put(AspectType.MailConfirmedAt, values[15]);
+                map.put(AspectType.FacebookAccount, values[18]);
+            } catch (ArrayIndexOutOfBoundsException e) {
+            }
+
+            return map;
+        }
+    }
 }

@@ -34,6 +34,8 @@ public enum AspectType {
 
     FirstAccess(false),
     LastAccess(false),
+    RegisteredAt(false),
+    MailConfirmedAt(false),
 
     EmailAccount(true) {
         @Override public void updateProfile(final Aspect aspect) {
@@ -51,13 +53,18 @@ public enum AspectType {
         }
     },
     GooglePlusAccount(true),
+    TwitterAccount(true),
 
-    MacAddress(false), TwitterAccount(true);
+    MacAddress(false),
+
+    City(false),
+    Address(false),
+    PostCode(false),
+    Country(false),
+    Province(false);
 
     @Getter
     private boolean key;
 
-    public void updateProfile(Aspect aspect){};
-
-
+    public void updateProfile(Aspect aspect){}
 }
