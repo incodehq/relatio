@@ -29,7 +29,6 @@ public class EventMenu {
             restrictTo = RestrictTo.PROTOTYPING
     )
     public List<Profile> allUpdatedProfiles() {
-
         for (Profile profile : profileRepository.listAll()) {
             profile.updateFromAspects();
         }
@@ -61,7 +60,7 @@ public class EventMenu {
         return eventSourceRepository.listAll();
     }
 
-    public List<Event> allEventsWithoutAspects() {
+    public List<Event> allEventsWithConflicts() {
         return eventRepository.allEventsWithoutAspects();
     }
 

@@ -54,6 +54,7 @@ public enum AspectType {
     },
     GooglePlusAccount(true),
     TwitterAccount(true),
+    LinkedInAccount(true),
 
     MacAddress(false),
 

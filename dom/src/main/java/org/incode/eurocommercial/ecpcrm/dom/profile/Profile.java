@@ -138,6 +138,6 @@ public class Profile implements Comparable<Profile> {
     public enum Gender {
         MALE,
         FEMALE,
-        UNKNOWN;
+        OTHER;
     }
 }

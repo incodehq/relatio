@@ -1,6 +1,9 @@
 package org.incode.eurocommercial.ecpcrm.dom.event;
 
-import java.io.UnsupportedEncodingException;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,20 +40,23 @@ public enum EventSourceType {
     public EventSource parseBlob(final Blob blob, final EventRepository eventRepository, final EventSourceRepository eventSourceRepository) {
         EventSource source = eventSourceRepository.create(this);
 
-        String data;
         try {
-            data = new String(blob.getBytes(), "UTF-8");
-            String[] records = data.split("[\r?\n]+");
-            for (int i = 1; i < records.length; i++) {
-                final Event event = eventRepository.create(source, records[i]);
+            ByteArrayInputStream is = new ByteArrayInputStream(blob.getBytes());
+            BufferedReader bfReader = new BufferedReader(new InputStreamReader(is));
+            bfReader.readLine();
+            for (String record = bfReader.readLine(); record != null; record = bfReader.readLine()) {
+                final long time = System.nanoTime();
+                final Event event = eventRepository.create(source, record);
                 for (Aspect aspect : event.getAspects()) {
                     if (aspect.getProfile() != null) {
                         aspect.getType().updateProfile(aspect);
                     }
                 }
+                final double elapsedTime = (System.nanoTime() - time) / 1e9;
+                System.out.println("==========================> Elapsed time: " + elapsedTime);
             }
             source.setStatus(EventSource.Status.SUCCESS);
-        } catch (UnsupportedEncodingException e) {
+        } catch (IOException e) {
             source.setStatus(EventSource.Status.FAILURE);
             e.printStackTrace();
         }
@@ -94,7 +100,7 @@ public enum EventSourceType {
                 } catch (Exception e){
                     //
                 }
-            } catch (ArrayIndexOutOfBoundsException e){
+            } catch (ArrayIndexOutOfBoundsException e) {
 
             }
 
@@ -123,7 +129,26 @@ public enum EventSourceType {
             },
             GooglePlus(AspectType.GooglePlusAccount) {
                 @Override Map<AspectType, String> toMap(final String input) {
-                    return Collections.emptyMap();
+                    final Map<String, String> stringMap = Splitter.on('&').withKeyValueSeparator('=').split(input);
+                    Map<AspectType, String> map = Maps.newHashMap();
+                    map.put(AspectType.GooglePlusAccount, stringMap.get("userid"));
+                    map.put(AspectType.FirstName, stringMap.get("first_name"));
+                    map.put(AspectType.LastName, stringMap.get("last_name"));
+                    map.put(AspectType.Gender, stringMap.get("gender"));
+                    return map;
+                }
+            },
+            LinkedIn(AspectType.LinkedInAccount) {
+                @Override Map<AspectType, String> toMap(final String input) {
+                    final Map<String, String> stringMap = Maps.newHashMap();
+                    String[] pairs = input.split("&");
+                    for (String pair : pairs) {
+                        String[] parts = pair.split("=", 1);
+                        stringMap.put(parts[0], parts[1]);
+                    }
+                    Map<AspectType, String> map = Maps.newHashMap();
+                    map.put(AspectType.LinkedInAccount, stringMap.get("userid"));
+                    return map;
                 }
             },
             SMS(AspectType.PhoneNumber) {
@@ -131,7 +156,7 @@ public enum EventSourceType {
                     return Collections.emptyMap();
                 }
             };
-            ;
+
             @Getter
             private AspectType aspectType;
 
@@ -161,7 +186,7 @@ public enum EventSourceType {
                 final String[] values = data.split(separator());
                 map.put(AspectType.MacAddress, values[2]);
                 map.putAll(Accesso.from(values));
-            } catch (ArrayIndexOutOfBoundsException e){
+            } catch (ArrayIndexOutOfBoundsException e) {
 
             }
 
