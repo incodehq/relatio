@@ -1,6 +1,6 @@
 package org.incode.eurocommercial.ecpcrm.dom.aspect;
 
-import java.time.LocalDate;
+import org.joda.time.LocalDate;
 
 import org.incode.eurocommercial.ecpcrm.dom.profile.Profile;
 

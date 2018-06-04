@@ -4,11 +4,14 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 
 import org.apache.isis.applib.value.Blob;
@@ -24,7 +27,8 @@ public enum EventSourceType {
 
     WifiProjects_Utenti_Csv(WifiProjectsUtentiCsv.class),
     WifiProjects_Accessi_Csv(WifiProjectsAccessiCsv.class),
-    ContestOnline_2017_Csv(ContestOnline2017Csv.class);
+    ContestOnline_2017_Csv(ContestOnline2017Csv.class),
+    Infopoint_Csv(InfoPointCsv.class);
 
     private Class<? extends EventParser> cls;
 
@@ -246,6 +250,42 @@ public enum EventSourceType {
                 map.put(AspectType.RegisteredAt, values[14]);
                 map.put(AspectType.MailConfirmedAt, values[15]);
                 map.put(AspectType.FacebookAccount, values[18]);
+            } catch (ArrayIndexOutOfBoundsException e) {
+            }
+
+            return map;
+        }
+    }
+
+    public static class InfoPointCsv implements EventParserForCsv {
+        public String header() {
+            return "NOME;COGNOME;DATA DI NASCITA;INDIRIZZO;CITTA';Country;PV;CAP;TELEFONO;CELL.;E-MAIL ;CONSENSO II";
+        }
+
+        @Override public String separator() {
+            return ";";
+        }
+
+        @Override
+        public Map<AspectType, String> toMap(String data) {
+            Map<AspectType, String> map = Maps.newHashMap();
+
+            try {
+                final String[] values = data.split(separator());
+                map.put(AspectType.FirstName, values[0]);
+                map.put(AspectType.LastName, values[1]);
+                map.put(AspectType.Birthday, LocalDate.parse(values[2], DateTimeFormatter.ofPattern("dd/MM/yyyy")).format(DateTimeFormatter.ISO_DATE));
+                map.put(AspectType.Address, values[3]);
+                map.put(AspectType.City, values[4]);
+                map.put(AspectType.Country, values[5]);
+                map.put(AspectType.PostCode, values[7]);
+                // TODO: Support multiple phone numbers
+                if (!Strings.isNullOrEmpty(values[8])) {
+                    map.put(AspectType.PhoneNumber, values[8]);
+                } else {
+                    map.put(AspectType.PhoneNumber, values[9]);
+                }
+                map.put(AspectType.EmailAccount, values[10]);
             } catch (ArrayIndexOutOfBoundsException e) {
             }
 

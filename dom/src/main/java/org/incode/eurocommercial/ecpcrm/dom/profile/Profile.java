@@ -1,6 +1,5 @@
 package org.incode.eurocommercial.ecpcrm.dom.profile;
 
-import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.SortedSet;
@@ -17,6 +16,8 @@ import javax.jdo.annotations.Query;
 import javax.jdo.annotations.Unique;
 import javax.jdo.annotations.Version;
 import javax.jdo.annotations.VersionStrategy;
+
+import org.joda.time.LocalDate;
 
 import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.Collection;
@@ -87,6 +88,7 @@ public class Profile implements Comparable<Profile> {
 
     @Column(allowsNull = "true")
     @Property()
+    @Persistent
     @Getter @Setter
     private LocalDate birthdate;
 
