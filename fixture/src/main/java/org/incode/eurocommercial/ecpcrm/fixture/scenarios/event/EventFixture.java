@@ -25,6 +25,7 @@ import org.incode.eurocommercial.ecpcrm.fixture.dom.event.AccessiEventFixture;
 import org.incode.eurocommercial.ecpcrm.fixture.dom.event.ConflictingUtentiEventFixture;
 import org.incode.eurocommercial.ecpcrm.fixture.dom.event.ContestOnline2017EventFixture;
 import org.incode.eurocommercial.ecpcrm.fixture.dom.event.InfopointEventFixture;
+import org.incode.eurocommercial.ecpcrm.fixture.dom.event.NewsletterOnlineContestEventFixture;
 import org.incode.eurocommercial.ecpcrm.fixture.dom.event.UtentiEventFixture;
 
 public class EventFixture extends FixtureScript {
@@ -39,5 +40,6 @@ public class EventFixture extends FixtureScript {
         ec.executeChild(EventFixture.this, new ConflictingUtentiEventFixture());
         ec.executeChild(EventFixture.this, new ContestOnline2017EventFixture());
         ec.executeChild(EventFixture.this, new InfopointEventFixture());
+        ec.executeChild(EventFixture.this, new NewsletterOnlineContestEventFixture());
     }
 }

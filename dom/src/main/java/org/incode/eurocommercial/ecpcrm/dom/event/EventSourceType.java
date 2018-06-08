@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
@@ -28,6 +29,7 @@ public enum EventSourceType {
     WifiProjects_Utenti_Csv(WifiProjectsUtentiCsv.class),
     WifiProjects_Accessi_Csv(WifiProjectsAccessiCsv.class),
     ContestOnline_2017_Csv(ContestOnline2017Csv.class),
+    Newsletter_Online_Contest_Csv(NewsletterOnlineContestCsv.class),
     Infopoint_Csv(InfoPointCsv.class);
 
     private Class<? extends EventParser> cls;
@@ -47,7 +49,11 @@ public enum EventSourceType {
         try {
             ByteArrayInputStream is = new ByteArrayInputStream(blob.getBytes());
             BufferedReader bfReader = new BufferedReader(new InputStreamReader(is));
-            bfReader.readLine();
+
+            /* Skip header lines (TODO: generalise this, since its csv-specific) */
+            for (int i = 0;  i < Objects.requireNonNull(getParser()).headerSize(); i++) {
+                bfReader.readLine();
+            }
             for (String record = bfReader.readLine(); record != null; record = bfReader.readLine()) {
                 final long time = System.nanoTime();
                 final Event event = eventRepository.create(source, record);
@@ -70,6 +76,7 @@ public enum EventSourceType {
 
     public interface EventParser {
         Map<AspectType, String> toMap(String data);
+        int headerSize();
     }
 
     public interface EventParserForCsv extends EventParser {
@@ -81,6 +88,10 @@ public enum EventSourceType {
     public static class WifiProjectsUtentiCsv implements EventParserForCsv {
         public String header() {
             return "NOME;COGNOME;DATA PRIMO ACCESSO;EMAIL;TELEFONO;ACCESSO SOCIAL;DATI SOCIAL";
+        }
+
+        public int headerSize() {
+            return 1;
         }
 
         @Override public String separator() {
@@ -178,6 +189,10 @@ public enum EventSourceType {
             return "ID;USERNAME;MAC-ADDR.;DATA ACCESSO;DATA FINE;ACCESSO;NOTE";
         }
 
+        public int headerSize() {
+            return 1;
+        }
+
         @Override public String separator() {
             return ";";
         }
@@ -232,6 +247,10 @@ public enum EventSourceType {
             return "nome;cognome;sesso;nascita;email;cellulare;via;citta;civico;cap;provincia;stato_famiglia;hafigli;privacy;data_ins;data_conferma_mail;data_conferma_cell;stato_mail;facebook_id;accetta comunicazioni marketing;accetta profilazione";
         }
 
+        public int headerSize() {
+            return 1;
+        }
+
         @Override public String separator() {
             return ";";
         }
@@ -262,6 +281,10 @@ public enum EventSourceType {
             return "NOME;COGNOME;DATA DI NASCITA;INDIRIZZO;CITTA';Country;PV;CAP;TELEFONO;CELL.;E-MAIL ;CONSENSO II";
         }
 
+        public int headerSize() {
+            return 1;
+        }
+
         @Override public String separator() {
             return ";";
         }
@@ -286,6 +309,37 @@ public enum EventSourceType {
                     map.put(AspectType.PhoneNumber, values[9]);
                 }
                 map.put(AspectType.EmailAccount, values[10]);
+            } catch (ArrayIndexOutOfBoundsException e) {
+            }
+
+            return map;
+        }
+    }
+
+    public static class NewsletterOnlineContestCsv implements EventParserForCsv {
+        public String header() {
+            return null;
+        }
+
+        public int headerSize() {
+            return 0;
+        }
+
+        @Override public String separator() {
+            return ";";
+        }
+
+        @Override
+        public Map<AspectType, String> toMap(String data) {
+            Map<AspectType, String> map = Maps.newHashMap();
+
+            try {
+                final String[] values = data.split(separator());
+                map.put(AspectType.Address, values[0]);
+                map.put(AspectType.EmailAccount, values[1]);
+                map.put(AspectType.City, values[2]);
+                map.put(AspectType.FirstName, values[3]);
+                map.put(AspectType.LastName, values[4]);
             } catch (ArrayIndexOutOfBoundsException e) {
             }
 
