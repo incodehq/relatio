@@ -85,7 +85,7 @@ public class EventSourceTypeTest {
             // Dan
             assertThat(map.size()).isEqualTo(2);
             assertThat(map.get(AspectType.MacAddress)).isEqualTo("81:B9:C0:9C:14:BB");
-            assertThat(map.get(AspectType.PhoneNumber)).isEqualTo("+319876543210");
+            assertThat(map.get(AspectType.CellPhoneNumber)).isEqualTo("+319876543210");
         }
 
         @Test

@@ -42,9 +42,10 @@ public enum AspectType {
             aspect.getProfile().setEmailAccount(aspect.getValue());
         }
     },
-    PhoneNumber(true) {
+    HomePhoneNumber(false),
+    CellPhoneNumber(true) {
         @Override public void updateProfile(final Aspect aspect) {
-            aspect.getProfile().setPhoneNumber(aspect.getValue());
+            aspect.getProfile().setCellPhoneNumber(aspect.getValue());
         }
     },
     FacebookAccount(true) {

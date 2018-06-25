@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import com.google.common.base.Splitter;
-import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 
 import org.apache.isis.applib.value.Blob;
@@ -108,7 +107,7 @@ public enum EventSourceType {
                 map.put(AspectType.LastName, values[1]);
                 map.put(AspectType.FirstAccess, values[2]);
                 map.put(AspectType.EmailAccount, values[3]);
-                map.put(AspectType.PhoneNumber, values[4]);
+                map.put(AspectType.CellPhoneNumber, values[4]);
                 try {
                     final SocialAccount socialAccount = SocialAccount.valueOfNormalised(values[5]);
                     map.putAll(socialAccount.toMap(values[6]));
@@ -166,7 +165,7 @@ public enum EventSourceType {
                     return map;
                 }
             },
-            SMS(AspectType.PhoneNumber) {
+            SMS(AspectType.CellPhoneNumber) {
                 @Override Map<AspectType, String> toMap(final String input) {
                     return Collections.emptyMap();
                 }
@@ -224,7 +223,7 @@ public enum EventSourceType {
             SMS {
                 @Override Map<AspectType, String> toMap(final String[] input) {
                     Map<AspectType, String> map = Maps.newHashMap();
-                    map.put(AspectType.PhoneNumber, input[1]);
+                    map.put(AspectType.CellPhoneNumber, input[1]);
                     return map;
                 }
             };
@@ -264,7 +263,7 @@ public enum EventSourceType {
                 map.put(AspectType.FirstName, values[0]);
                 map.put(AspectType.LastName, values[1]);
                 map.put(AspectType.EmailAccount, values[4]);
-                map.put(AspectType.PhoneNumber, values[5]);
+                map.put(AspectType.CellPhoneNumber, values[5]);
                 map.put(AspectType.City, values[7]);
                 map.put(AspectType.RegisteredAt, values[14]);
                 map.put(AspectType.MailConfirmedAt, values[15]);
@@ -302,12 +301,8 @@ public enum EventSourceType {
                 map.put(AspectType.City, values[4]);
                 map.put(AspectType.Country, values[5]);
                 map.put(AspectType.PostCode, values[7]);
-                // TODO: Support multiple phone numbers
-                if (!Strings.isNullOrEmpty(values[8])) {
-                    map.put(AspectType.PhoneNumber, values[8]);
-                } else {
-                    map.put(AspectType.PhoneNumber, values[9]);
-                }
+                map.put(AspectType.HomePhoneNumber, values[8]);
+                map.put(AspectType.CellPhoneNumber, values[9]);
                 map.put(AspectType.EmailAccount, values[10]);
             } catch (ArrayIndexOutOfBoundsException e) {
             }

@@ -66,7 +66,7 @@ public class Profile implements Comparable<Profile> {
 
     public String title() {
         String keyAspect = Optional.ofNullable(emailAccount)
-                .orElse(Optional.ofNullable(phoneNumber)
+                .orElse(Optional.ofNullable(cellPhoneNumber)
                         .orElse(facebookAccount));
         return "[" + keyAspect + "] " + firstName + " " + lastName;
     }
@@ -110,7 +110,7 @@ public class Profile implements Comparable<Profile> {
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
-    private String phoneNumber;
+    private String cellPhoneNumber;
 
     @Persistent(mappedBy = "profile", dependentElement = "false")
     @Collection
@@ -122,14 +122,14 @@ public class Profile implements Comparable<Profile> {
     @Override
     public int compareTo(final Profile other) {
         return Comparator.comparing(Profile::getEmailAccount)
-                .thenComparing(Profile::getPhoneNumber)
+                .thenComparing(Profile::getCellPhoneNumber)
                 .thenComparing(Profile::getFacebookAccount)
                 .compare(this, other);
     }
 
     //endregion
 
-    public Profile updateFromAspects(){
+    public Profile updateFromAspects() {
         for (Aspect aspect :
                 getAspects()) {
             aspect.getType().updateProfile(aspect);
