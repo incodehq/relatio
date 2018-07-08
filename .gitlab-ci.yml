@@ -31,7 +31,11 @@ services:
 variables:
   DOCKER_HOST: tcp://docker:2375
   DOCKER_DRIVER: overlay2
+<<<<<<< HEAD
   APP_NAME: "ecpcrm"
+=======
+  APP_NAME: "ecphrm"
+>>>>>>> adds .gitlab-ci.yml
 
 stages:
   - build-package-push
@@ -42,6 +46,7 @@ build-package-push:
     - echo "REVISION=$REVISION"
     - >
       mvn $BUILD_ADDITIONAL_OPTIONS \
+<<<<<<< HEAD
           --batch-mode \
           -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
           clean install \
@@ -52,6 +57,12 @@ build-package-push:
       mvn -s .m2/settings.xml \
           --batch-mode \
           -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+=======
+          clean install \
+          -Drevision=$REVISION
+    - >
+      mvn --batch-mode \
+>>>>>>> adds .gitlab-ci.yml
           docker:push@push-image-tagged \
           -pl webapp \
           -Drevision=$REVISION \
