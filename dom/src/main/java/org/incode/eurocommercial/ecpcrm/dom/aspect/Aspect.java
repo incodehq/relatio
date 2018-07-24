@@ -8,6 +8,8 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Queries;
 import javax.jdo.annotations.Query;
 
+import org.joda.time.LocalDateTime;
+
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Property;
@@ -54,6 +56,11 @@ public class Aspect implements Comparable<Aspect> {
     @Property(hidden = Where.REFERENCES_PARENT)
     private Profile profile;
 
+    @Column(allowsNull = "false", name = "eventId")
+    @Getter @Setter
+    @Property(hidden = Where.REFERENCES_PARENT)
+    private Event event;
+
     @Column(allowsNull = "false")
     @Getter @Setter
     private AspectType type;
@@ -62,12 +69,11 @@ public class Aspect implements Comparable<Aspect> {
     @Getter @Setter
     private String value;
 
-    @Column(allowsNull = "false", name = "eventId")
+    @Column(allowsNull = "true")
     @Getter @Setter
-    @Property(hidden = Where.REFERENCES_PARENT)
-    private Event event;
+    private LocalDateTime collectedAt;
 
-    public Aspect(){}
+    public Aspect() {}
 
     public Aspect(final Event event, final AspectType type, final String value) {
         this.event = event;

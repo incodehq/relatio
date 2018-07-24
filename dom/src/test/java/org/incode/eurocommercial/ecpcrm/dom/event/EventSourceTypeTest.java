@@ -51,7 +51,7 @@ public class EventSourceTypeTest {
             assertThat(map.get(AspectType.EmailAccount)).isEqualTo("lmerguem@quantcast.com");
             assertThat(map.get(AspectType.FacebookAccount)).isEqualTo("1240943875699972");
             assertThat(map.get(AspectType.Gender)).isEqualTo("male");
-            assertThat(map.get(AspectType.FirstAccess)).isEqualTo("29/03/2017");
+            assertThat(map.get(AspectType.Access)).isEqualTo("29/03/2017");
         }
     }
 

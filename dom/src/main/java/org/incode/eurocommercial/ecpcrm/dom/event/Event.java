@@ -17,6 +17,8 @@ import javax.jdo.annotations.Query;
 
 import com.google.common.collect.Sets;
 
+import org.joda.time.LocalDateTime;
+
 import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
@@ -25,11 +27,11 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Where;
 
-import org.incode.eurocommercial.ecpcrm.dom.profile.Profile;
-import org.incode.eurocommercial.ecpcrm.dom.profile.ProfileRepository;
 import org.incode.eurocommercial.ecpcrm.dom.aspect.Aspect;
 import org.incode.eurocommercial.ecpcrm.dom.aspect.AspectRepository;
 import org.incode.eurocommercial.ecpcrm.dom.aspect.AspectType;
+import org.incode.eurocommercial.ecpcrm.dom.profile.Profile;
+import org.incode.eurocommercial.ecpcrm.dom.profile.ProfileRepository;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -86,9 +88,11 @@ public class Event implements Comparable<Event> {
     @Property(hidden = Where.REFERENCES_PARENT)
     private EventSource source;
 
+    @Programmatic
     public void createAspects() {
         Map<AspectType, String> aspectMap = getAspectMap();
         Map<AspectType, String> keyAspectMap = getKeyAspectsFromAspectMap(aspectMap);
+        SortedSet<LocalDateTime> collectionDates = getCollectionDatesFromAspectMap(aspectMap);
         Set<Profile> matchedProfiles = getProfilesFromKeyAspects(keyAspectMap);
         Profile profile = null;
 
@@ -103,9 +107,17 @@ public class Event implements Comparable<Event> {
         }
 
         for (Map.Entry<AspectType, String> entry : aspectMap.entrySet()) {
-            Aspect aspect = aspectRepository.findOrCreate(this, entry.getKey(), entry.getValue(), profile);
+            LocalDateTime collectionDate = collectionDates.size() == 0 ? null : collectionDates.last();
+            Aspect aspect = aspectRepository.findOrCreate(profile, this, entry.getKey(), entry.getValue(), collectionDate);
             aspects.add(aspect);
         }
+    }
+
+    private SortedSet<LocalDateTime> getCollectionDatesFromAspectMap(final Map<AspectType, String> aspectMap) {
+        return aspectMap.entrySet().stream()
+                .filter(e -> e.getKey().isCollectionDate())
+                .map(e -> LocalDateTime.parse(e.getValue()))
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 
     @Programmatic

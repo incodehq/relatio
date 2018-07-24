@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.joda.time.LocalDateTime;
+
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
@@ -63,16 +65,17 @@ public class AspectRepository  {
 
     @Programmatic
     public Aspect create(
-            final Event event,
+            final Profile profile, final Event event,
             final AspectType type,
             final String value,
-            final Profile profile) {
+            final LocalDateTime collectedAt
+    ) {
         final Aspect aspect = repositoryService.instantiate(Aspect.class);
         aspect.setEvent(event);
         aspect.setType(type);
         aspect.setValue(value);
         aspect.setProfile(profile);
-        // TODO dates?
+        aspect.setCollectedAt(collectedAt);
 
         repositoryService.persist(aspect);
         return aspect;
@@ -80,13 +83,14 @@ public class AspectRepository  {
 
     @Programmatic
     public Aspect findOrCreate(
-            final Event event,
+            final Profile profile, final Event event,
             final AspectType type,
             final String value,
-            final Profile profile) {
+            final LocalDateTime collectedAt
+    ) {
         Aspect aspect = findByEventAndType(event, type);
         if (aspect == null) {
-            aspect = create(event, type, value, profile);
+            aspect = create(profile, event, type, value, collectedAt);
         }
         return aspect;
     }

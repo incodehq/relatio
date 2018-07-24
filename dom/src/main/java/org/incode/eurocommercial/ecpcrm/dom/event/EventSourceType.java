@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +16,7 @@ import org.apache.isis.applib.value.Blob;
 
 import org.incode.eurocommercial.ecpcrm.dom.aspect.Aspect;
 import org.incode.eurocommercial.ecpcrm.dom.aspect.AspectType;
+import org.incode.eurocommercial.ecpcrm.dom.utils.DateFormatUtils;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -105,7 +104,7 @@ public enum EventSourceType {
                 final String[] values = data.split(separator());
                 map.put(AspectType.FirstName, values[0]);
                 map.put(AspectType.LastName, values[1]);
-                map.put(AspectType.FirstAccess, values[2]);
+                map.put(AspectType.Access, DateFormatUtils.toISOLocalDate(values[2], "dd/MM/yyyy"));
                 map.put(AspectType.EmailAccount, values[3]);
                 map.put(AspectType.CellPhoneNumber, values[4]);
                 try {
@@ -203,9 +202,9 @@ public enum EventSourceType {
             try {
                 final String[] values = data.split(separator());
                 map.put(AspectType.MacAddress, values[2]);
+                map.put(AspectType.Access, DateFormatUtils.toISOLocalDateTime(values[3], "yyyy-MM-dd HH:mm:ss"));
                 map.putAll(Accesso.from(values));
-            } catch (ArrayIndexOutOfBoundsException e) {
-
+            } catch (ArrayIndexOutOfBoundsException ignored) {
             }
 
             return map;
@@ -215,7 +214,6 @@ public enum EventSourceType {
             FB() {
                 @Override Map<AspectType, String> toMap(final String[] input) {
                     Map<AspectType, String> map = Maps.newHashMap();
-                    map.put(AspectType.FacebookAccount, input[1]);
                     map.put(AspectType.EmailAccount, input[1]);
                     return map;
                 }
@@ -265,10 +263,10 @@ public enum EventSourceType {
                 map.put(AspectType.EmailAccount, values[4]);
                 map.put(AspectType.CellPhoneNumber, values[5]);
                 map.put(AspectType.City, values[7]);
-                map.put(AspectType.RegisteredAt, values[14]);
-                map.put(AspectType.MailConfirmedAt, values[15]);
+                map.put(AspectType.RegisteredAt, DateFormatUtils.toISOLocalDateTime(values[14], "MMM d yyyy HH:mm:ss:SSSa"));
+                map.put(AspectType.MailConfirmedAt, DateFormatUtils.toISOLocalDateTime(values[14], "MMM d yyyy HH:mm:ss:SSSa"));
                 map.put(AspectType.FacebookAccount, values[18]);
-            } catch (ArrayIndexOutOfBoundsException e) {
+            } catch (ArrayIndexOutOfBoundsException ignored) {
             }
 
             return map;
@@ -296,7 +294,10 @@ public enum EventSourceType {
                 final String[] values = data.split(separator());
                 map.put(AspectType.FirstName, values[0]);
                 map.put(AspectType.LastName, values[1]);
-                map.put(AspectType.Birthday, LocalDate.parse(values[2], DateTimeFormatter.ofPattern("dd/MM/yyyy")).format(DateTimeFormatter.ISO_DATE));
+                try {
+                    map.put(AspectType.Birthday, DateFormatUtils.toISOLocalDate(values[2], "dd/MM/yyyy"));
+                } catch (Exception ignored) {
+                }
                 map.put(AspectType.Address, values[3]);
                 map.put(AspectType.City, values[4]);
                 map.put(AspectType.Country, values[5]);
@@ -304,7 +305,7 @@ public enum EventSourceType {
                 map.put(AspectType.HomePhoneNumber, values[8]);
                 map.put(AspectType.CellPhoneNumber, values[9]);
                 map.put(AspectType.EmailAccount, values[10]);
-            } catch (ArrayIndexOutOfBoundsException e) {
+            } catch (ArrayIndexOutOfBoundsException ignored) {
             }
 
             return map;

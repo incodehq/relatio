@@ -9,40 +9,38 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public enum AspectType {
-
-    FirstName(false) {
+    FirstName() {
         @Override public void updateProfile(final Aspect aspect) {
             aspect.getProfile().setFirstName(aspect.getValue());
         }
     },
-    LastName(false) {
+    LastName() {
         @Override public void updateProfile(final Aspect aspect) {
             aspect.getProfile().setLastName(aspect.getValue());
         }
     },
-    Age(false),
-    Birthday(false) {
+    Age(),
+    Birthday() {
         @Override public void updateProfile(final Aspect aspect) {
             aspect.getProfile().setBirthdate(LocalDate.parse(aspect.getValue()));
         }
     },
-    Gender(false) {
+    Gender() {
         @Override public void updateProfile(final Aspect aspect) {
             aspect.getProfile().setGender(Profile.Gender.valueOf(aspect.getValue().toUpperCase()));
         }
     },
 
-    FirstAccess(false),
-    LastAccess(false),
-    RegisteredAt(false),
-    MailConfirmedAt(false),
+    Access(false, true),
+    RegisteredAt(false, true),
+    MailConfirmedAt(false, true),
 
     EmailAccount(true) {
         @Override public void updateProfile(final Aspect aspect) {
             aspect.getProfile().setEmailAccount(aspect.getValue());
         }
     },
-    HomePhoneNumber(false),
+    HomePhoneNumber(),
     CellPhoneNumber(true) {
         @Override public void updateProfile(final Aspect aspect) {
             aspect.getProfile().setCellPhoneNumber(aspect.getValue());
@@ -57,16 +55,27 @@ public enum AspectType {
     TwitterAccount(true),
     LinkedInAccount(true),
 
-    MacAddress(false),
+    MacAddress(),
 
-    City(false),
-    Address(false),
-    PostCode(false),
-    Country(false),
-    Province(false);
+    City(),
+    Address(),
+    PostCode(),
+    Country(),
+    Province();
 
     @Getter
     private boolean key;
+
+    @Getter
+    private boolean collectionDate;
+
+    AspectType(final boolean key) {
+        this(key, false);
+    }
+
+    AspectType() {
+        this(false, false);
+    }
 
     public void updateProfile(Aspect aspect){}
 }
