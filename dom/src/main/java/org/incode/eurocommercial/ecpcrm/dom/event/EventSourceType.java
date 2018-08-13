@@ -28,6 +28,7 @@ public enum EventSourceType {
     WifiProjects_Accessi_Csv(WifiProjectsAccessiCsv.class),
     ContestOnline_2017_Csv(ContestOnline2017Csv.class),
     Newsletter_Online_Contest_Csv(NewsletterOnlineContestCsv.class),
+    Database_Wifi_2018_Csv(DatabaseWifi2018Csv.class),
     Infopoint_Csv(InfoPointCsv.class);
 
     private Class<? extends EventParser> cls;
@@ -318,7 +319,7 @@ public enum EventSourceType {
         }
 
         public int headerSize() {
-            return 0;
+            return 1;
         }
 
         @Override public String separator() {
@@ -336,8 +337,45 @@ public enum EventSourceType {
                 map.put(AspectType.City, values[2]);
                 map.put(AspectType.FirstName, values[3]);
                 map.put(AspectType.LastName, values[4]);
-            } catch (ArrayIndexOutOfBoundsException e) {
-            }
+            } catch (ArrayIndexOutOfBoundsException e) {}
+
+            return map;
+        }
+    }
+
+    public static class DatabaseWifi2018Csv implements EventParserForCsv {
+        public String header() {
+            return null;
+        }
+        public int headerSize() {
+            return 1;
+        }
+        @Override public String separator() {
+            return ";";
+        }
+        @Override
+        public Map<AspectType, String> toMap(String data) {
+            Map<AspectType, String> map = Maps.newHashMap();
+
+            try {
+                final String[] values = data.split(separator());
+
+                map.put(AspectType.FirstName, values[0]);
+                map.put(AspectType.LastName, values[1]);
+
+                map.put(AspectType.Access, DateFormatUtils.toISOLocalDate(values[2], "dd/mm/yyyy"));
+                map.put(AspectType.EmailAccount, values[3]);
+                map.put(AspectType.CellPhoneNumber, values[4]);
+                //map.put(AspectType.AgeRange, values[5]);
+                if(values[6].equals("M")) {
+                    map.put(AspectType.Gender, "MALE");
+                }
+                if(values[6].equals("F")) {
+                    map.put(AspectType.Gender, "FEMALE");
+                }
+                //map.put(AspectType.HasFacebook, values[7]);
+
+            } catch (ArrayIndexOutOfBoundsException e) {}
 
             return map;
         }

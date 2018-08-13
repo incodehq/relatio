@@ -21,12 +21,7 @@ package org.incode.eurocommercial.ecpcrm.fixture.scenarios.event;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-import org.incode.eurocommercial.ecpcrm.fixture.dom.event.AccessiEventFixture;
-import org.incode.eurocommercial.ecpcrm.fixture.dom.event.ConflictingUtentiEventFixture;
-import org.incode.eurocommercial.ecpcrm.fixture.dom.event.ContestOnline2017EventFixture;
-import org.incode.eurocommercial.ecpcrm.fixture.dom.event.InfopointEventFixture;
-import org.incode.eurocommercial.ecpcrm.fixture.dom.event.NewsletterOnlineContestEventFixture;
-import org.incode.eurocommercial.ecpcrm.fixture.dom.event.UtentiEventFixture;
+import org.incode.eurocommercial.ecpcrm.fixture.dom.event.*;
 
 public class EventFixture extends FixtureScript {
     public EventFixture() {
@@ -41,5 +36,6 @@ public class EventFixture extends FixtureScript {
         ec.executeChild(EventFixture.this, new ContestOnline2017EventFixture());
         ec.executeChild(EventFixture.this, new InfopointEventFixture());
         ec.executeChild(EventFixture.this, new NewsletterOnlineContestEventFixture());
+        ec.executeChild(EventFixture.this, new DatabaseWifiYearFixture());
     }
 }
