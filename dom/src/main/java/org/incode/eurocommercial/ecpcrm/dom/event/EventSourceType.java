@@ -31,6 +31,7 @@ public enum EventSourceType {
     Database_Wifi_2018_Csv(DatabaseWifi2018Csv.class),
     Moduli_Privacy_Presso_Infopoint_Csv(ModuliPrivacyPressoInfopointCsv.class),
     Moduli_Privacy_Abissi_Csv(ModuliPrivacyAbissiCsv.class),
+    Couponing_Da_Infopad_Csv(CouponingDaInfopadCsv.class),
     Infopoint_Csv(InfoPointCsv.class);
 
     private Class<? extends EventParser> cls;
@@ -438,6 +439,35 @@ public enum EventSourceType {
                 map.put(AspectType.MinimumAge, values[3]);
                 map.put(AspectType.Comune, values[4]);
                 map.put(AspectType.EmailAccount, values[5]);
+
+            } catch (ArrayIndexOutOfBoundsException e) {}
+
+            return map;
+        }
+    }
+
+    public static class CouponingDaInfopadCsv implements EventParserForCsv {
+        public String header() {
+            return null;
+        }
+        public int headerSize() {
+            return 1;
+        }
+        @Override public String separator() {
+            return ";";
+        }
+        @Override
+        public Map<AspectType, String> toMap(String data) {
+            Map<AspectType, String> map = Maps.newHashMap();
+
+            try {
+                final String[] values = data.split(separator());
+
+                map.put(AspectType.Address, values[0]);
+                map.put(AspectType.EmailAccount, values[1]);
+                map.put(AspectType.Comune, values[2]);
+                map.put(AspectType.FirstName, values[3]);
+                map.put(AspectType.LastName, values[4]);
 
             } catch (ArrayIndexOutOfBoundsException e) {}
 
