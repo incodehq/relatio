@@ -37,5 +37,6 @@ public class EventFixture extends FixtureScript {
         ec.executeChild(EventFixture.this, new InfopointEventFixture());
         ec.executeChild(EventFixture.this, new NewsletterOnlineContestEventFixture());
         ec.executeChild(EventFixture.this, new DatabaseWifiYearFixture());
+        ec.executeChild(EventFixture.this, new ModuliPrivacyPressoInfopointFixture());
     }
 }

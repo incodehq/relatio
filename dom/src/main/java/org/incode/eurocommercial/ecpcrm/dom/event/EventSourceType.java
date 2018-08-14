@@ -29,6 +29,7 @@ public enum EventSourceType {
     ContestOnline_2017_Csv(ContestOnline2017Csv.class),
     Newsletter_Online_Contest_Csv(NewsletterOnlineContestCsv.class),
     Database_Wifi_2018_Csv(DatabaseWifi2018Csv.class),
+    Moduli_Privacy_Presso_Infopoint_Csv(ModuliPrivacyPressoInfopointCsv.class),
     Infopoint_Csv(InfoPointCsv.class);
 
     private Class<? extends EventParser> cls;
@@ -362,7 +363,6 @@ public enum EventSourceType {
 
                 map.put(AspectType.FirstName, values[0]);
                 map.put(AspectType.LastName, values[1]);
-
                 map.put(AspectType.Access, DateFormatUtils.toISOLocalDate(values[2], "dd/mm/yyyy"));
                 map.put(AspectType.EmailAccount, values[3]);
                 map.put(AspectType.CellPhoneNumber, values[4]);
@@ -374,6 +374,34 @@ public enum EventSourceType {
                     map.put(AspectType.Gender, "FEMALE");
                 }
                 //map.put(AspectType.HasFacebook, values[7]);
+
+            } catch (ArrayIndexOutOfBoundsException e) {}
+
+            return map;
+        }
+    }
+
+    public static class ModuliPrivacyPressoInfopointCsv implements EventParserForCsv {
+        public String header() {
+            return null;
+        }
+        public int headerSize() {
+            return 3;
+        }
+        @Override public String separator() {
+            return ";";
+        }
+        @Override
+        public Map<AspectType, String> toMap(String data) {
+            Map<AspectType, String> map = Maps.newHashMap();
+
+            try {
+                final String[] values = data.split(separator());
+
+                map.put(AspectType.FirstName, values[0]);
+                map.put(AspectType.LastName, values[3]);
+                map.put(AspectType.City, values[6]);
+                map.put(AspectType.EmailAccount, values[9]);
 
             } catch (ArrayIndexOutOfBoundsException e) {}
 
