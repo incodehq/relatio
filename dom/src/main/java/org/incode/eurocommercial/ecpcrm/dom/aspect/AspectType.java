@@ -19,7 +19,7 @@ public enum AspectType {
             aspect.getProfile().setLastName(aspect.getValue());
         }
     },
-    Age(),
+    MinimumAge(),
     Birthday() {
         @Override public void updateProfile(final Aspect aspect) {
             aspect.getProfile().setBirthdate(LocalDate.parse(aspect.getValue()));
@@ -61,7 +61,8 @@ public enum AspectType {
     Address(),
     PostCode(),
     Country(),
-    Province();
+    Province(),
+    Comune();
 
     @Getter
     private boolean key;
