@@ -24,27 +24,19 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum EventSourceType {
 
-    WifiProjects_Utenti_Csv(WifiProjectsUtentiCsv.class),
-    WifiProjects_Accessi_Csv(WifiProjectsAccessiCsv.class),
-    ContestOnline_2017_Csv(ContestOnline2017Csv.class),
-    Newsletter_Online_Contest_Csv(NewsletterOnlineContestCsv.class),
-    Database_Wifi_2018_Csv(DatabaseWifi2018Csv.class),
-    Moduli_Privacy_Presso_Infopoint_Csv(ModuliPrivacyPressoInfopointCsv.class),
-    Moduli_Privacy_Abissi_Csv(ModuliPrivacyAbissiCsv.class),
-    Couponing_Da_Infopad_Csv(CouponingDaInfopadCsv.class),
-    Carosello_Angry_Birds_Csv(CaroselloAngryBirdsCsv.class),
-    Infopoint_Csv(InfoPointCsv.class);
+    WifiProjects_Utenti_Csv(new WifiProjectsUtentiCsv()),
+    WifiProjects_Accessi_Csv(new WifiProjectsAccessiCsv()),
+    ContestOnline_2017_Csv(new ContestOnline2017Csv()),
+    Newsletter_Online_Contest_Csv(new NewsletterOnlineContestCsv()),
+    Database_Wifi_2018_Csv(new DatabaseWifi2018Csv()),
+    Moduli_Privacy_Presso_Infopoint_Csv(new ModuliPrivacyPressoInfopointCsv()),
+    Moduli_Privacy_Abissi_Csv(new ModuliPrivacyAbissiCsv()),
+    Couponing_Da_Infopad_Csv(new CouponingDaInfopadCsv()),
+    Carosello_Angry_Birds_Csv(new CaroselloAngryBirdsCsv()),
+    Infopoint_Csv(new InfoPointCsv());
 
-    private Class<? extends EventParser> cls;
-
-    public EventParser getParser() {
-        try {
-            return cls.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+    @Getter
+    private EventParser parser;
 
     public EventSource parseBlob(final Blob blob, final EventRepository eventRepository, final EventSourceRepository eventSourceRepository) {
         EventSource source = eventSourceRepository.create(this);
