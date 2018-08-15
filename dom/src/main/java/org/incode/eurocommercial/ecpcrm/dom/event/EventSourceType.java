@@ -32,6 +32,7 @@ public enum EventSourceType {
     Moduli_Privacy_Presso_Infopoint_Csv(ModuliPrivacyPressoInfopointCsv.class),
     Moduli_Privacy_Abissi_Csv(ModuliPrivacyAbissiCsv.class),
     Couponing_Da_Infopad_Csv(CouponingDaInfopadCsv.class),
+    Carosello_Angry_Birds_Csv(CaroselloAngryBirdsCsv.class),
     Infopoint_Csv(InfoPointCsv.class);
 
     private Class<? extends EventParser> cls;
@@ -365,7 +366,7 @@ public enum EventSourceType {
 
                 map.put(AspectType.FirstName, values[0]);
                 map.put(AspectType.LastName, values[1]);
-                map.put(AspectType.Access, DateFormatUtils.toISOLocalDate(values[2], "dd/mm/yyyy"));
+                map.put(AspectType.Access, DateFormatUtils.toISOLocalDate(values[2], "dd/MM/yyyy"));
                 map.put(AspectType.EmailAccount, values[3]);
                 map.put(AspectType.CellPhoneNumber, values[4]);
                 //map.put(AspectType.AgeRange, values[5]);
@@ -468,6 +469,64 @@ public enum EventSourceType {
                 map.put(AspectType.Comune, values[2]);
                 map.put(AspectType.FirstName, values[3]);
                 map.put(AspectType.LastName, values[4]);
+
+            } catch (ArrayIndexOutOfBoundsException e) {}
+
+            return map;
+        }
+    }
+
+    public static class CaroselloAngryBirdsCsv implements EventParserForCsv {
+        public String header() {
+            return null;
+        }
+        public int headerSize() {
+            return 1;
+        }
+        @Override public String separator() {
+            return ";";
+        }
+        @Override
+        public Map<AspectType, String> toMap(String data) {
+            Map<AspectType, String> map = Maps.newHashMap();
+
+            try {
+                final String[] values = data.split(separator());
+
+                map.put(AspectType.Access, DateFormatUtils.toISOLocalDateTime(values[0], "yyyy-MM-dd HH:mm:ss Z"));
+                map.put(AspectType.LastName, values[1]);
+                map.put(AspectType.FirstName, values[2]);
+                map.put(AspectType.Gender, values[3]);
+
+                String ageRange = values[4];
+                switch (ageRange) {
+                    case "< 18":
+                        break;
+                    case "18 - 30":
+                        map.put(AspectType.MinimumAge, "18");
+                        break;
+                    case "31 - 50":
+                        map.put(AspectType.MinimumAge, "31");
+                        break;
+                    case "51 - 70":
+                        map.put(AspectType.MinimumAge, "51");
+                        break;
+                    case "> 70":
+                        map.put(AspectType.MinimumAge, "71");
+                        break;
+                    default:
+                        break;
+                }
+
+                map.put(AspectType.Address, values[5]);
+                map.put(AspectType.PostCode, values[6]);
+                map.put(AspectType.City, values[7]);
+                map.put(AspectType.Province, values[8]);
+                map.put(AspectType.HomePhoneNumber, values[9]);
+                map.put(AspectType.EmailAccount, values[10]);
+                //values[11]; privacy
+                //values[12]; trattamento dati
+                //values[13]; jpg filename
 
             } catch (ArrayIndexOutOfBoundsException e) {}
 
