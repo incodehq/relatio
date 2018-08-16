@@ -38,6 +38,7 @@ public enum EventSourceType {
     Couponing_Da_Infopad_Csv(new CouponingDaInfopadCsv()),
     Carosello_Angry_Birds_Csv(new CaroselloAngryBirdsCsv()),
     Anagrafiche_Gadget_Carosello_Csv(new AnagraficheGadgetCaroselloCsv()),
+    Anagrafiche_Csv(new AnagraficheCsv()),
     Infopoint_Csv(new InfoPointCsv());
 
     @Getter
@@ -577,6 +578,45 @@ public enum EventSourceType {
                 else {
                     currentDate = result;
                 }
+
+            } catch (ArrayIndexOutOfBoundsException e) {}
+
+            return map;
+        }
+    }
+
+    public static class AnagraficheCsv implements EventParserForCsv {
+        public String header() {
+            return null;
+        }
+        public int headerSize() {
+            return 1;
+        }
+        @Override public String separator() {
+            return "\t";
+        }
+        @Override
+        public Map<AspectType, String> toMap(String data) {
+            Map<AspectType, String> map = Maps.newHashMap();
+
+            try {
+                final String[] values = data.split(separator());
+
+                map.put(AspectType.RegisteredAt, DateFormatUtils.toISOLocalDate(values[0],"dd/MM/yyyy"));
+                map.put(AspectType.Access, DateFormatUtils.toISOLocalDate(values[1],"dd/MM/yyyy"));
+                //Codice: code
+                map.put(AspectType.LastName, values[3]);
+                map.put(AspectType.FirstName, values[4]);
+                map.put(AspectType.BusinessName, values[5]);
+                map.put(AspectType.Address, values[6]);
+                map.put(AspectType.Localita, values[7]);
+                map.put(AspectType.PostCode, values[8]);
+                map.put(AspectType.Province, values[9]);
+                map.put(AspectType.HomePhoneNumber, values[10]);
+                map.put(AspectType.Birthday, DateFormatUtils.toISOLocalDate(values[11],"dd/MM/yyyy"));
+                map.put(AspectType.EmailAccount, values[12]);
+                //consent
+                //marketing consent
 
             } catch (ArrayIndexOutOfBoundsException e) {}
 

@@ -64,7 +64,9 @@ public enum AspectType {
     Province(),
     Belongings(),
     FullName(),
-    Comune();
+    Comune(),
+    Localita(),
+    BusinessName();
 
     @Getter
     private boolean key;
