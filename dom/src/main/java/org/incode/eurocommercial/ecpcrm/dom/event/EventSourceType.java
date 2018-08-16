@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 
 import org.apache.isis.applib.value.Blob;
@@ -20,6 +21,9 @@ import org.incode.eurocommercial.ecpcrm.dom.utils.DateFormatUtils;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 @AllArgsConstructor
 public enum EventSourceType {
@@ -33,6 +37,7 @@ public enum EventSourceType {
     Moduli_Privacy_Abissi_Csv(new ModuliPrivacyAbissiCsv()),
     Couponing_Da_Infopad_Csv(new CouponingDaInfopadCsv()),
     Carosello_Angry_Birds_Csv(new CaroselloAngryBirdsCsv()),
+    Anagrafiche_Gadget_Carosello_Csv(new AnagraficheGadgetCaroselloCsv()),
     Infopoint_Csv(new InfoPointCsv());
 
     @Getter
@@ -519,6 +524,59 @@ public enum EventSourceType {
                 //values[11]; privacy
                 //values[12]; trattamento dati
                 //values[13]; jpg filename
+
+            } catch (ArrayIndexOutOfBoundsException e) {}
+
+            return map;
+        }
+    }
+
+    public static class AnagraficheGadgetCaroselloCsv implements EventParserForCsv {
+        LocalDate currentDate;
+
+        public String header() {
+            return null;
+        }
+        public int headerSize() {
+            return 1;
+        }
+        @Override public String separator() {
+            return ";";
+        }
+        @Override
+        public Map<AspectType, String> toMap(String data) {
+            Map<AspectType, String> map = Maps.newHashMap();
+
+            try {
+                final String[] values = data.split(separator());
+
+                String format = "dd/MM/yy";
+                LocalDate result = DateFormatUtils.parseStringToLocalDateOrNull(values[0], format);
+
+                //current row is a user
+                if(result == null) {
+
+                    //currentDate not set yet
+                    if(currentDate == null) {
+                        //todo: inform/log
+                    }
+                    else {
+                        map.put(AspectType.Access, currentDate.toString());
+                        //could be split into first/lastname, but data ordering is inconsistent
+                        map.put(AspectType.FullName, values[0]);
+                        map.put(AspectType.EmailAccount, values[4]);
+
+                        if(!Strings.isNullOrEmpty(values[1])) {
+                            map.put(AspectType.Belongings, "AURICOLARI");
+                        }
+                        //unsure how to handle "GETTONE X CARRELLO", "SUPPORTO CELL"
+                    }
+                }
+
+                //current row is a date
+                else {
+                    currentDate = result;
+                }
 
             } catch (ArrayIndexOutOfBoundsException e) {}
 

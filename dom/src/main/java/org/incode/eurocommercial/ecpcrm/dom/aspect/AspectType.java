@@ -62,6 +62,8 @@ public enum AspectType {
     PostCode(),
     Country(),
     Province(),
+    Belongings(),
+    FullName(),
     Comune();
 
     @Getter

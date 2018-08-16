@@ -33,4 +33,14 @@ public class DateFormatUtils {
         final LocalDate localDate = LocalDate.parse(dateString, formatter);
         return localDate.toString();
     }
+    public static LocalDate parseStringToLocalDateOrNull(String dateString, String format) {
+        final DateTimeFormatter formatter = DateTimeFormat.forPattern(format);
+
+        try {
+            return LocalDate.parse(dateString, formatter);
+        }
+        catch(Exception e) {
+            return null;
+        }
+    }
 }
