@@ -43,5 +43,6 @@ public class EventFixture extends FixtureScript {
         ec.executeChild(EventFixture.this, new CaroselloAngrybirdsAnagraficheFixture());
         ec.executeChild(EventFixture.this, new AnagraficheGadgetCaroselloFixture());
         ec.executeChild(EventFixture.this, new AnagraficheFixture());
+        ec.executeChild(EventFixture.this, new WifiOldFixture());
     }
 }

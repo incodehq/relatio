@@ -21,13 +21,15 @@ import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+
 public class DateFormatUtils {
+    //illegalargumentexceptions not handled
     public static String toISOLocalDateTime(String dateString, String format) {
         final DateTimeFormatter formatter = DateTimeFormat.forPattern(format);
         final LocalDateTime localDateTime = LocalDateTime.parse(dateString, formatter);
         return localDateTime.toString();
     }
-
+    //illegalargumentexceptions not handled
     public static String toISOLocalDate(String dateString, String format) {
         final DateTimeFormatter formatter = DateTimeFormat.forPattern(format);
         final LocalDate localDate = LocalDate.parse(dateString, formatter);

@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,8 +24,6 @@ import org.incode.eurocommercial.ecpcrm.dom.utils.DateFormatUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 @AllArgsConstructor
 public enum EventSourceType {
@@ -39,6 +39,7 @@ public enum EventSourceType {
     Carosello_Angry_Birds_Csv(new CaroselloAngryBirdsCsv()),
     Anagrafiche_Gadget_Carosello_Csv(new AnagraficheGadgetCaroselloCsv()),
     Anagrafiche_Csv(new AnagraficheCsv()),
+    Wifi_Old_Csv(new WifiOldCsv()),
     Infopoint_Csv(new InfoPointCsv());
 
     @Getter
@@ -104,6 +105,7 @@ public enum EventSourceType {
             Map<AspectType, String> map = Maps.newHashMap();
 
             try {
+                //https://stackoverflow.com/questions/1757065/java-splitting-a-comma-separated-string-but-ignoring-commas-in-quotes/1757107#1757107
                 final String[] values = data.split(separator());
                 map.put(AspectType.FirstName, values[0]);
                 map.put(AspectType.LastName, values[1]);
@@ -617,6 +619,83 @@ public enum EventSourceType {
                 map.put(AspectType.EmailAccount, values[12]);
                 //consent
                 //marketing consent
+
+            } catch (ArrayIndexOutOfBoundsException e) {}
+
+            return map;
+        }
+    }
+
+    //todo: 2nd column [index 1]: the like action, results in: "error: Illegal quoting in line 1."
+    public static class WifiOldCsv implements EventParserForCsv {
+        public String header() {
+            return null;
+        }
+        public int headerSize() {
+            return 1;
+        }
+        @Override public String separator() {
+            return ";";
+        }
+        @Override
+        public Map<AspectType, String> toMap(String data) {
+            Map<AspectType, String> map = Maps.newHashMap();
+
+            try {
+                final String[] values = data.split(separator() + "(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+
+                String auth_method = values[0];
+                switch (auth_method) {
+                    case "google":
+                        //storing email address for google users, id is malformed
+                        map.put(AspectType.GooglePlusAccount, values[7]);
+                        break;
+                    case "facebook":
+                        map.put(AspectType.FacebookAccount, values[5].replaceAll("[^0-9]",""));
+                        break;
+                    case "live":
+                        map.put(AspectType.LiveAccount, values[13]);
+                        break;
+                    case "linkedin":
+                        map.put(AspectType.LinkedInAccount, values[13]);
+                        break;
+                    case "twitter":
+                        map.put(AspectType.TwitterAccount, values[13]);
+                        break;
+                    case "instagram":
+                        map.put(AspectType.InstagramAccount, values[13]);
+                        break;
+                    case "sms":
+                        break;
+                    default:
+                        break;
+                }
+
+                java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+
+                //values[1]: {"type":"like","page_id":"128931679729","action":1}
+                //values[2]: 'created at', presumably when the record was created
+                map.put(AspectType.FirstName, values[3]);
+                map.put(AspectType.LastName, values[4]);
+                //values[5]: 'user-picture' url
+                map.put(AspectType.Gender, values[6]);
+                map.put(AspectType.EmailAccount, values[7]);
+                //values[8]: 'user-phone' useless: only 1 entry, malformed
+
+                try {
+                    map.put(AspectType.Birthday,
+                        java.time.LocalDateTime.parse(values[9], formatter)
+                            .toLocalDate().toString());
+                }
+                catch(Exception e) {}
+
+                map.put(AspectType.City, values[10]); //'user_location_city' likely does not refer to residence, but location.
+                map.put(AspectType.Country, values[11]); //similar to ^
+                //values[12]: duplicate of values[0], but blank where values[0] == twitter
+                //values[13]: user-id, invalid for google,facebook,sms
+                map.put(AspectType.MacAddress, values[14]);
+                map.put(AspectType.RegisteredAt, java.time.LocalDateTime.parse(values[15], formatter).toString());
+                map.put(AspectType.Access, java.time.LocalDateTime.parse(values[16], formatter).toString());
 
             } catch (ArrayIndexOutOfBoundsException e) {}
 
