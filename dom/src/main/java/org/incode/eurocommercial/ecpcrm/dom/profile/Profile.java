@@ -48,12 +48,28 @@ import lombok.Setter;
         @Query(
                 name = "find", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incode.eurocommercial.ecpcrm.dom.profile.Profile "),
+                        + "FROM org.incode.eurocommercial.ecpcrm.dom.profile.Profile "
+        ),
         @Query(
                 name = "findByFullNameContains", language = "JDOQL",
                 value = "SELECT "
                         + "FROM org.incode.eurocommercial.ecpcrm.dom.profile.Profile "
-                        + "WHERE lastName.indexOf(:lastName) >= 0 ")
+                        + "WHERE lastName.indexOf(:lastName) >= 0 "
+        ),
+        @Query(
+                name = "findByAspectType", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM org.incode.eurocommercial.ecpcrm.dom.profile.Profile "
+                        + "WHERE this.aspects.contains(aspect) && aspect.type == :aspectType "
+                        + "VARIABLES org.incode.eurocommercial.ecpcrm.dom.aspect.Aspect aspect "
+        ),
+        @Query(
+                name = "findByAspectTypeAndValue", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM org.incode.eurocommercial.ecpcrm.dom.profile.Profile "
+                        + "WHERE this.aspects.contains(aspect) && aspect.type == :aspectType && aspect.value == :aspectValue "
+                        + "VARIABLES org.incode.eurocommercial.ecpcrm.dom.aspect.Aspect aspect "
+        )
 })
 @Unique(name = "Profile_fullName_UNQ", members = { "uuid" })
 @DomainObject(

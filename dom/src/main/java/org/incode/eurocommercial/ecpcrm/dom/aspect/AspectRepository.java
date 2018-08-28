@@ -27,6 +27,18 @@ public class AspectRepository  {
     }
 
     @Programmatic
+    public List<Aspect> findByType(
+            final AspectType type
+    ) {
+        return repositoryService.allMatches(
+                new QueryDefault<>(
+                        Aspect.class,
+                        "findByType",
+                        "type")
+        );
+    }
+
+    @Programmatic
     public List<Aspect> findByTypeAndValue(
             final AspectType type,
             final String value

@@ -26,10 +26,15 @@ import lombok.Setter;
 )
 @Queries({
         @Query(
+                name = "findByType", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM org.incode.eurocommercial.ecpcrm.dom.aspect.Aspect "
+                        + "WHERE type == :type "),
+        @Query(
                 name = "findByTypeAndValue", language = "JDOQL",
                 value = "SELECT "
                         + "FROM org.incode.eurocommercial.ecpcrm.dom.aspect.Aspect "
-                        + "WHERE type == :type && value == :value "),
+                        + "WHERE type == :type && value.toUpperCase() == :value.toUpperCase() "),
         @Query(
                 name = "findByEvent", language = "JDOQL",
                 value = "SELECT "

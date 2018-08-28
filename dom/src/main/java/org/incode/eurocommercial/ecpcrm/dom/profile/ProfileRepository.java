@@ -10,6 +10,8 @@ import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
+import org.incode.eurocommercial.ecpcrm.dom.aspect.AspectType;
+
 @DomainService(
         nature = NatureOfService.DOMAIN,
         repositoryFor = Profile.class
@@ -29,7 +31,34 @@ public class ProfileRepository {
                 new org.apache.isis.applib.query.QueryDefault<>(
                         Profile.class,
                         "findByLastNameContains",
-                        "lastName", lastName));
+                        "lastName", lastName)
+        );
+    }
+
+    @Programmatic
+    public List<Profile> findByAspectType(
+            final AspectType aspectType
+    ) {
+        return repositoryService.allMatches(
+                new org.apache.isis.applib.query.QueryDefault<>(
+                        Profile.class,
+                        "findByAspectType",
+                        "aspectType", aspectType)
+        );
+    }
+
+    @Programmatic
+    public List<Profile> findByAspectTypeAndValue(
+            final AspectType aspectType,
+            final String aspectValue
+    ) {
+        return repositoryService.allMatches(
+                new org.apache.isis.applib.query.QueryDefault<>(
+                        Profile.class,
+                        "findByAspectTypeAndValue",
+                        "aspectType", aspectType,
+                        "aspectValue", aspectValue)
+        );
     }
 
     @Programmatic
