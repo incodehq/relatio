@@ -79,6 +79,16 @@ public class EventRepository {
     }
 
     @Programmatic
+    public List<Event> allEventsWithConflicts() {
+        return repositoryService.allMatches(
+                new QueryDefault<>(
+                        Event.class,
+                        "findEventsWithConflicts"
+                )
+        );
+    }
+
+    @Programmatic
     public Event create(
             final EventSource source,
             final String data

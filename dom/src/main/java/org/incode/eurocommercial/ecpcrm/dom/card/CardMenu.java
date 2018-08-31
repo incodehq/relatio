@@ -40,7 +40,7 @@ import org.incode.eurocommercial.ecpcrm.dom.center.Center;
 import org.incode.eurocommercial.ecpcrm.dom.center.CenterRepository;
 
 @DomainService(
-        nature = NatureOfService.VIEW_MENU_ONLY
+        nature = NatureOfService.VIEW_REST_ONLY
 )
 @DomainServiceLayout(
         named = "Cards",

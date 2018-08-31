@@ -41,10 +41,6 @@ import lombok.Setter;
 )
 @Queries({
         @Query(
-                name = "find", language = "JDOQL",
-                value = "SELECT "
-                        + "FROM org.incode.eurocommercial.ecpcrm.dom.event.Event "),
-        @Query(
                 name = "findByDataContains", language = "JDOQL",
                 value = "SELECT "
                         + "FROM org.incode.eurocommercial.ecpcrm.dom.event.Event "
@@ -68,7 +64,14 @@ import lombok.Setter;
                 name = "finByAspectCount", language = "JDOQL",
                 value = "SELECT "
                         + "FROM org.incode.eurocommercial.ecpcrm.dom.event.Event "
-                        + "WHERE aspects.size() == :count ")
+                        + "WHERE aspects.size() == :count "),
+        @Query(
+                name = "findEventsWithConflicts", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM org.incode.eurocommercial.ecpcrm.dom.event.Event "
+                        + "WHERE this.aspects.contains(aspect) && aspect.profile == null && aspect.type.key "
+                        + "VARIABLES org.incode.eurocommercial.ecpcrm.dom.aspect.Aspect aspect "
+        )
 })
 @DomainObject(
         editing = Editing.DISABLED
@@ -96,14 +99,12 @@ public class Event implements Comparable<Event> {
         Set<Profile> matchedProfiles = getProfilesFromKeyAspects(keyAspectMap);
         Profile profile = null;
 
-        if (matchedProfiles.size() > 1) {
-            return;
-        } else if (matchedProfiles.size() == 1) {
-            profile = matchedProfiles.iterator().next();
-        } else {
+        if (matchedProfiles.isEmpty()) {
             if (keyAspectMap.size() > 0) {
                 profile = profileRepository.create();
             }
+        } else if (matchedProfiles.size() == 1) {
+            profile = matchedProfiles.iterator().next();
         }
 
         for (Map.Entry<AspectType, String> entry : aspectMap.entrySet()) {

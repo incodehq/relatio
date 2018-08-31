@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
-import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +13,8 @@ import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 
+import org.joda.time.LocalDate;
+
 import org.apache.isis.applib.value.Blob;
 
 import org.incode.eurocommercial.ecpcrm.dom.aspect.Aspect;
@@ -23,7 +23,6 @@ import org.incode.eurocommercial.ecpcrm.dom.utils.DateFormatUtils;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.joda.time.LocalDate;
 
 @AllArgsConstructor
 public enum EventSourceType {
@@ -560,20 +559,19 @@ public enum EventSourceType {
                 if(result == null) {
 
                     //currentDate not set yet
-                    if(currentDate == null) {
+                    if(currentDate != null) {
+                        map.put(AspectType.Access, currentDate.toString());
                         //todo: inform/log
                     }
-                    else {
-                        map.put(AspectType.Access, currentDate.toString());
-                        //could be split into first/lastname, but data ordering is inconsistent
-                        map.put(AspectType.FullName, values[0]);
-                        map.put(AspectType.EmailAccount, values[4]);
 
-                        if(!Strings.isNullOrEmpty(values[1])) {
-                            map.put(AspectType.Belongings, "AURICOLARI");
-                        }
-                        //unsure how to handle "GETTONE X CARRELLO", "SUPPORTO CELL"
+                    //could be split into first/lastname, but data ordering is inconsistent
+                    map.put(AspectType.FullName, values[0]);
+                    map.put(AspectType.EmailAccount, values[4]);
+
+                    if(!Strings.isNullOrEmpty(values[1])) {
+                        map.put(AspectType.Belongings, "AURICOLARI");
                     }
+                    //unsure how to handle "GETTONE X CARRELLO", "SUPPORTO CELL"
                 }
 
                 //current row is a date

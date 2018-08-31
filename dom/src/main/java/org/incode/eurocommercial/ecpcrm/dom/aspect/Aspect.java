@@ -53,7 +53,8 @@ import lombok.Setter;
 public class Aspect implements Comparable<Aspect> {
 
     public String title() {
-        return "[" + getProfile().title() + "] " + getType() + ": " + getValue();
+        String profileTitle = getProfile() == null ? "" : "[" + getProfile().title() + "] ";
+        return profileTitle + getType() + ": " + getValue();
     }
 
     @Column(allowsNull = "true", name = "profileId")
