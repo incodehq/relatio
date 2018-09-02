@@ -29,11 +29,9 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.incode.eurocommercial.relatio.dom.seed.roles.AuditModuleRoleAndPermissions;
 import org.incode.eurocommercial.relatio.dom.seed.roles.CommandModuleRoleAndPermissions;
 import org.incode.eurocommercial.relatio.dom.seed.roles.DevUtilsModuleRoleAndPermissions;
+import org.incode.eurocommercial.relatio.dom.seed.roles.PublishingModuleRoleAndPermissions;
 import org.incode.eurocommercial.relatio.dom.seed.roles.RelatioFixtureServiceRoleAndPermissions;
 import org.incode.eurocommercial.relatio.dom.seed.roles.RelatioRegularRoleAndPermissions;
-import org.incode.eurocommercial.relatio.dom.seed.roles.RelatioVetoSelectedMembersPermissions;
-import org.incode.eurocommercial.relatio.dom.seed.roles.HostessRoleAndPermissions;
-import org.incode.eurocommercial.relatio.dom.seed.roles.PublishingModuleRoleAndPermissions;
 import org.incode.eurocommercial.relatio.dom.seed.roles.SessionLoggerModuleRoleAndPermissions;
 import org.incode.eurocommercial.relatio.dom.seed.roles.SettingsModuleRoleAndPermissions;
 import org.incode.eurocommercial.relatio.dom.seed.roles.TranslationServicePoMenuRoleAndPermissions;
@@ -65,8 +63,6 @@ public class RelatioRolesAndPermissionsSeedService {
         @Override
         protected void execute(final ExecutionContext executionContext) {
             executionContext.executeChild(this, new RelatioRegularRoleAndPermissions());
-            executionContext.executeChild(this, new HostessRoleAndPermissions());
-            executionContext.executeChild(this, new RelatioVetoSelectedMembersPermissions());
             executionContext.executeChild(this, new RelatioFixtureServiceRoleAndPermissions());
 
             executionContext.executeChild(this, new AuditModuleRoleAndPermissions());

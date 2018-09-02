@@ -18,64 +18,31 @@ package org.incode.eurocommercial.relatio.app.services.homepage;
 
 import java.util.List;
 
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.ActionLayout;
+import javax.inject.Inject;
+
 import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.HomePage;
 import org.apache.isis.applib.annotation.ViewModel;
-import org.apache.isis.applib.services.i18n.TranslatableString;
 
-import org.incode.eurocommercial.relatio.dom.user.User;
-import org.incode.eurocommercial.relatio.dom.user.UserRepository;
+import org.incode.eurocommercial.relatio.dom.profile.Profile;
+import org.incode.eurocommercial.relatio.dom.profile.ProfileRepository;
 
 @ViewModel
 public class HomePageViewModel {
 
     public String title() {
-        return "Customers";
+        return "All Profiles";
     }
-
 
     @Collection(editing = Editing.DISABLED)
     @CollectionLayout(paged=200)
-    @org.apache.isis.applib.annotation.HomePage
-    public List<User> getCustomers() {
-        return userRepository.listAll();
+    @HomePage
+    public List<Profile> getCustomers() {
+        return profileRepository.listAll();
     }
 
-    @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(named = "Delete")
-    @MemberOrder(name = "customers", sequence = "2")
-    public HomePageViewModel deleteCustomer(
-            final User user,
-            final boolean delete) {
-        if (delete) {
-            userRepository.delete(user);
-        }
-        return this;
-    }
-
-    public TranslatableString validateDeleteCustomer(final User user, final boolean delete) {
-        return delete ? null : TranslatableString.tr("You have to agree");
-    }
-
-    public List<User> choices0DeleteCustomer() {
-        return userRepository.listAll();
-    }
-    public User default0DeleteCustomer() {
-        final List<User> choices = choices0DeleteCustomer();
-        return choices.isEmpty() ? null: choices.get(0);
-    }
-
-    public TranslatableString disableDeleteCustomer() {
-        return choices0DeleteCustomer().isEmpty() ? TranslatableString.tr("No customers"): null;
-    }
-
-    @javax.inject.Inject
-    UserRepository userRepository;
-
-
+    @Inject
+    ProfileRepository profileRepository;
 }

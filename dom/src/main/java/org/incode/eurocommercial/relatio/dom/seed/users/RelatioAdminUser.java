@@ -34,7 +34,7 @@ import org.incode.eurocommercial.relatio.dom.seed.roles.TranslationServicePoMenu
 
 public class RelatioAdminUser extends AbstractUserAndRolesFixtureScript {
 
-    public static final String USER_NAME = "ecpcrm-admin";
+    public static final String USER_NAME = "relatio-admin";
     public static final String TENANCY_PATH = "/";
 
     private static final String PASSWORD = "pass";

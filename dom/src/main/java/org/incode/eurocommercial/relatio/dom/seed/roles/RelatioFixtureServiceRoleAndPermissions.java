@@ -22,10 +22,10 @@ import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFix
 
 public class RelatioFixtureServiceRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 
-    public static final String ROLE_NAME = "ecpcrm-fixture-scripts";
+    public static final String ROLE_NAME = "relatio-fixture-scripts";
 
     public RelatioFixtureServiceRoleAndPermissions() {
-        super(ROLE_NAME, "Execute the ecpcrm fixture scripts");
+        super(ROLE_NAME, "Execute the relatio fixture scripts");
     }
 
     @Override
@@ -33,7 +33,7 @@ public class RelatioFixtureServiceRoleAndPermissions extends AbstractRoleAndPerm
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                "org.incode.eurocommercial.ecpcrm.fixture"
+                "org.incode.eurocommercial.relatio.fixture"
         );
     }
 

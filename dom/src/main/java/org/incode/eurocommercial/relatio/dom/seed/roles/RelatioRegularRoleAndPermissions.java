@@ -22,10 +22,10 @@ import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFix
 
 public class RelatioRegularRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 
-    public static final String ROLE_NAME = "ecpcrm-regular-role";
+    public static final String ROLE_NAME = "relatio-regular-role";
 
     public RelatioRegularRoleAndPermissions() {
-        super(ROLE_NAME, "Read/write access to ecpcrm dom");
+        super(ROLE_NAME, "Read/write access to relatio dom");
     }
 
     @Override
@@ -33,8 +33,8 @@ public class RelatioRegularRoleAndPermissions extends AbstractRoleAndPermissions
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                "org.incode.eurocommercial.ecpcrm.app",
-                "org.incode.eurocommercial.ecpcrm.dom"
+                "org.incode.eurocommercial.relatio.app",
+                "org.incode.eurocommercial.relatio.dom"
         );
     }
 

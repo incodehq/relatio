@@ -21,10 +21,10 @@
     xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
-    <display-name>Eurocommercial CRM System</display-name>
+    <display-name>Relatio</display-name>
 
     <welcome-file-list>
-        <welcome-file>about/index.html</welcome-file>
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
     <!-- shiro security configuration -->
@@ -259,12 +259,6 @@
         <listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
     </listener>
 
-    <!-- used by RestEasy to determine the JAX-RS resources and other related configuration -->
-    <context-param>
-        <param-name>javax.ws.rs.Application</param-name>
-        <param-value>org.incode.eurocommercial.ecpcrm.restapi.EcpCrmRestfulApplication</param-value>
-    </context-param>
-    
     <context-param>
         <param-name>resteasy.servlet.mapping.prefix</param-name>
         <param-value>/restful/</param-value>

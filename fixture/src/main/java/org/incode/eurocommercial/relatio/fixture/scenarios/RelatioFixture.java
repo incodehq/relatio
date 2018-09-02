@@ -52,7 +52,6 @@ import org.incode.eurocommercial.relatio.fixture.dom.child.ChildCreate;
 import org.incode.eurocommercial.relatio.fixture.dom.child.ChildTearDown;
 import org.incode.eurocommercial.relatio.fixture.dom.childcare.ChildCareCreate;
 import org.incode.eurocommercial.relatio.fixture.dom.childcare.ChildCareTearDown;
-import org.incode.eurocommercial.relatio.fixture.dom.hostess.MaryHostessFixtureScript;
 import org.incode.eurocommercial.relatio.fixture.dom.numerator.NumeratorTearDown;
 import org.incode.eurocommercial.relatio.fixture.dom.request.CardRequestCreate;
 import org.incode.eurocommercial.relatio.fixture.dom.request.CardRequestTearDown;
@@ -204,12 +203,6 @@ public class RelatioFixture extends FixtureScript {
                                 .filter(c -> c instanceof ChildCare)
                                 .map(c -> (ChildCare) c)
                                 .collect(Collectors.toList()));
-
-                        final MaryHostessFixtureScript maryScript = new MaryHostessFixtureScript();
-                        ec.executeChild(RelatioFixture.this, maryScript);
-
-                        Center center = getCenters().get(new Random().nextInt(getCenters().size()));
-                        maryScript.getApplicationUser().setAtPath(center.getAtPath());
                     }
                 });
     }
