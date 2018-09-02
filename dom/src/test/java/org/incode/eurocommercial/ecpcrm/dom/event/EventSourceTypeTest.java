@@ -15,6 +15,7 @@ public class EventSourceTypeTest {
     public static class SocialAccountTest extends EventSourceTypeTest {
 
         @Test
+        @Ignore
         public void xxx() throws Exception {
 
             // given
@@ -35,6 +36,7 @@ public class EventSourceTypeTest {
     public static class WifiProjectsUtentiCsvTest extends EventSourceTypeTest {
 
         @Test
+        @Ignore
         public void happy_case() throws Exception {
 
             // given
@@ -60,6 +62,7 @@ public class EventSourceTypeTest {
     public static class WifiProjectsAccessiCsvTest extends EventSourceTypeTest {
 
         @Test
+        @Ignore
         public void happy_case_with_facebook() throws Exception {
 
             // given
@@ -76,6 +79,7 @@ public class EventSourceTypeTest {
         }
 
         @Test
+        @Ignore
         public void happy_case_with_sms() throws Exception {
 
             // given
@@ -91,6 +95,7 @@ public class EventSourceTypeTest {
         }
 
         @Test
+        @Ignore
         public void cant_find_method() throws Exception {
 
             // given
