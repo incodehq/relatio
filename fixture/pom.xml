@@ -22,13 +22,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.isisaddons.app</groupId>
-        <artifactId>ecpcrm</artifactId>
+        <groupId>org.incode.eurocommercial</groupId>
+        <artifactId>relatio</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>ecpcrm-fixture</artifactId>
-    <name>Eurocommercial CRM System Fixtures</name>
+    <artifactId>relatio-fixture</artifactId>
+    <name>Relatio Fixtures</name>
 
     <build>
         <resources>
@@ -73,7 +73,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>ecpcrm-dom</artifactId>
+            <artifactId>relatio-dom</artifactId>
             <exclusions>
                 <exclusion>
                     <!-- so don't pick up transitive dependency to asm 4.0.0 -->

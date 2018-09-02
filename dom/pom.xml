@@ -21,16 +21,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.isisaddons.app</groupId>
-        <artifactId>ecpcrm</artifactId>
+        <groupId>org.incode.eurocommercial</groupId>
+        <artifactId>relatio</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>ecpcrm-dom</artifactId>
-    <name>Eurocommercial CRM System DOM</name>
+    <artifactId>relatio-dom</artifactId>
+    <name>Relatio DOM</name>
 
     <properties>
-        <isis-maven-plugin.validate.appManifest>org.incode.eurocommercial.ecpcrm.dom.EcpCrmDomManifest</isis-maven-plugin.validate.appManifest>
+        <isis-maven-plugin.validate.appManifest>org.incode.eurocommercial.relatio.dom.RelatioDomManifest</isis-maven-plugin.validate.appManifest>
         <mavenmixin-isisvalidate.version>0.0.2</mavenmixin-isisvalidate.version>
         <axon-core.version>2.4</axon-core.version>
     </properties>

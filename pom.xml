@@ -27,14 +27,14 @@
         <version>1.16.2.20180707-1320-eca4c55a</version>
     </parent>
 
-    <groupId>org.isisaddons.app</groupId>
-    <artifactId>ecpcrm</artifactId>
+    <groupId>org.incode.eurocommercial</groupId>
+    <artifactId>relatio</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
 
-    <name>Eurocommercial CRM System</name>
+    <name>Relatio - CRM System</name>
 
-    <url>https://www.github.com/incodehq/ecpcrm</url>
+    <url>https://www.github.com/incodehq/relatio</url>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -45,11 +45,11 @@
     <scm>
         <!--
         also:
-        <connection>scm:git:https://gitlab.com/incodehq-public/ecpcrm.git</connection>
+        <connection>scm:git:https://gitlab.com/incodehq-public/realtio.git</connection>
         -->
-        <connection>scm:git:https://github.com/incodehq/ecpcrm.git</connection>
-        <developerConnection>scm:git:https://github.com/incodehq/ecpcrm.git</developerConnection>
-        <url>https://github.com/incodehq/ecpcrm.git</url>
+        <connection>scm:git:https://github.com/incodehq/relatio.git</connection>
+        <developerConnection>scm:git:https://github.com/incodehq/relatio.git</developerConnection>
+        <url>https://github.com/incodehq/relatio.git</url>
     </scm>
     <developers>
         <developer>
@@ -168,27 +168,27 @@
             <!-- this project's own modules -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>ecpcrm-app</artifactId>
+                <artifactId>relatio-app</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>ecpcrm-dom</artifactId>
+                <artifactId>relatio-dom</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>ecpcrm-fixture</artifactId>
+                <artifactId>relatio-fixture</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>ecpcrm-integtests</artifactId>
+                <artifactId>relatio-integtests</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>ecpcrm-webapp</artifactId>
+                <artifactId>relatio-webapp</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

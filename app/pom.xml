@@ -21,13 +21,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.isisaddons.app</groupId>
-        <artifactId>ecpcrm</artifactId>
+        <groupId>org.incode.eurocommercial</groupId>
+        <artifactId>relatio</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>ecpcrm-app</artifactId>
-    <name>Eurocommercial CRM System Application</name>
+    <artifactId>relatio-app</artifactId>
+    <name>Relatio Application</name>
 
     <build>
         <resources>
@@ -73,7 +73,7 @@
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>ecpcrm-fixture</artifactId>
+            <artifactId>relatio-fixture</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.isis.core</groupId>
