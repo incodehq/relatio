@@ -2,12 +2,14 @@ package org.incode.eurocommercial.ecpcrm.dom.event;
 
 import java.util.Map;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import org.incode.eurocommercial.ecpcrm.dom.aspect.AspectType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Ignore
 public class EventSourceTypeTest {
 
     public static class SocialAccountTest extends EventSourceTypeTest {
