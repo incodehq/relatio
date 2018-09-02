@@ -39,7 +39,7 @@ public class HomePageViewModel {
     @Collection(editing = Editing.DISABLED)
     @CollectionLayout(paged=200)
     @HomePage
-    public List<Profile> getCustomers() {
+    public List<Profile> getAllProfiles() {
         return profileRepository.listAll();
     }
 
