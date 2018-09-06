@@ -7,6 +7,8 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.DatastoreIdentity;
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -28,6 +30,9 @@ import lombok.Setter;
 @PersistenceCapable(
         identityType = IdentityType.DATASTORE
 )
+@DatastoreIdentity(
+        strategy = IdGeneratorStrategy.IDENTITY,
+        column = "id")
 @Queries({
         @Query(
                 name = "findByType", language = "JDOQL",

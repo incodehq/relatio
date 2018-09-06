@@ -35,7 +35,6 @@ import lombok.Setter;
 
 @PersistenceCapable(
         identityType = IdentityType.DATASTORE,
-        schema = "Profile",
         table = "Profile"
 )
 @DatastoreIdentity(

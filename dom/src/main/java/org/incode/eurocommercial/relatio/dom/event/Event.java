@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.DatastoreIdentity;
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -39,6 +41,9 @@ import lombok.Setter;
 @PersistenceCapable(
         identityType = IdentityType.DATASTORE
 )
+@DatastoreIdentity(
+        strategy = IdGeneratorStrategy.IDENTITY,
+        column = "id")
 @Queries({
         @Query(
                 name = "findByDataContains", language = "JDOQL",
@@ -86,7 +91,7 @@ public class Event implements Comparable<Event> {
     @Getter @Setter
     private String data;
 
-    @Column(allowsNull = "false")
+    @Column(allowsNull = "false", name = "eventSourceId")
     @Getter @Setter
     @Property(hidden = Where.REFERENCES_PARENT)
     private EventSource source;
