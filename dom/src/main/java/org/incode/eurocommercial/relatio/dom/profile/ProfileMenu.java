@@ -51,7 +51,8 @@ public class ProfileMenu {
             final @Parameter(optionality = Optionality.OPTIONAL) Profile.Gender gender,
             final boolean withEmailAddress,
             final boolean withCellPhoneNumber,
-            final boolean withFacebookAccount
+            final boolean withFacebookAccount,
+            final boolean withMarketingConsent
     ) {
         List<Profile> foundProfiles = profileRepository.listAll();
 
@@ -73,6 +74,11 @@ public class ProfileMenu {
         if (withFacebookAccount) {
             List<Profile> profilesWithFacebookAccount = profileRepository.findByAspectType(AspectType.FacebookAccount);
             foundProfiles.retainAll(profilesWithFacebookAccount);
+        }
+
+        if(withMarketingConsent) {
+            List<Profile> profilesWithMarketingConsent = profileRepository.findByAspectType(AspectType.HasGivenMarketingConsent);
+            foundProfiles.retainAll(profilesWithMarketingConsent);
         }
 
         return foundProfiles;
