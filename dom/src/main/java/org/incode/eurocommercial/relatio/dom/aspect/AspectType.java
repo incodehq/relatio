@@ -68,7 +68,10 @@ public enum AspectType {
     FullName(),
     Comune(),
     Localita(),
-    BusinessName();
+    BusinessName(),
+
+    HasReadPrivacyPolicy(),
+    HasGivenMarketingConsent();
 
     @Getter
     private boolean key;

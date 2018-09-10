@@ -267,11 +267,16 @@ public enum EventSourceType {
                 map.put(AspectType.EmailAccount, values[4]);
                 map.put(AspectType.CellPhoneNumber, values[5]);
                 map.put(AspectType.City, values[7]);
+                if(values[13].trim().equals("1")) {
+                    map.put(AspectType.HasReadPrivacyPolicy, "true");
+                }
                 map.put(AspectType.RegisteredAt, DateFormatUtils.toISOLocalDateTime(values[14], "MMM d yyyy HH:mm:ss:SSSa"));
                 map.put(AspectType.MailConfirmedAt, DateFormatUtils.toISOLocalDateTime(values[14], "MMM d yyyy HH:mm:ss:SSSa"));
                 map.put(AspectType.FacebookAccount, values[18]);
-            } catch (ArrayIndexOutOfBoundsException ignored) {
-            }
+                if(values[19].trim().equals("1")) {
+                    map.put(AspectType.HasGivenMarketingConsent, "true");
+                }
+            } catch (ArrayIndexOutOfBoundsException ignored) { }
 
             return map;
         }
@@ -309,20 +314,19 @@ public enum EventSourceType {
                 map.put(AspectType.HomePhoneNumber, values[8]);
                 map.put(AspectType.CellPhoneNumber, values[9]);
                 map.put(AspectType.EmailAccount, values[10]);
-            } catch (ArrayIndexOutOfBoundsException ignored) {
-            }
+                if(values[11].trim().equals("SI")) {
+                    map.put(AspectType.HasGivenMarketingConsent, "true");
+                }
+            } catch (ArrayIndexOutOfBoundsException ignored) { }
 
             return map;
         }
     }
 
     public static class NewsletterOnlineContestCsv implements EventParserForCsv {
-        public String header() {
-            return null;
-        }
-
+        public String header() { return null; } //has no header
         public int headerSize() {
-            return 1;
+            return 0;
         }
 
         @Override public String separator() {
@@ -348,7 +352,7 @@ public enum EventSourceType {
 
     public static class DatabaseWifi2018Csv implements EventParserForCsv {
         public String header() {
-            return null;
+            return "MOME;COGNOME;DATA PRIMO ACCESSO;EMAIL;TELEFONO;RANGE ETA';SESSO;ACCESSO SOCIAL";
         }
         public int headerSize() {
             return 1;
@@ -385,10 +389,13 @@ public enum EventSourceType {
 
     public static class ModuliPrivacyPressoInfopointCsv implements EventParserForCsv {
         public String header() {
-            return null;
+            return "MODULI PRIVACY PRESSO L'INFO POINT;;;;;;;;;;;;;\n" +
+                    ";;;;;;;;;;;;;\n" +
+                    ";;;;;;;;;;;;;\n" +
+                    "NOME;;;COGNOME;;;CITTA;;;INDIRIZZO MAIL;;;;";
         }
         public int headerSize() {
-            return 3;
+            return 4;
         }
         @Override public String separator() {
             return ";";
@@ -413,7 +420,7 @@ public enum EventSourceType {
 
     public static class ModuliPrivacyAbissiCsv implements EventParserForCsv {
         public String header() {
-            return null;
+            return "NOME;COGNOME;M o F;Età;COMUNE ;E-MAIL;";
         }
         public int headerSize() {
             return 1;
@@ -449,10 +456,11 @@ public enum EventSourceType {
     public static class CouponingDaInfopadCsv implements EventParserForCsv {
         public String header() {
             return null;
-        }
+        } //has no header
         public int headerSize() {
-            return 1;
+            return 0;
         }
+
         @Override public String separator() {
             return ";";
         }
@@ -477,7 +485,7 @@ public enum EventSourceType {
 
     public static class CaroselloAngryBirdsCsv implements EventParserForCsv {
         public String header() {
-            return null;
+            return "DT. INSERIMENTO;COGNOME;NOME;SESSO;ETA;INDIRIZZO;CAP;CITTA;PROVINCIA;TELEFONO;EMAIL;PRIVACY;TRATTAMENTO DATI;Firma";
         }
         public int headerSize() {
             return 1;
@@ -523,9 +531,13 @@ public enum EventSourceType {
                 map.put(AspectType.Province, values[8]);
                 map.put(AspectType.HomePhoneNumber, values[9]);
                 map.put(AspectType.EmailAccount, values[10]);
-                //values[11]; privacy
-                //values[12]; trattamento dati
-                //values[13]; jpg filename
+                if(values[11].equals("Consento")) {
+                    map.put(AspectType.HasReadPrivacyPolicy, "true");
+                }
+                if(values[12].equals("Consento")) {
+                    map.put(AspectType.HasGivenMarketingConsent, "true");
+                }
+                //values[13]; jpg filename refers to scanned signature
 
             } catch (ArrayIndexOutOfBoundsException e) {}
 
@@ -537,7 +549,7 @@ public enum EventSourceType {
         LocalDate currentDate;
 
         public String header() {
-            return null;
+            return "GIORNO ;AURICOLARI ;GETTONE X CARRELLO ;SUPPORTO CEL;MAIL";
         }
         public int headerSize() {
             return 1;
@@ -587,7 +599,7 @@ public enum EventSourceType {
 
     public static class AnagraficheCsv implements EventParserForCsv {
         public String header() {
-            return null;
+            return "Data tesseramento\tData ultima visita\tCodice\tCognome\tNome\tRagione Sociale\tIndirizzo\tLocalita\tCAP\tProvincia\tTelefono\tData di Nascita\tEMail\tConsenso\tConsenso Marketing";
         }
         public int headerSize() {
             return 1;
@@ -615,8 +627,12 @@ public enum EventSourceType {
                 map.put(AspectType.HomePhoneNumber, values[10]);
                 map.put(AspectType.Birthday, DateFormatUtils.toISOLocalDate(values[11],"dd/MM/yyyy"));
                 map.put(AspectType.EmailAccount, values[12]);
-                //consent
-                //marketing consent
+                if(values[13].trim().equals("SI")) {
+                    map.put(Aspect)
+                }
+                if(values[14].trim().equals("SI")) {
+
+                }
 
             } catch (ArrayIndexOutOfBoundsException e) {}
 
@@ -624,10 +640,9 @@ public enum EventSourceType {
         }
     }
 
-    //todo: 2nd column [index 1]: the like action, results in: "error: Illegal quoting in line 1."
     public static class WifiOldCsv implements EventParserForCsv {
         public String header() {
-            return null;
+            return "auth_method;social_action;created_at;user_first_name;user_last_name;user_picture;user_gender;user_email;user_phone;user_birthday;user_location_city;user_location_country;user_auth_method;user_auth_user_id;user_original_mac_address;user_registered_at;user_last_login";
         }
         public int headerSize() {
             return 1;
