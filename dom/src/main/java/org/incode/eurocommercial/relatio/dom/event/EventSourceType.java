@@ -628,10 +628,10 @@ public enum EventSourceType {
                 map.put(AspectType.Birthday, DateFormatUtils.toISOLocalDate(values[11],"dd/MM/yyyy"));
                 map.put(AspectType.EmailAccount, values[12]);
                 if(values[13].trim().equals("SI")) {
-                    map.put(Aspect)
+                    map.put(AspectType.HasReadPrivacyPolicy, "true");
                 }
                 if(values[14].trim().equals("SI")) {
-
+                    map.put(AspectType.HasGivenMarketingConsent, "true");
                 }
 
             } catch (ArrayIndexOutOfBoundsException e) {}
