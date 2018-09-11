@@ -127,6 +127,11 @@ public class Profile implements Comparable<Profile> {
     @Getter @Setter
     private String cellPhoneNumber;
 
+    @Column(allowsNull = "true")
+    @Property()
+    @Getter @Setter
+    private String  hasGivenMarketingConsent;
+
     @Persistent(mappedBy = "profile", dependentElement = "false")
     @Collection
     @CollectionLayout(defaultView = "table")

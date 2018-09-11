@@ -51,6 +51,11 @@ public enum AspectType {
             aspect.getProfile().setFacebookAccount(aspect.getValue());
         }
     },
+    HasGivenMarketingConsent() {
+        @Override public void updateProfile(final Aspect aspect) {
+            aspect.getProfile().setHasGivenMarketingConsent(aspect.getValue());
+        }
+    },
     GooglePlusAccount(true),
     TwitterAccount(true),
     LinkedInAccount(true),
@@ -70,8 +75,7 @@ public enum AspectType {
     Localita(),
     BusinessName(),
 
-    HasReadPrivacyPolicy(),
-    HasGivenMarketingConsent();
+    HasReadPrivacyPolicy();
 
     @Getter
     private boolean key;
