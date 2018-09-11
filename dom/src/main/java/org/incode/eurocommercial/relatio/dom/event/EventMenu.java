@@ -36,9 +36,9 @@ public class EventMenu {
         return eventSourceRepository.listAll();
     }
 
-    public List<Event> allEventsWithConflicts() {
-        return eventRepository.allEventsWithConflicts();
-    }
+//    public List<Event> allEventsWithConflicts() {
+//        return eventRepository.allEventsWithConflicts();
+//    }
 
     @Action(
             semantics = SemanticsOf.SAFE
