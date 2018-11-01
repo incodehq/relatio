@@ -68,6 +68,10 @@ public class EventSource implements Comparable<EventSource> {
     @Getter @Setter
     private LocalDateTime createdAt;
 
+    @Column(allowsNull = "true", length = 260)
+    @Getter @Setter
+    private String name;
+
     @Column(allowsNull = "false")
     @Getter @Setter
     private EventSource.Status status;

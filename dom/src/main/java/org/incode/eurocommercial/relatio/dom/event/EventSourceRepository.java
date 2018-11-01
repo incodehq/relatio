@@ -67,39 +67,21 @@ public class EventSourceRepository {
     @Programmatic
     public EventSource create(
             final EventSourceType type,
-            final LocalDateTime createdAt
-    ) {
+            final LocalDateTime createdAt,
+            final String name) {
         final EventSource eventSource = repositoryService.instantiate(EventSource.class);
         eventSource.setType(type);
         eventSource.setCreatedAt(createdAt);
+        eventSource.setName(name);
         repositoryService.persist(eventSource);
         return eventSource;
     }
 
     @Programmatic
     public EventSource create(
-            final EventSourceType type
-    ) {
-        return create(type, clockService.nowAsLocalDateTime());
-    }
-
-    @Programmatic
-    public EventSource findOrCreate(
             final EventSourceType type,
-            final LocalDateTime createdAt
-    ) {
-        EventSource eventSource = findByTypeAndDateTime(type, createdAt);
-        if (eventSource == null) {
-            eventSource = create(type, createdAt);
-        }
-        return eventSource;
-    }
-
-    @Programmatic
-    public EventSource findOrCreate(
-            final EventSourceType type
-    ) {
-        return findOrCreate(type, clockService.nowAsLocalDateTime());
+            final String name) {
+        return create(type, clockService.nowAsLocalDateTime(), name);
     }
 
     @Inject RepositoryService repositoryService;

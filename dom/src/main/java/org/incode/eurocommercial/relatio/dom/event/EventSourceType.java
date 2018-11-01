@@ -45,7 +45,7 @@ public enum EventSourceType {
     private EventParser parser;
 
     public EventSource parseBlob(final Blob blob, final EventRepository eventRepository, final EventSourceRepository eventSourceRepository) {
-        EventSource source = eventSourceRepository.create(this);
+        EventSource source = eventSourceRepository.create(this, blob.getName());
 
         try {
             ByteArrayInputStream is = new ByteArrayInputStream(blob.getBytes());
