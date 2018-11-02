@@ -1,0 +1,10 @@
+DROP TABLE [AuthenticationDevice]
+DROP TABLE [CardRequest]
+DROP TABLE [CardGame]
+DROP TABLE [Card]
+DROP TABLE [ChildCare]
+DROP TABLE [Child]
+DROP TABLE [User]
+DROP TABLE [Center]
+DROP TABLE [Numerator]
+GO

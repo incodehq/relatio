@@ -61,7 +61,7 @@ public class EventIntegTest extends RelatioIntegTest {
             String data = "Luca;Rendina;28/03/2017;mama@hotmail.it;;Facebook;userurl=&userid=1231369723582333&fullname=Luca Rendina&first_name=Luca&last_name=Rendina&birthday=&age_range=max:20,min:18&gender=male";
 
             // when
-            EventSource source = eventSourceRepository.findOrCreate(EventSourceType.WifiProjects_Utenti_Csv);
+            EventSource source = eventSourceRepository.findOrCreate(EventSourceType.WifiProjects_Utenti_Csv, "integ test");
             Event event = eventRepository.findOrCreate(source, data);
 
             // then

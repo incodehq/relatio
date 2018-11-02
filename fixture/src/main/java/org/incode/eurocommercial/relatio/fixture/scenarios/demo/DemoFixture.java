@@ -24,13 +24,5 @@ import org.incode.eurocommercial.relatio.fixture.scenarios.RelatioFixture;
 public class DemoFixture extends RelatioFixture {
     public DemoFixture() {
         super();
-        NUM_CENTERS = 5;
-        CARDS_PER_CENTER = 10;
-        USERS_WITH_CARDS_PER_CENTER = 10;
-        USERS_WITHOUT_CARDS_PER_CENTER = 10;
-        CARD_REQUESTS_PER_CENTER = 5;
-        CHILDREN_PER_USER = 2;
-        CLOSED_CHILDCARES_PER_CHILD = 2;
-        OPEN_CHILDCARES_PER_CENTER = 5;
     }
 }
