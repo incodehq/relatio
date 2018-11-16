@@ -78,7 +78,7 @@ public class ProfileMenu {
 
         if(withMarketingConsent) {
 
-            List<Profile> profilesWithMarketingConsent = profileRepository.findByAspectType(AspectType.HasGivenMarketingConsent);
+            List<Profile> profilesWithMarketingConsent = profileRepository.findByAspectType(AspectType.MarketingConsent);
             foundProfiles.retainAll(profilesWithMarketingConsent);
         }
 

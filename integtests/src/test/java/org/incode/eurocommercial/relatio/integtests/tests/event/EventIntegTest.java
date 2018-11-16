@@ -15,8 +15,8 @@ import org.incode.eurocommercial.relatio.dom.event.EventRepository;
 import org.incode.eurocommercial.relatio.dom.event.EventSource;
 import org.incode.eurocommercial.relatio.dom.event.EventSourceRepository;
 import org.incode.eurocommercial.relatio.dom.event.EventSourceType;
-import org.incode.eurocommercial.relatio.fixture.dom.event.AccessiEventFixture;
-import org.incode.eurocommercial.relatio.fixture.dom.event.UtentiEventFixture;
+import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectAccessiEventFixture;
+import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectUtentiEventFixture;
 import org.incode.eurocommercial.relatio.integtests.tests.RelatioIntegTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,8 +34,8 @@ public class EventIntegTest extends RelatioIntegTest {
     @Before
     public void setUp() throws Exception {
         // given
-        fixtureScripts.runFixtureScript(new AccessiEventFixture(), null);
-        fixtureScripts.runFixtureScript(new UtentiEventFixture(), null);
+        fixtureScripts.runFixtureScript(new WifiprojectAccessiEventFixture(), null);
+        fixtureScripts.runFixtureScript(new WifiprojectUtentiEventFixture(), null);
     }
 
     public static class ImportAccessi extends EventIntegTest {

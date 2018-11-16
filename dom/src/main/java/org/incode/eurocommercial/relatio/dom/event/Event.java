@@ -129,8 +129,9 @@ public class Event implements Comparable<Event> {
     @Programmatic
     private Map<AspectType, String> getAspectMap() {
         /* Retrieve all aspects from event data and filter all empty aspects */
-        return source.getType().getParser().toMap(getData()).entrySet().stream()
-                .filter(e -> e.getValue() != null && e.getValue().length() > 0)
+        final Map<AspectType, String> map = getSource().getType().getParser().toMap(getData());
+        return map.entrySet().stream()
+                .filter(e ->  e.getValue() != null && e.getValue().length() > 0)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 

@@ -27,22 +27,33 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum EventSourceType {
 
-    WifiProjects_Utenti_Csv(new WifiProjectsUtentiCsv()),
-    WifiProjects_Accessi_Csv(new WifiProjectsAccessiCsv()),
-    ContestOnline_2017_Csv(new ContestOnline2017Csv()),
-    Newsletter_Online_Contest_Csv(new NewsletterOnlineContestCsv()),
-    Database_Wifi_2018_Csv(new DatabaseWifi2018Csv()),
-    Moduli_Privacy_Presso_Infopoint_Csv(new ModuliPrivacyPressoInfopointCsv()),
-    Moduli_Privacy_Abissi_Csv(new ModuliPrivacyAbissiCsv()),
-    Couponing_Da_Infopad_Csv(new CouponingDaInfopadCsv()),
-    Carosello_Angry_Birds_Csv(new CaroselloAngryBirdsCsv()),
-    Anagrafiche_Gadget_Carosello_Csv(new AnagraficheGadgetCaroselloCsv()),
-    Anagrafiche_Csv(new AnagraficheCsv()),
-    Wifi_Old_Csv(new WifiOldCsv()),
-    Infopoint_Csv(new InfoPointCsv());
+    WifiProjects_Utenti_Csv(WifiProjectsUtentiCsv.class),
+    WifiProjects_Accessi_Csv(WifiProjectsAccessiCsv.class),
+    ContestOnline_2017_Csv(ContestOnline2017Csv.class),
+    Newsletter_Online_Contest_Csv(NewsletterOnlineContestCsv.class),
+    Database_Wifi_2018_Csv(DatabaseWifi2018Csv.class),
+    Moduli_Privacy_Presso_Infopoint_Csv(ModuliPrivacyPressoInfopointCsv.class),
+    Moduli_Privacy_Abissi_Csv(ModuliPrivacyAbissiCsv.class),
+    Couponing_Da_Infopad_Csv(CouponingDaInfopadCsv.class),
+    Carosello_Angry_Birds_Csv(CaroselloAngryBirdsCsv.class),
+    Anagrafiche_Gadget_Carosello_Csv(AnagraficheGadgetCaroselloCsv.class),
+    Anagrafiche_Csv(AnagraficheCsv.class),
+    Wifi_Old_Csv(WifiOldCsv.class),
+    Infopoint_Csv(InfoPointCsv.class);
 
     @Getter
-    private EventParser parser;
+    private Class parserClass;
+
+    public EventParser getParser(){
+        try {
+            return (EventParser) parserClass.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public EventSource parseBlob(final Blob blob, final EventRepository eventRepository, final EventSourceRepository eventSourceRepository) {
         EventSource source = eventSourceRepository.create(this, blob.getName());
@@ -75,7 +86,7 @@ public enum EventSourceType {
     }
 
 
-    public interface EventParser {
+    public interface EventParser<T> {
         Map<AspectType, String> toMap(String data);
         int headerSize();
     }
@@ -268,13 +279,13 @@ public enum EventSourceType {
                 map.put(AspectType.CellPhoneNumber, values[5]);
                 map.put(AspectType.City, values[7]);
                 if(values[13].trim().equals("1")) {
-                    map.put(AspectType.HasReadPrivacyPolicy, "true");
+                    map.put(AspectType.PrivacyConsent, "true");
                 }
                 map.put(AspectType.RegisteredAt, DateFormatUtils.toISOLocalDateTime(values[14], "MMM d yyyy HH:mm:ss:SSSa"));
                 map.put(AspectType.MailConfirmedAt, DateFormatUtils.toISOLocalDateTime(values[14], "MMM d yyyy HH:mm:ss:SSSa"));
                 map.put(AspectType.FacebookAccount, values[18]);
                 if(values[19].trim().equals("1")) {
-                    map.put(AspectType.HasGivenMarketingConsent, "true");
+                    map.put(AspectType.MarketingConsent, "true");
                 }
             } catch (ArrayIndexOutOfBoundsException ignored) { }
 
@@ -310,12 +321,12 @@ public enum EventSourceType {
                 map.put(AspectType.Address, values[3]);
                 map.put(AspectType.City, values[4]);
                 map.put(AspectType.Country, values[5]);
-                map.put(AspectType.PostCode, values[7]);
+                map.put(AspectType.PostalCode, values[7]);
                 map.put(AspectType.HomePhoneNumber, values[8]);
                 map.put(AspectType.CellPhoneNumber, values[9]);
                 map.put(AspectType.EmailAccount, values[10]);
                 if(values[11].trim().equals("SI")) {
-                    map.put(AspectType.HasGivenMarketingConsent, "true");
+                    map.put(AspectType.MarketingConsent, "true");
                 }
             } catch (ArrayIndexOutOfBoundsException ignored) { }
 
@@ -526,16 +537,16 @@ public enum EventSourceType {
                 }
 
                 map.put(AspectType.Address, values[5]);
-                map.put(AspectType.PostCode, values[6]);
+                map.put(AspectType.PostalCode, values[6]);
                 map.put(AspectType.City, values[7]);
                 map.put(AspectType.Province, values[8]);
                 map.put(AspectType.HomePhoneNumber, values[9]);
                 map.put(AspectType.EmailAccount, values[10]);
                 if(values[11].equals("Consento")) {
-                    map.put(AspectType.HasReadPrivacyPolicy, "true");
+                    map.put(AspectType.PrivacyConsent, "true");
                 }
                 if(values[12].equals("Consento")) {
-                    map.put(AspectType.HasGivenMarketingConsent, "true");
+                    map.put(AspectType.MarketingConsent, "true");
                 }
                 //values[13]; jpg filename refers to scanned signature
 
@@ -622,16 +633,16 @@ public enum EventSourceType {
                 map.put(AspectType.BusinessName, values[5]);
                 map.put(AspectType.Address, values[6]);
                 map.put(AspectType.Localita, values[7]);
-                map.put(AspectType.PostCode, values[8]);
+                map.put(AspectType.PostalCode, values[8]);
                 map.put(AspectType.Province, values[9]);
                 map.put(AspectType.HomePhoneNumber, values[10]);
                 map.put(AspectType.Birthday, DateFormatUtils.toISOLocalDate(values[11],"dd/MM/yyyy"));
                 map.put(AspectType.EmailAccount, values[12]);
                 if(values[13].trim().equals("SI")) {
-                    map.put(AspectType.HasReadPrivacyPolicy, "true");
+                    map.put(AspectType.PrivacyConsent, "true");
                 }
                 if(values[14].trim().equals("SI")) {
-                    map.put(AspectType.HasGivenMarketingConsent, "true");
+                    map.put(AspectType.MarketingConsent, "true");
                 }
 
             } catch (ArrayIndexOutOfBoundsException e) {}
@@ -713,6 +724,49 @@ public enum EventSourceType {
             } catch (ArrayIndexOutOfBoundsException e) {}
 
             return map;
+        }
+
+        public static class AnagraficheCsv implements EventParserForCsv {
+            public String header() {
+                return "Data tesseramento\tData ultima visita\tCodice\tCognome\tNome\tRagione Sociale\tIndirizzo\tLocalita\tCAP\tProvincia\tTelefono\tData di Nascita\tEMail\tConsenso\tConsenso Marketing";
+            }
+            public int headerSize() {
+                return 1;
+            }
+            @Override public String separator() {
+                return "\t";
+            }
+            @Override
+            public Map<AspectType, String> toMap(String data) {
+                Map<AspectType, String> map = Maps.newHashMap();
+
+                try {
+                    final String[] values = data.split(separator());
+
+                    map.put(AspectType.RegisteredAt, DateFormatUtils.toISOLocalDate(values[0],"dd/MM/yyyy"));
+                    map.put(AspectType.Access, DateFormatUtils.toISOLocalDate(values[1],"dd/MM/yyyy"));
+                    //Codice: code
+                    map.put(AspectType.LastName, values[3]);
+                    map.put(AspectType.FirstName, values[4]);
+                    map.put(AspectType.BusinessName, values[5]);
+                    map.put(AspectType.Address, values[6]);
+                    map.put(AspectType.Localita, values[7]);
+                    map.put(AspectType.PostalCode, values[8]);
+                    map.put(AspectType.Province, values[9]);
+                    map.put(AspectType.HomePhoneNumber, values[10]);
+                    map.put(AspectType.Birthday, DateFormatUtils.toISOLocalDate(values[11],"dd/MM/yyyy"));
+                    map.put(AspectType.EmailAccount, values[12]);
+                    if(values[13].trim().equals("SI")) {
+                        map.put(AspectType.PrivacyConsent, "true");
+                    }
+                    if(values[14].trim().equals("SI")) {
+                        map.put(AspectType.MarketingConsent, "true");
+                    }
+
+                } catch (ArrayIndexOutOfBoundsException e) {}
+
+                return map;
+            }
         }
     }
 }

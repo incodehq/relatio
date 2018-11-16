@@ -21,7 +21,7 @@ package org.incode.eurocommercial.relatio.fixture.scenarios.event;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-import org.incode.eurocommercial.relatio.fixture.dom.event.AccessiEventFixture;
+import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectAccessiEventFixture;
 import org.incode.eurocommercial.relatio.fixture.dom.event.AnagraficheFixture;
 import org.incode.eurocommercial.relatio.fixture.dom.event.AnagraficheGadgetCaroselloFixture;
 import org.incode.eurocommercial.relatio.fixture.dom.event.CaroselloAngrybirdsAnagraficheFixture;
@@ -29,11 +29,11 @@ import org.incode.eurocommercial.relatio.fixture.dom.event.ConflictingUtentiEven
 import org.incode.eurocommercial.relatio.fixture.dom.event.ContestOnline2017EventFixture;
 import org.incode.eurocommercial.relatio.fixture.dom.event.CouponingDaInfopadFixture;
 import org.incode.eurocommercial.relatio.fixture.dom.event.DatabaseWifiYearFixture;
-import org.incode.eurocommercial.relatio.fixture.dom.event.InfopointEventFixture;
+import org.incode.eurocommercial.relatio.fixture.dom.event.PtaInfopointEventFixture;
 import org.incode.eurocommercial.relatio.fixture.dom.event.ModuliPrivacyAbissiFixture;
 import org.incode.eurocommercial.relatio.fixture.dom.event.ModuliPrivacyPressoInfopointFixture;
 import org.incode.eurocommercial.relatio.fixture.dom.event.NewsletterOnlineContestEventFixture;
-import org.incode.eurocommercial.relatio.fixture.dom.event.UtentiEventFixture;
+import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectUtentiEventFixture;
 import org.incode.eurocommercial.relatio.fixture.dom.event.WifiOldFixture;
 
 public class EventFixture extends FixtureScript {
@@ -43,11 +43,11 @@ public class EventFixture extends FixtureScript {
 
     @Override
     protected void execute(final ExecutionContext ec) {
-        ec.executeChild(EventFixture.this, new AccessiEventFixture());
-        ec.executeChild(EventFixture.this, new UtentiEventFixture());
+        ec.executeChild(EventFixture.this, new WifiprojectAccessiEventFixture());
+        ec.executeChild(EventFixture.this, new WifiprojectUtentiEventFixture());
         ec.executeChild(EventFixture.this, new ConflictingUtentiEventFixture());
         ec.executeChild(EventFixture.this, new ContestOnline2017EventFixture());
-        ec.executeChild(EventFixture.this, new InfopointEventFixture());
+        ec.executeChild(EventFixture.this, new PtaInfopointEventFixture());
         ec.executeChild(EventFixture.this, new NewsletterOnlineContestEventFixture());
         ec.executeChild(EventFixture.this, new DatabaseWifiYearFixture());
         ec.executeChild(EventFixture.this, new ModuliPrivacyPressoInfopointFixture());

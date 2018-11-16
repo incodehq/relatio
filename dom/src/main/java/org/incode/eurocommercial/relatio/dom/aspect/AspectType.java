@@ -9,6 +9,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public enum AspectType {
+    //Identity
     FirstName() {
         @Override public void updateProfile(final Aspect aspect) {
             aspect.getProfile().setFirstName(aspect.getValue());
@@ -25,16 +26,12 @@ public enum AspectType {
             aspect.getProfile().setBirthdate(LocalDate.parse(aspect.getValue()));
         }
     },
+    Age(),
     Gender() {
         @Override public void updateProfile(final Aspect aspect) {
             aspect.getProfile().setGender(Profile.Gender.valueOf(aspect.getValue().toUpperCase()));
         }
     },
-
-    Access(false, true),
-    RegisteredAt(false, true),
-    MailConfirmedAt(false, true),
-
     EmailAccount(true) {
         @Override public void updateProfile(final Aspect aspect) {
             aspect.getProfile().setEmailAccount(aspect.getValue());
@@ -51,31 +48,45 @@ public enum AspectType {
             aspect.getProfile().setFacebookAccount(aspect.getValue());
         }
     },
-    HasGivenMarketingConsent() {
-        @Override public void updateProfile(final Aspect aspect) {
-            aspect.getProfile().setHasGivenMarketingConsent(aspect.getValue());
-        }
-    },
+
+    // Address
+    City(),
+    Address(),
+    PostalCode(),
+    Country(),
+    Province(),
+    Belongings(),
+    FullName(),
+    Comune(), // TODO: Very Italian, should we change?
+    Localita(), // TODO: Very Italian, should we change?
+    BusinessName(),
+
+    // Social Accounts
     GooglePlusAccount(true),
     TwitterAccount(true),
     LinkedInAccount(true),
     LiveAccount(true),
     InstagramAccount(true),
 
+
+    // Interactions
+    Access(false, true),
     MacAddress(),
 
-    City(),
-    Address(),
-    PostCode(),
-    Country(),
-    Province(),
-    Belongings(),
-    FullName(),
-    Comune(),
-    Localita(),
-    BusinessName(),
+    RegisteredAt(false, true),
+    MailConfirmedAt(false, true),
 
-    HasReadPrivacyPolicy();
+    //Legal
+    PrivacyConsent(),
+    MarketingConsent() {
+        @Override public void updateProfile(final Aspect aspect) {
+            aspect.getProfile().setMarketingConsent(aspect.getValue());
+        }
+    },
+
+    GamePlayDateAndTime(),
+    GameType()
+    ;
 
     @Getter
     private boolean key;

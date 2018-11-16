@@ -130,7 +130,12 @@ public class Profile implements Comparable<Profile> {
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
-    private String  hasGivenMarketingConsent;
+    private String marketingConsent;
+
+    @Column(allowsNull = "true")
+    @Property()
+    @Getter @Setter
+    private String privacyConsent;
 
     @Persistent(mappedBy = "profile", dependentElement = "false")
     @Collection
