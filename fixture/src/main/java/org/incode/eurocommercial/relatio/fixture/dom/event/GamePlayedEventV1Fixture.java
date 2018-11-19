@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 public class GamePlayedEventV1Fixture extends CsvEventFixture {
     public GamePlayedEventV1Fixture() {
         super();
-        fileName = "wifi_utenti.csv";
-        eventSourceType = EventSourceType.WifiProjects_Utenti_Csv;
+        fileName = "GamePlayedEventV1.csv";
+        eventSourceType = EventSourceType.GamePlayedEventV1Fixture;
     }
 }
