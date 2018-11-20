@@ -1,5 +1,16 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.apache.isis.applib.value.Blob;
+import org.incode.eurocommercial.relatio.dom.aspect.Aspect;
+import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
+import org.incode.eurocommercial.relatio.dom.utils.DateFormatUtils;
+import org.joda.time.LocalDate;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -8,21 +19,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import com.google.common.base.Splitter;
-import com.google.common.base.Strings;
-import com.google.common.collect.Maps;
-
-import org.joda.time.LocalDate;
-
-import org.apache.isis.applib.value.Blob;
-
-import org.incode.eurocommercial.relatio.dom.aspect.Aspect;
-import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
-import org.incode.eurocommercial.relatio.dom.utils.DateFormatUtils;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @AllArgsConstructor
 public enum EventSourceType {
@@ -39,7 +35,8 @@ public enum EventSourceType {
     Anagrafiche_Gadget_Carosello_Csv(AnagraficheGadgetCaroselloCsv.class),
     Anagrafiche_Csv(AnagraficheCsv.class),
     Wifi_Old_Csv(WifiOldCsv.class),
-    Infopoint_Csv(InfoPointCsv.class);
+    Infopoint_Csv(InfoPointCsv.class),
+    GamePlayedEventV1Fixture(GamePlayedEventV1Fixture.class);
 
     @Getter
     private Class parserClass;
@@ -194,6 +191,56 @@ public enum EventSourceType {
                 return SocialAccount.valueOf(name.replace("+", "Plus"));
             }
 
+        }
+    }
+
+
+    public static class GamePlayedEventV1Fixture implements EventParserForCsv {
+        public String header(){
+            return "FirstName~LastName~Gender~Age~EmailAddress~PhoneNumber~PostalCode~MarketingConsent~PrivacyConsent~GamePlayDateAndTime~GameType\n";
+        }
+
+        public int headerSize(){return  1;}
+
+        @Override
+        public String separator(){return "~";}
+
+        @Override
+        public Map<AspectType, String> toMap(String data){
+            Map<AspectType, String> map = Maps.newHashMap();
+
+            try{
+                final String[] values = data.split(separator());
+                map.put(AspectType.FirstName, values[0]);
+                map.put(AspectType.LastName, values[1]);
+                if(values[2].trim().toUpperCase().equals("F")){
+                    map.put(AspectType.Gender, "FEMALE");
+                }else if(values[2].trim().toUpperCase().equals("M")){
+                    map.put(AspectType.Gender, "MALE");
+                }else if(!values[2].trim().isEmpty()){
+                    map.put(AspectType.Gender, "OTHER");
+                }
+                map.put(AspectType.Age, values[3]);
+                map.put(AspectType.EmailAccount, values[4]);
+                map.put(AspectType.CellPhoneNumber, values[5]);
+                map.put(AspectType.PostalCode, values[6]);
+
+                if(values[7].trim().equals("YES")) {
+                    map.put(AspectType.MarketingConsent, "true");
+                } else{
+                    map.put(AspectType.MarketingConsent, values[7]);
+                }
+                if(values[8].trim().equals("YES")) {
+                    map.put(AspectType.PrivacyConsent, "true");
+                } else{
+                    map.put(AspectType.PrivacyConsent, values[8]);
+                }
+
+                map.put(AspectType.PrivacyConsent, values[8]);
+                map.put(AspectType.GamePlayDateAndTime, values[9]);
+                map.put(AspectType.GameType, values[10]);
+            } catch (ArrayIndexOutOfBoundsException ignored) { }
+            return map;
         }
     }
 
