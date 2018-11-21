@@ -19,9 +19,6 @@
 package org.incode.eurocommercial.relatio.app;
 
 import java.util.List;
-import java.util.Map;
-
-import com.google.common.collect.Lists;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
@@ -29,20 +26,10 @@ import org.incode.eurocommercial.relatio.fixture.scenarios.event.EventFixture;
 
 public class RelatioAppManifestWithEventFixtures extends RelatioAppManifest {
 
-    /**
-     * Fixtures to be installed.
-     */
-    @Override
-    public List<Class<? extends FixtureScript>> getFixtures() {
-        return Lists.newArrayList(EventFixture.class);
+
+
+    @Override protected void overrideFixtures(final List<Class<? extends FixtureScript>> fixtureScriptClasses) {
+        fixtureScriptClasses.add(EventFixture.class);
     }
 
-    /**
-     * Force fixtures to be loaded.
-     */
-    @Override
-    protected void appendConfigurationProperties(final Map<String, String> props) {
-        super.appendConfigurationProperties(props);
-        props.put("isis.persistor.datanucleus.install-fixtures","true");
-    }
 }

@@ -18,18 +18,16 @@
  */
 package org.incode.eurocommercial.relatio.app;
 
-/**
- * Bypasses security, meaning any user/password combination can be used to login.
- */
-public class RelatioAppManifestWithFixturesBypassSecurity extends RelatioAppManifestWithFixtures {
+import java.util.List;
 
-    @Override
-    public String getAuthenticationMechanism() {
-        return "bypass";
+import org.apache.isis.applib.fixturescripts.FixtureScript;
+
+import org.incode.eurocommercial.relatio.fixture.scenarios.demo.DemoFixture;
+
+public class RelatioAppManifestWithDemoFixtures extends RelatioAppManifest {
+
+    @Override protected void overrideFixtures(final List<Class<? extends FixtureScript>> fixtureScriptClasses) {
+        fixtureScriptClasses.add(DemoFixture.class);
     }
 
-    @Override
-    public String getAuthorizationMechanism() {
-        return "bypass";
-    }
 }

@@ -19,112 +19,44 @@
 package org.incode.eurocommercial.relatio.app;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.Maps;
-
-import org.apache.isis.applib.AppManifest;
-import org.apache.isis.applib.fixturescripts.FixtureScript;
-
-import org.isisaddons.metamodel.paraname8.NamedFacetOnParameterParaname8Factory;
-import org.isisaddons.module.security.facets.TenantedAuthorizationFacetFactory;
+import org.apache.isis.applib.AppManifestAbstract2;
 
 import org.incode.eurocommercial.relatio.dom.RelatioDomainModule;
 import org.incode.eurocommercial.relatio.fixture.RelatioFixtureModule;
 
-public class RelatioAppManifest implements AppManifest {
+public class RelatioAppManifest extends AppManifestAbstract2 {
 
-    @Override
-    public List<Class<?>> getModules() {
-        return Arrays.asList(
+    public static final AppManifestAbstract2.Builder BUILDER =
+            AppManifestAbstract2.Builder.forModule(new RelatioAppModule())
+                    .withAuthMechanism(null)
+                    .withConfigurationPropertiesFile(
+                            RelatioAppManifest.class, "isis-non-changing.properties")
+                    .withConfigurationPropertiesFile(
+                            RelatioAppManifest.class, "git.estatio.properties")
+                    .withAdditionalModules(myModules())
+                    .withAdditionalServices(myAdditionalServices());
 
-                RelatioDomainModule.class     // entities and domain services
-                , RelatioFixtureModule.class   // fixture scripts and FixtureScriptsSpecificationProvider
-                , RelatioAppModule.class     // RelatioRolesAndPermissionsSeedService (requires security module)
-
-                ,org.isisaddons.module.excel.ExcelModule.class // to run fixtures
-                ,org.isisaddons.module.settings.SettingsModule.class // used by DomainAppUserSettingsThemeProvider
-
-//                ,org.isisaddons.module.audit.AuditModule.class
-//                ,org.isisaddons.module.command.CommandModule.class
-//                ,org.isisaddons.module.devutils.DevUtilsModule.class
-//                ,org.isisaddons.module.docx.DocxModule.class
-//                ,org.isisaddons.module.fakedata.FakeDataModule.class
-//                ,org.isisaddons.module.publishing.PublishingModule.class
-                ,org.isisaddons.module.security.SecurityModule.class
-//                ,org.isisaddons.module.sessionlogger.SessionLoggerModule.class
-//                ,org.incode.module.note.dom.NoteModule.class
-//                ,org.incode.module.commchannel.dom.CommChannelModule.class
-                );
+    public RelatioAppManifest() {
+        super(BUILDER);
     }
 
-    @Override
-    public List<Class<?>> getAdditionalServices() {
+    public static List<Class<?>> myModules() {
         return Arrays.asList(
-                org.isisaddons.module.security.dom.password.PasswordEncryptionServiceUsingJBcrypt.class
+                RelatioDomainModule.class,
+                RelatioFixtureModule.class,
+                RelatioAppModule.class
+                , org.isisaddons.module.excel.ExcelModule.class // to run fixtures
+                , org.isisaddons.module.settings.SettingsModule.class // used by DomainAppUserSettingsThemeProvider
+                , org.isisaddons.module.security.SecurityModule.class
         );
     }
 
-
-
-    /**
-     * Use shiro for authentication.
-     *
-     * <p>
-     *     NB: this is ignored for integration tests, which always use "bypass".
-     * </p>
-     */
-    @Override
-    public String getAuthenticationMechanism() {
-        return "shiro";
-    }
-
-    /**
-     * Use shiro for authorization.
-     *
-     * <p>
-     *     NB: this is ignored for integration tests, which always use "bypass".
-     * </p>
-     */
-    @Override
-    public String getAuthorizationMechanism() {
-        return "shiro";
-    }
-
-    /**
-     * No fixtures.
-     */
-    @Override
-    public List<Class<? extends FixtureScript>> getFixtures() {
-        return Collections.emptyList();
-    }
-
-    /**
-     * configure metamodel facets (paraname8 and tenanted authorization)
-     */
-    @Override
-    public final Map<String, String> getConfigurationProperties() {
-        Map<String,String> props = Maps.newHashMap();
-
-        props.put(
-                "isis.reflector.facets.include",
-                Joiner.on(',').join(
-                        NamedFacetOnParameterParaname8Factory.class.getName()
-                        , TenantedAuthorizationFacetFactory.class.getName()
-                ));
-
-        appendConfigurationProperties(props);
-        return props.isEmpty()? null: props;
-
-    }
-
-    /**
-     * Optional hook for subclasses
-     */
-    protected void appendConfigurationProperties(final Map<String, String> props) {
+    public static List<Class<?>> myAdditionalServices() {
+        return Arrays.asList(
+                org.isisaddons.module.security.dom.password.PasswordEncryptionServiceUsingJBcrypt.class
+        );
     }
 
 }
