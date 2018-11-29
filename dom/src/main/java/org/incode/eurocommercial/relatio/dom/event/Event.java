@@ -170,8 +170,16 @@ public class Event implements Comparable<Event> {
     @Persistent(mappedBy = "event", dependentElement = "false")
     @Collection
     @CollectionLayout(defaultView = "table")
-    @Getter @Setter
+//    @Getter @Setter
     private SortedSet<Aspect> aspects = new TreeSet<>();
+
+    public SortedSet<Aspect> getAspects() {
+        return aspects;
+    }
+
+    public void setAspects(final SortedSet<Aspect> aspects) {
+        this.aspects = aspects;
+    }
 
     @Override
     public int compareTo(final Event other) {

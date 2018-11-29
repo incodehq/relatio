@@ -1,16 +1,5 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
-import com.google.common.base.Splitter;
-import com.google.common.base.Strings;
-import com.google.common.collect.Maps;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.apache.isis.applib.value.Blob;
-import org.incode.eurocommercial.relatio.dom.aspect.Aspect;
-import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
-import org.incode.eurocommercial.relatio.dom.utils.DateFormatUtils;
-import org.joda.time.LocalDate;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -19,6 +8,21 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
+
+import org.joda.time.LocalDate;
+
+import org.apache.isis.applib.value.Blob;
+
+import org.incode.eurocommercial.relatio.dom.aspect.Aspect;
+import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
+import org.incode.eurocommercial.relatio.dom.utils.DateFormatUtils;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
 public enum EventSourceType {
@@ -36,7 +40,7 @@ public enum EventSourceType {
     Anagrafiche_Csv(AnagraficheCsv.class),
     Wifi_Old_Csv(WifiOldCsv.class),
     Infopoint_Csv(InfoPointCsv.class),
-    GamePlayedEventV1Fixture(GamePlayedEventV1Fixture.class);
+    GamePlayedEventV1(GamePlayedEventV1.class);
 
     @Getter
     private Class parserClass;
@@ -195,7 +199,7 @@ public enum EventSourceType {
     }
 
 
-    public static class GamePlayedEventV1Fixture implements EventParserForCsv {
+    public static class GamePlayedEventV1 implements EventParserForCsv {
         public String header(){
             return "FirstName~LastName~Gender~Age~EmailAddress~PhoneNumber~PostalCode~MarketingConsent~PrivacyConsent~GamePlayDateAndTime~GameType\n";
         }

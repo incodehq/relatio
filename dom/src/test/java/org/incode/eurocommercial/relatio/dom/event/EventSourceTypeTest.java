@@ -110,6 +110,28 @@ public class EventSourceTypeTest {
         }
     }
 
+    public static class GamePlayedEventV1 extends EventSourceTypeTest {
 
+        @Test
+        @Ignore
+        public void happy_case() throws Exception {
+
+            // given
+            String data = "Rosa ~Di Mamma~F~51~~3288993344~22040~NO~YES~2018-07-21T08:19:23~BENVENUTO";
+            //            Sandrino~Ginnio~M~34~hello@yahoo.com~3912345678~23900~YES~YES~2018-07-21T08:26:51~BENVENUTO
+            //            No~Gender~~51~~3288993344~22040~NO~YES~2018-07-21T08:19:23~BENVENUTO
+
+            // when
+            final Map<AspectType, String> map = EventSourceType.GamePlayedEventV1.getParser().toMap(data);
+
+            // Dan
+            assertThat(map.size()).isEqualTo(11);
+            assertThat(map.get(AspectType.EmailAccount)).isEqualTo("");
+            assertThat(map.get(AspectType.MarketingConsent)).isEqualTo("NO");
+            assertThat(map.get(AspectType.PrivacyConsent)).isEqualTo("YES");
+
+
+        }
+    }
 
 }
