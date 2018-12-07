@@ -7,7 +7,7 @@ import org.apache.isis.applib.annotation.NatureOfService;
 
 import java.util.Arrays;
 
-@DomainService(nature = NatureOfService.DOMAIN)
+@DomainService(nature = NatureOfService.DOMAIN, menuOrder = "999")
 
 public class EmailCleaningService {
 
@@ -17,11 +17,7 @@ public class EmailCleaningService {
     @Setter
     public String input;
 
-    public EmailCleaningService(final String input) {
-        setInput(input);
-    }
-
-    public String startService() {
+    public String process(final String input) {
         EmailValidator validator = EmailValidator.getInstance();
         return validator.isValid(input) ? input : clean(input);
     }

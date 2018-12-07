@@ -11,7 +11,7 @@ public class EmailCleaningServiceTest {
 
     @Before
     public void setUp() {
-        emailCleaningService = new EmailCleaningService(null);
+        emailCleaningService = new EmailCleaningService();
     }
 
 
