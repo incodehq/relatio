@@ -7,12 +7,75 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class EmailCleaningServiceTest {
 
+    private EmailCleaningService emailCleaningService;
+
     @Before
     public void setUp() {
-        emailCleaningService = new EmailCleaningService();
+        emailCleaningService = new EmailCleaningService(null);
     }
 
-    private EmailCleaningService emailCleaningService;
+
+    @Test
+    public void addAtSumbolBasedOnTLDs_happyCase(){
+        //given
+        String withoutAtSymbol = "johndoeyahoo.com";
+
+        //when
+        String withAtSymbol = emailCleaningService.addAtSumbolBasedOnTLDs(withoutAtSymbol);
+
+        //then
+        assertThat(withAtSymbol).isEqualTo("johndoe@yahoo.com");
+
+    }
+
+    @Test
+    public void addAtSumbolBasedOnTLDsNoPeriod_happyCase(){
+        //given
+        String withoutAtSymbol = "johndoegmailcom";
+
+        //when
+        String withAtSymbol = emailCleaningService.addAtSumbolBasedOnTLDs(withoutAtSymbol);
+
+        //then
+        assertThat(withAtSymbol).isEqualTo("johndoe@gmailcom");
+
+    }
+
+    @Test
+    public void removeDotsBeforeAt_happyCase(){
+        //given
+        String emailWithSymbolsBeforeAt = "johndoe989!....@hotmail.com";
+
+        //when
+        String emailWithoutSymbolsBeforeAt = emailCleaningService.removeDotsBeforeAt(emailWithSymbolsBeforeAt);
+
+        //then
+        assertThat(emailWithoutSymbolsBeforeAt).isEqualTo("johndoe989!@hotmail.com");
+    }
+
+    @Test
+    public void cleanTLDsWithRegex_happyCase(){
+        //given
+        String emailWithDoubleDomains = "johndoe@hotmail.com@ormai.com";
+
+        //when
+        String emailWithOneTLD = emailCleaningService.cleanTLDsWithRegex(emailWithDoubleDomains);
+
+        //then
+        assertThat(emailWithOneTLD).isEqualTo("johndoe@hotmail.com");
+    }
+
+    @Test
+    public void cleanTLDsWithRegex_sadCase(){
+        //given
+        String emailWithDoubleDomains = "johndoeitaly@hotmail.it@ormai.com";
+
+        //when
+        String emailWithOneTLD = emailCleaningService.cleanTLDsWithRegex(emailWithDoubleDomains);
+
+        //then
+        assertThat(emailWithOneTLD).isEqualTo("johndoeitaly@hotmail.it");
+    }
 
     @Test
     public void removeUnwantedCharacters_happyCase(){
@@ -76,6 +139,18 @@ public class EmailCleaningServiceTest {
     }
 
     @Test
+    public void removeDoubleDotsAfterAt_happyCase(){
+        //given
+        String unwantedDoubleDots = "josetroya1020@hotmail..com";
+
+        //when
+        String fixedDoubleDots = emailCleaningService.removeDoubleDotsAfterAt(unwantedDoubleDots);
+
+        assertThat(fixedDoubleDots).isEqualTo("josetroya1020@hotmail.com");
+
+    }
+
+    @Test
     public void fixKnownTLDIfIncomplete_happyCase(){
         //given
         String incompleteTLDEmail = "johndoe@hotmail.iit";
@@ -96,28 +171,28 @@ public class EmailCleaningServiceTest {
         String withFixedTLD = emailCleaningService.fixKnownTLDIfIncomplete(incompleteTLDEmail);
 
         //then
-        assertThat(withFixedTLD).isEqualTo("johndoe@hotmail.c");
+        assertThat(withFixedTLD).isEqualTo("johndoe@hotmail.com");
     }
 
     @Test
-    public void replaceDashForDot_happyCase(){
+    public void addMissingTldIfKnownDomain_happyCaseDash(){
         //given
         String wrongDotInEmail = "johndoe@hotmail-it";
 
         //when
-        String withFilterDashForDot = emailCleaningService.replaceDashForDot(wrongDotInEmail);
+        String withFilterDashForDot = emailCleaningService.addMissingTldIfKnownDomain(wrongDotInEmail);
 
         //then
         assertThat(withFilterDashForDot).isEqualTo("johndoe@hotmail.it");
     }
 
     @Test
-    public void replaceDashForDot_sadCase(){
+    public void addMissingTldIfKnownDomain_sadCase(){
         //given
         String wrongDotInEmail = "johndoe@hotmail--it";
 
         //when
-        String withFilterDashForDot = emailCleaningService.replaceDashForDot(wrongDotInEmail);
+        String withFilterDashForDot = emailCleaningService.addMissingTldIfKnownDomain(wrongDotInEmail);
 
         //then
         assertThat(withFilterDashForDot).isEqualTo("johndoe@hotmail--it");
