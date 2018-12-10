@@ -29,8 +29,8 @@ public class EmailCleaningService {
             return cleanMail;
         }
 
-        cleanMail = addAtSumbolBasedOnTLDs(cleanMail);
-        //If email doens't contain @ symbol we can't service it.
+        cleanMail = addAtSymbolBasedOnTLDs(cleanMail);
+        //If email doesn't contain @ symbol we can't service it.
         if (!cleanMail.contains("@")) {
             return input;
         }
@@ -42,12 +42,12 @@ public class EmailCleaningService {
         cleanMail = removeNonAlphaAtTheEnd(cleanMail);
         cleanMail = cleanLastCharacterIfNotAlphabet(cleanMail);
         cleanMail = fixKnownTLDIfIncomplete(cleanMail);
-        cleanMail = addMissingTldIfKnownDomain(cleanMail);
-        cleanMail = fixKnownmissingDotTLDIfIncomplete(cleanMail);
+        cleanMail = addMissingTLDIfKnownDomain(cleanMail);
+        cleanMail = fixKnownMissingDotTLDIfIncomplete(cleanMail);
         return cleanMail;
     }
 
-    public String addAtSumbolBasedOnTLDs(final String input) {
+    public String addAtSymbolBasedOnTLDs(final String input) {
         if (input.contains("@")) {
             return input;
         }
@@ -162,7 +162,7 @@ public class EmailCleaningService {
         return input;
     }
 
-    public String addMissingTldIfKnownDomain(final String input) {
+    public String addMissingTLDIfKnownDomain(final String input) {
         //check for not at symbol
         String substring = input.substring(input.lastIndexOf('@') + 1);
         String head = input.substring(0, input.lastIndexOf('@') + 1);
@@ -211,7 +211,7 @@ public class EmailCleaningService {
         }
     }
 
-    public String fixKnownmissingDotTLDIfIncomplete(final String input) {
+    public String fixKnownMissingDotTLDIfIncomplete(final String input) {
         String[] splitOnDot = input.split("\\?");
         String email = String.join(".", Arrays.copyOf(splitOnDot, splitOnDot.length - 1));
         switch (splitOnDot[splitOnDot.length - 1]) {

@@ -16,12 +16,12 @@ public class EmailCleaningServiceTest {
 
 
     @Test
-    public void addAtSumbolBasedOnTLDs_happyCase(){
+    public void addAtSymbolBasedOnTLDs_happyCase(){
         //given
         String withoutAtSymbol = "johndoeyahoo.com";
 
         //when
-        String withAtSymbol = emailCleaningService.addAtSumbolBasedOnTLDs(withoutAtSymbol);
+        String withAtSymbol = emailCleaningService.addAtSymbolBasedOnTLDs(withoutAtSymbol);
 
         //then
         assertThat(withAtSymbol).isEqualTo("johndoe@yahoo.com");
@@ -29,12 +29,12 @@ public class EmailCleaningServiceTest {
     }
 
     @Test
-    public void addAtSumbolBasedOnTLDsNoPeriod_happyCase(){
+    public void addAtSymbolBasedOnTLDsNoPeriod_happyCase(){
         //given
         String withoutAtSymbol = "johndoegmailcom";
 
         //when
-        String withAtSymbol = emailCleaningService.addAtSumbolBasedOnTLDs(withoutAtSymbol);
+        String withAtSymbol = emailCleaningService.addAtSymbolBasedOnTLDs(withoutAtSymbol);
 
         //then
         assertThat(withAtSymbol).isEqualTo("johndoe@gmailcom");
@@ -102,7 +102,7 @@ public class EmailCleaningServiceTest {
     }
 
     @Test
-    public void removeNonAlphaAtTheEnd_SadCase(){
+    public void removeNonAlphaAtTheEnd_sadCase(){
         //given
         String unwantedEndEmail = "johndoe@hotmail.com..";
 
@@ -127,7 +127,7 @@ public class EmailCleaningServiceTest {
     }
 
     @Test
-    public void cleanLastCharacters_SadCase(){
+    public void cleanLastCharacters_sadCase(){
         //given
         String unwantedEndEmail = "johndoe@hotmail.com..";
 
@@ -163,7 +163,7 @@ public class EmailCleaningServiceTest {
     }
 
     @Test
-    public void fixKnownTLDIfIncomplete_SadCase(){
+    public void fixKnownTLDIfIncomplete_sadCase(){
         //given
         String incompleteTLDEmail = "johndoe@hotmail.c";
 
@@ -175,24 +175,24 @@ public class EmailCleaningServiceTest {
     }
 
     @Test
-    public void addMissingTldIfKnownDomain_happyCaseDash(){
+    public void addMissingTLDIfKnownDomain_happyCase_dash(){
         //given
         String wrongDotInEmail = "johndoe@hotmail-it";
 
         //when
-        String withFilterDashForDot = emailCleaningService.addMissingTldIfKnownDomain(wrongDotInEmail);
+        String withFilterDashForDot = emailCleaningService.addMissingTLDIfKnownDomain(wrongDotInEmail);
 
         //then
         assertThat(withFilterDashForDot).isEqualTo("johndoe@hotmail.it");
     }
 
     @Test
-    public void addMissingTldIfKnownDomain_sadCase(){
+    public void addMissingTLDIfKnownDomain_sadCase(){
         //given
         String wrongDotInEmail = "johndoe@hotmail--it";
 
         //when
-        String withFilterDashForDot = emailCleaningService.addMissingTldIfKnownDomain(wrongDotInEmail);
+        String withFilterDashForDot = emailCleaningService.addMissingTLDIfKnownDomain(wrongDotInEmail);
 
         //then
         assertThat(withFilterDashForDot).isEqualTo("johndoe@hotmail--it");
@@ -201,13 +201,13 @@ public class EmailCleaningServiceTest {
     @Test
     public void addMissingSubDomainIfKnownDomain_happyCase() {
         // given
-        String withoutTld = "johndoe@bayer";
+        String withoutTLD = "johndoe@bayer";
 
         // when
-        String withTld = emailCleaningService.addMissingTldIfKnownDomain(withoutTld);
+        String withTLD = emailCleaningService.addMissingTLDIfKnownDomain(withoutTLD);
 
         // then
-        assertThat(withTld).isEqualTo("johndoe@bayer.com");
+        assertThat(withTLD).isEqualTo("johndoe@bayer.com");
     }
 
     @Test
@@ -216,23 +216,23 @@ public class EmailCleaningServiceTest {
         String unknownDomain = "johndoe@fakedomain";
 
         // when
-        String withTld = emailCleaningService.addMissingTldIfKnownDomain(unknownDomain);
+        String withTLD = emailCleaningService.addMissingTLDIfKnownDomain(unknownDomain);
 
         // then
-        assertThat(withTld).isEqualTo(unknownDomain);
+        assertThat(withTLD).isEqualTo(unknownDomain);
     }
 
 
     @Test
-    public void  addMissingSubDomainIfKnownDomain_happyCase_alreadyContainsTld() {
+    public void addMissingSubDomainIfKnownDomain_happyCase_alreadyContainsTLD() {
         // given
-        String withTld = "johndoe@bayer.com";
+        String withTLD = "johndoe@bayer.com";
 
         // when
-        String withTldAdded = emailCleaningService.addMissingTldIfKnownDomain(withTld);
+        String withTLDAdded = emailCleaningService.addMissingTLDIfKnownDomain(withTLD);
 
         // then
-        assertThat(withTldAdded).isEqualTo(withTld);
+        assertThat(withTLDAdded).isEqualTo(withTLD);
     }
 
     @Test
@@ -248,12 +248,12 @@ public class EmailCleaningServiceTest {
     }
 
     @Test
-    public void fixKnownmissingDotTLDIfIncomplete_happyCase(){
+    public void fixKnownMissingDotTLDIfIncomplete_happyCase(){
         //given
         String incompleteTLDEmail = "johndoe@gmail?com";
 
         //when
-        String withFixedTLD = emailCleaningService.fixKnownmissingDotTLDIfIncomplete(incompleteTLDEmail);
+        String withFixedTLD = emailCleaningService.fixKnownMissingDotTLDIfIncomplete(incompleteTLDEmail);
 
         //then
         assertThat(withFixedTLD).isEqualTo("johndoe@gmail.com");
