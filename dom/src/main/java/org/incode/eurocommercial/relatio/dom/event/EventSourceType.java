@@ -215,8 +215,8 @@ public enum EventSourceType {
 
             try{
                 final String[] values = data.split(separator());
-                map.put(AspectType.FirstName, values[0]);
-                map.put(AspectType.LastName, values[1]);
+                map.put(AspectType.FirstName, values[0].trim());
+                map.put(AspectType.LastName, values[1].trim());
                 if(values[2].trim().toUpperCase().equals("F")){
                     map.put(AspectType.Gender, "FEMALE");
                 }else if(values[2].trim().toUpperCase().equals("M")){
@@ -224,26 +224,27 @@ public enum EventSourceType {
                 }else if(!values[2].trim().isEmpty()){
                     map.put(AspectType.Gender, "OTHER");
                 }
-                map.put(AspectType.Age, values[3]);
-                map.put(AspectType.EmailAccount, values[4]);
-                map.put(AspectType.CellPhoneNumber, values[5]);
-                map.put(AspectType.PostalCode, values[6]);
+                map.put(AspectType.Age, values[3].trim());
+                map.put(AspectType.EmailAccount, values[4].trim());
+                map.put(AspectType.CellPhoneNumber, values[5].trim());
+                map.put(AspectType.PostalCode, values[6].trim());
 
                 if(values[7].trim().equals("YES")) {
                     map.put(AspectType.MarketingConsent, "true");
                 } else{
-                    map.put(AspectType.MarketingConsent, values[7]);
+                    map.put(AspectType.MarketingConsent, values[7].trim());
                 }
                 if(values[8].trim().equals("YES")) {
                     map.put(AspectType.PrivacyConsent, "true");
                 } else{
-                    map.put(AspectType.PrivacyConsent, values[8]);
+                    map.put(AspectType.PrivacyConsent, values[8].trim());
                 }
 
-                map.put(AspectType.PrivacyConsent, values[8]);
-                map.put(AspectType.GamePlayDateAndTime, values[9]);
-                map.put(AspectType.GameType, values[10]);
-            } catch (ArrayIndexOutOfBoundsException ignored) { }
+                map.put(AspectType.GamePlayDateAndTime, values[9].trim());
+                map.put(AspectType.GameType, values[10].trim());
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw e;
+            }
             return map;
         }
     }

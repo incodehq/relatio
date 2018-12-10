@@ -2,6 +2,7 @@ package org.incode.eurocommercial.relatio.dom.event;
 
 import java.util.Map;
 
+import org.jmock.Expectations;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -24,7 +25,7 @@ public class EventSourceTypeTest {
             // when
             final Map<AspectType, String> map = EventSourceType.WifiProjectsUtentiCsv.SocialAccount.Facebook.toMap(facebookdata);
 
-            // Dan
+            // then
             assertThat(map.get(AspectType.FirstName)).isEqualTo("Pattie");
             assertThat(map.get(AspectType.LastName)).isEqualTo("Yeliashev");
             assertThat(map.get(AspectType.Birthday)).isEqualTo("");
@@ -45,7 +46,7 @@ public class EventSourceTypeTest {
             // when
             final Map<AspectType, String> map = EventSourceType.WifiProjects_Utenti_Csv.getParser().toMap(data);
 
-            // Dan
+            // then
             assertThat(map.size()).isEqualTo(8);
 
 
@@ -71,7 +72,7 @@ public class EventSourceTypeTest {
             // when
             final Map<AspectType, String> map = EventSourceType.WifiProjects_Accessi_Csv.getParser().toMap(data);
 
-            // Dan
+            // then
             assertThat(map.size()).isEqualTo(3);
             assertThat(map.get(AspectType.FacebookAccount)).isEqualTo("ebegg4@fastcompany.com");
             assertThat(map.get(AspectType.MacAddress)).isEqualTo("81:B9:C0:9C:14:BB");
@@ -88,7 +89,7 @@ public class EventSourceTypeTest {
             // when
             final Map<AspectType, String> map = EventSourceType.WifiProjects_Accessi_Csv.getParser().toMap(data);
 
-            // Dan
+            // then
             assertThat(map.size()).isEqualTo(2);
             assertThat(map.get(AspectType.MacAddress)).isEqualTo("81:B9:C0:9C:14:BB");
             assertThat(map.get(AspectType.CellPhoneNumber)).isEqualTo("+319876543210");
@@ -104,7 +105,7 @@ public class EventSourceTypeTest {
             // when
             final Map<AspectType, String> map = EventSourceType.WifiProjects_Accessi_Csv.getParser().toMap(data);
 
-            // Dan
+            // then
             assertThat(map.size()).isEqualTo(1);
             assertThat(map.get(AspectType.MacAddress)).isEqualTo("81:B9:C0:9C:14:BB");
         }
@@ -113,25 +114,115 @@ public class EventSourceTypeTest {
     public static class GamePlayedEventV1 extends EventSourceTypeTest {
 
         @Test
-        @Ignore
-        public void happy_case() throws Exception {
+        public void happy_case_rosa() throws Exception {
 
             // given
-            String data = "Rosa ~Di Mamma~F~51~~3288993344~22040~NO~YES~2018-07-21T08:19:23~BENVENUTO";
-            //            Sandrino~Ginnio~M~34~hello@yahoo.com~3912345678~23900~YES~YES~2018-07-21T08:26:51~BENVENUTO
-            //            No~Gender~~51~~3288993344~22040~NO~YES~2018-07-21T08:19:23~BENVENUTO
+            String data = "Rosa~Di Mamma~F~51~~3288993344~22040~NO~YES~2018-07-21T08:19:23~BENVENUTO";
 
             // when
             final Map<AspectType, String> map = EventSourceType.GamePlayedEventV1.getParser().toMap(data);
 
-            // Dan
+            // then
             assertThat(map.size()).isEqualTo(11);
+            assertThat(map.get(AspectType.FirstName)).isEqualTo("Rosa");
+            assertThat(map.get(AspectType.LastName)).isEqualTo("Di Mamma");
+            assertThat(map.get(AspectType.Gender)).isEqualTo("FEMALE");
+            assertThat(map.get(AspectType.Age)).isEqualTo("51");
             assertThat(map.get(AspectType.EmailAccount)).isEqualTo("");
+            assertThat(map.get(AspectType.CellPhoneNumber)).isEqualTo("3288993344");
+            assertThat(map.get(AspectType.PostalCode)).isEqualTo("22040");
             assertThat(map.get(AspectType.MarketingConsent)).isEqualTo("NO");
-            assertThat(map.get(AspectType.PrivacyConsent)).isEqualTo("YES");
+            assertThat(map.get(AspectType.PrivacyConsent)).isEqualTo("true");
+            assertThat(map.get(AspectType.GamePlayDateAndTime)).isEqualTo("2018-07-21T08:19:23");
+            assertThat(map.get(AspectType.GameType)).isEqualTo("BENVENUTO");
 
+        }
+
+        @Test
+        public void happy_case_sandrino() throws Exception {
+
+            // given
+            String data = "Sandrino~Ginnio~M~34~hello@yahoo.com~3912345678~23900~YES~YES~2018-07-21T08:26:51~BENVENUTO";
+
+            // when
+            final Map<AspectType, String> map = EventSourceType.GamePlayedEventV1.getParser().toMap(data);
+
+            // then
+            assertThat(map.size()).isEqualTo(11);
+            assertThat(map.get(AspectType.FirstName)).isEqualTo("Sandrino");
+            assertThat(map.get(AspectType.LastName)).isEqualTo("Ginnio");
+            assertThat(map.get(AspectType.Gender)).isEqualTo("MALE");
+            assertThat(map.get(AspectType.Age)).isEqualTo("34");
+            assertThat(map.get(AspectType.EmailAccount)).isEqualTo("hello@yahoo.com");
+            assertThat(map.get(AspectType.CellPhoneNumber)).isEqualTo("3912345678");
+            assertThat(map.get(AspectType.PostalCode)).isEqualTo("23900");
+            assertThat(map.get(AspectType.MarketingConsent)).isEqualTo("true");
+            assertThat(map.get(AspectType.PrivacyConsent)).isEqualTo("true");
+            assertThat(map.get(AspectType.GamePlayDateAndTime)).isEqualTo("2018-07-21T08:26:51");
+            assertThat(map.get(AspectType.GameType)).isEqualTo("BENVENUTO");
+
+        }
+
+        @Test
+        public void happy_case_no_gender() throws Exception {
+
+            // given
+            String data = "No~Gender~~51~~3288993344~22040~YES~NO~2018-07-21T08:19:23~BENVENUTO";
+
+            // when
+            final Map<AspectType, String> map = EventSourceType.GamePlayedEventV1.getParser().toMap(data);
+
+            // then
+            assertThat(map.size()).isEqualTo(10);
+            assertThat(map.get(AspectType.FirstName)).isEqualTo("No");
+            assertThat(map.get(AspectType.LastName)).isEqualTo("Gender");
+            assertThat(map.get(AspectType.Gender)).isNull();
+            assertThat(map.get(AspectType.Age)).isEqualTo("51");
+            assertThat(map.get(AspectType.EmailAccount)).isEqualTo("");
+            assertThat(map.get(AspectType.CellPhoneNumber)).isEqualTo("3288993344");
+            assertThat(map.get(AspectType.PostalCode)).isEqualTo("22040");
+            assertThat(map.get(AspectType.MarketingConsent)).isEqualTo("true");
+            assertThat(map.get(AspectType.PrivacyConsent)).isEqualTo("NO");
+            assertThat(map.get(AspectType.GamePlayDateAndTime)).isEqualTo("2018-07-21T08:19:23");
+            assertThat(map.get(AspectType.GameType)).isEqualTo("BENVENUTO");
+
+        }
+
+        @Test
+        public void happy_case_trim() throws Exception {
+
+            // given
+            String data = " Rosa ~ Di Mamma ~ F ~ 51 ~  ~ 3288993344 ~ 22040 ~ NO ~ YES ~ 2018-07-21T08:19:23 ~ BENVENUTO ";
+
+            // when
+            final Map<AspectType, String> map = EventSourceType.GamePlayedEventV1.getParser().toMap(data);
+
+            // then
+            assertThat(map.size()).isEqualTo(11);
+            assertThat(map.get(AspectType.FirstName)).isEqualTo("Rosa");
+            assertThat(map.get(AspectType.LastName)).isEqualTo("Di Mamma");
+            assertThat(map.get(AspectType.Gender)).isEqualTo("FEMALE");
+            assertThat(map.get(AspectType.Age)).isEqualTo("51");
+            assertThat(map.get(AspectType.EmailAccount)).isEqualTo("");
+            assertThat(map.get(AspectType.CellPhoneNumber)).isEqualTo("3288993344");
+            assertThat(map.get(AspectType.PostalCode)).isEqualTo("22040");
+            assertThat(map.get(AspectType.MarketingConsent)).isEqualTo("NO");
+            assertThat(map.get(AspectType.PrivacyConsent)).isEqualTo("true");
+            assertThat(map.get(AspectType.GamePlayDateAndTime)).isEqualTo("2018-07-21T08:19:23");
+            assertThat(map.get(AspectType.GameType)).isEqualTo("BENVENUTO");
 
         }
     }
 
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void sad_case() throws Exception {
+        // given
+        String data = "Rosa~Di Mamma~~~";
+
+        // when
+        final Map<AspectType, String> map = EventSourceType.GamePlayedEventV1.getParser().toMap(data);
+
+        // then exception is thrown
+    }
 }
+
