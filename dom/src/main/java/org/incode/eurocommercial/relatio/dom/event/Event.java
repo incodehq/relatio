@@ -1,11 +1,22 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
-import java.util.Comparator;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
+import com.google.common.collect.Sets;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.isis.applib.annotation.Collection;
+import org.apache.isis.applib.annotation.CollectionLayout;
+import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.Where;
+import org.incode.eurocommercial.relatio.dom.aspect.Aspect;
+import org.incode.eurocommercial.relatio.dom.aspect.AspectRepository;
+import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
+import org.incode.eurocommercial.relatio.dom.profile.Profile;
+import org.incode.eurocommercial.relatio.dom.profile.ProfileRepository;
+import org.incode.eurocommercial.relatio.dom.service.EmailCleaningService;
+import org.joda.time.LocalDateTime;
 
 import javax.inject.Inject;
 import javax.jdo.annotations.Column;
@@ -16,27 +27,13 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.Queries;
 import javax.jdo.annotations.Query;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
-import com.google.common.collect.Sets;
-
-import org.joda.time.LocalDateTime;
-
-import org.apache.isis.applib.annotation.Collection;
-import org.apache.isis.applib.annotation.CollectionLayout;
-import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.Programmatic;
-import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.Where;
-
-import org.incode.eurocommercial.relatio.dom.aspect.Aspect;
-import org.incode.eurocommercial.relatio.dom.aspect.AspectRepository;
-import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
-import org.incode.eurocommercial.relatio.dom.profile.Profile;
-import org.incode.eurocommercial.relatio.dom.profile.ProfileRepository;
-
-import lombok.Getter;
-import lombok.Setter;
 
 @PersistenceCapable(
         identityType = IdentityType.DATASTORE
@@ -88,17 +85,31 @@ public class Event implements Comparable<Event> {
     }
 
     @Column(allowsNull = "false", jdbcType = "CLOB")
-    @Getter @Setter
+    @Getter
+    @Setter
     private String data;
 
     @Column(allowsNull = "false", name = "eventSourceId")
-    @Getter @Setter
+    @Getter
+    @Setter
     @Property(hidden = Where.REFERENCES_PARENT)
     private EventSource source;
+
+
+    @Programmatic
+    public void cleanEmailOnAspectMap(final Map<AspectType, String> aspectMap) {
+        if (aspectMap.containsKey(AspectType.EmailAccount)) {
+            String cleanedEmailAddress = emailCleaningService.process(aspectMap.get(AspectType.EmailAccount));
+            aspectMap.put(AspectType.EmailAccount, cleanedEmailAddress);
+        }
+    }
 
     @Programmatic
     public void createAspects() {
         Map<AspectType, String> aspectMap = getAspectMap();
+        /* filter email on aspectMap */
+        cleanEmailOnAspectMap(aspectMap);
+
         Map<AspectType, String> keyAspectMap = getKeyAspectsFromAspectMap(aspectMap);
         SortedSet<LocalDateTime> collectionDates = getCollectionDatesFromAspectMap(aspectMap);
         Set<Profile> matchedProfiles = getProfilesFromKeyAspects(keyAspectMap);
@@ -131,7 +142,7 @@ public class Event implements Comparable<Event> {
         /* Retrieve all aspects from event data and filter all empty aspects */
         final Map<AspectType, String> map = getSource().getType().getParser().toMap(getData());
         return map.entrySet().stream()
-                .filter(e ->  e.getValue() != null && e.getValue().length() > 0)
+                .filter(e -> e.getValue() != null && e.getValue().length() > 0)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
@@ -187,7 +198,12 @@ public class Event implements Comparable<Event> {
         return Comparator.comparing(Event::getSource).thenComparing(Event::getData).compare(this, other);
     }
 
-    @Inject private AspectRepository aspectRepository;
+    @Inject
+    private AspectRepository aspectRepository;
 
-    @Inject private ProfileRepository profileRepository;
+    @Inject
+    private ProfileRepository profileRepository;
+
+    @Inject
+    private EmailCleaningService emailCleaningService;
 }

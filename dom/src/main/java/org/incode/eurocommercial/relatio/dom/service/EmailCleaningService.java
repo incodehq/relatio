@@ -1,6 +1,5 @@
-package org.incode.eurocommercial.relatio.app.services.email;
+package org.incode.eurocommercial.relatio.dom.service;
 
-import lombok.Setter;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
@@ -14,15 +13,12 @@ public class EmailCleaningService {
     public static final String IT_TLD = ".it";
     public static final String COM_TLD = ".com";
 
-    @Setter
-    public String input;
-
     public String process(final String input) {
         EmailValidator validator = EmailValidator.getInstance();
         return validator.isValid(input) ? input : clean(input);
     }
 
-    public String clean(final String input) {
+    private String clean(final String input) {
         //If email is smaller then 6 chars then we can't service it.
         String cleanMail = input.toLowerCase();
         if (cleanMail.length() < 6) {
@@ -47,7 +43,7 @@ public class EmailCleaningService {
         return cleanMail;
     }
 
-    public String addAtSymbolBasedOnTLDs(final String input) {
+    String addAtSymbolBasedOnTLDs(final String input) {
         if (input.contains("@")) {
             return input;
         }
@@ -63,37 +59,37 @@ public class EmailCleaningService {
         return input;
     }
 
-    public String removeDotsBeforeAt(final String input) {
+    String removeDotsBeforeAt(final String input) {
         return input.replaceAll("\\.+@", "@");
     }
 
-    public String removeDoubleDotsAfterAt(final String input) {
+    String removeDoubleDotsAfterAt(final String input) {
         String substring = input.substring(input.lastIndexOf('@') + 1);
         String head = input.substring(0, input.lastIndexOf('@') + 1);
         return head.concat(substring.replaceAll("\\.{2,}", "."));
     }
 
 
-    public String removeUnwantedCharacters(final String input) {
+    String removeUnwantedCharacters(final String input) {
         return input.replaceAll("[\",$\"(?)\" ]", "");
     }
 
-    public String removeXAndQuestionMark(final String input) {
+    String removeXAndQuestionMark(final String input) {
         return input.replaceAll("x\\?", "");
     }
 
-    public String removeNonAlphaAtTheEnd(final String input) {
+    String removeNonAlphaAtTheEnd(final String input) {
         String punctuation = input;
         return (input.endsWith(".") || input.endsWith("0")) ? punctuation.substring(0, punctuation.length() - 1) : punctuation;
     }
 
-    public String cleanLastCharacterIfNotAlphabet(final String input) {
+    String cleanLastCharacterIfNotAlphabet(final String input) {
         String lastChar = input.substring(input.length() - 1).replaceAll("[^a-z]", "");
         String email = input.substring(0, input.length() - 1);
         return email.concat(lastChar);
     }
 
-    public String fixKnownTLDIfIncomplete(final String input) {
+    String fixKnownTLDIfIncomplete(final String input) {
         String[] splitOnDot = input.split("\\.");
         String email = String.join(".", Arrays.copyOf(splitOnDot, splitOnDot.length - 1));
         switch (splitOnDot[splitOnDot.length - 1]) {
@@ -143,7 +139,7 @@ public class EmailCleaningService {
         Not the nicest function, will replace john.it.hi@hotmail.it.com
         instead of making it john.it.hi@hotmail.it, very edge-casey.
      */
-    public String cleanTLDsWithRegex(final String input){
+    String cleanTLDsWithRegex(final String input){
         String[] TLDs = {COM_TLD, IT_TLD};
         String[] splitOnDot = input.split("\\.com|\\.it");
 
@@ -162,7 +158,7 @@ public class EmailCleaningService {
         return input;
     }
 
-    public String addMissingTLDIfKnownDomain(final String input) {
+    String addMissingTLDIfKnownDomain(final String input) {
         //check for not at symbol
         String substring = input.substring(input.lastIndexOf('@') + 1);
         String head = input.substring(0, input.lastIndexOf('@') + 1);
@@ -211,7 +207,7 @@ public class EmailCleaningService {
         }
     }
 
-    public String fixKnownMissingDotTLDIfIncomplete(final String input) {
+    String fixKnownMissingDotTLDIfIncomplete(final String input) {
         String[] splitOnDot = input.split("\\?");
         String email = String.join(".", Arrays.copyOf(splitOnDot, splitOnDot.length - 1));
         switch (splitOnDot[splitOnDot.length - 1]) {

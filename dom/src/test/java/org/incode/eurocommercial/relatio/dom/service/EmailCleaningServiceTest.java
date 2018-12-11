@@ -1,4 +1,4 @@
-package org.incode.eurocommercial.relatio.app.services.email;
+package org.incode.eurocommercial.relatio.dom.service;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -127,7 +127,7 @@ public class EmailCleaningServiceTest {
     }
 
     @Test
-    public void cleanLastCharacters_sadCase(){
+    public void cleanLastCharacters_7(){
         //given
         String unwantedEndEmail = "johndoe@hotmail.com..";
 

@@ -1,9 +1,5 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
@@ -11,6 +7,9 @@ import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.value.Blob;
+
+import javax.inject.Inject;
+import java.util.List;
 
 @DomainService(
         nature = NatureOfService.VIEW_MENU_ONLY
@@ -36,9 +35,9 @@ public class EventMenu {
         return eventSourceRepository.listAll();
     }
 
-//    public List<Event> allEventsWithConflicts() {
-//        return eventRepository.allEventsWithConflicts();
-//    }
+    public List<Event> allEventsWithConflicts() {
+        return eventRepository.allEventsWithConflicts();
+    }
 
     @Action(
             semantics = SemanticsOf.SAFE
