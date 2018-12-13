@@ -1,19 +1,16 @@
 package org.incode.eurocommercial.relatio.dom.aspect;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
-import org.joda.time.LocalDateTime;
-
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.repository.RepositoryService;
-
-import org.incode.eurocommercial.relatio.dom.profile.Profile;
 import org.incode.eurocommercial.relatio.dom.event.Event;
+import org.incode.eurocommercial.relatio.dom.profile.Profile;
+import org.joda.time.LocalDateTime;
+
+import javax.inject.Inject;
+import java.util.List;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
@@ -77,7 +74,8 @@ public class AspectRepository  {
 
     @Programmatic
     public Aspect create(
-            final Profile profile, final Event event,
+            final Profile profile,
+            final Event event,
             final AspectType type,
             final String value,
             final LocalDateTime collectedAt
@@ -88,14 +86,14 @@ public class AspectRepository  {
         aspect.setValue(value);
         aspect.setProfile(profile);
         aspect.setCollectedAt(collectedAt);
-
         repositoryService.persist(aspect);
         return aspect;
     }
 
     @Programmatic
     public Aspect findOrCreate(
-            final Profile profile, final Event event,
+            final Profile profile,
+            final Event event,
             final AspectType type,
             final String value,
             final LocalDateTime collectedAt
@@ -107,5 +105,7 @@ public class AspectRepository  {
         return aspect;
     }
 
-    @Inject RepositoryService repositoryService;
+    @Inject
+    RepositoryService repositoryService;
+
 }

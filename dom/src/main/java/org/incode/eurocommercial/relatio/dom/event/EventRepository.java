@@ -1,14 +1,14 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.query.QueryDefault;
+import org.apache.isis.applib.services.eventbus.EventBusService;
 import org.apache.isis.applib.services.repository.RepositoryService;
+
+import javax.inject.Inject;
+import java.util.List;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
@@ -97,7 +97,10 @@ public class EventRepository {
         event.setSource(source);
         event.setData(data);
         repositoryService.persist(event);
-        event.createAspects();
+
+        final Event.EventCreatedEvent domainEvent = new Event.EventCreatedEvent(event);
+        eventBusService.post(domainEvent);
+
         return event;
     }
 
@@ -113,5 +116,9 @@ public class EventRepository {
         return event;
     }
 
-    @Inject RepositoryService repositoryService;
+    @Inject
+    RepositoryService repositoryService;
+
+    @Inject
+    EventBusService eventBusService;
 }

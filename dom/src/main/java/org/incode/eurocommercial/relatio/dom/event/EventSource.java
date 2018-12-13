@@ -1,10 +1,12 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.isis.applib.annotation.Collection;
+import org.apache.isis.applib.annotation.CollectionLayout;
+import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.Editing;
+import org.joda.time.LocalDateTime;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.DatastoreIdentity;
@@ -14,18 +16,9 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.Queries;
 import javax.jdo.annotations.Query;
-
-import com.google.common.collect.Lists;
-
-import org.joda.time.LocalDateTime;
-
-import org.apache.isis.applib.annotation.Collection;
-import org.apache.isis.applib.annotation.CollectionLayout;
-import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.Editing;
-
-import lombok.Getter;
-import lombok.Setter;
+import java.util.Comparator;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @PersistenceCapable(
         identityType = IdentityType.DATASTORE
@@ -82,16 +75,16 @@ public class EventSource implements Comparable<EventSource> {
     @Getter @Setter
     private SortedSet<Event> events = new TreeSet<>();
 
+    /*  TODO: REL-12?
     @CollectionLayout(defaultView = "table")
     public List<Event> getEventsWithConflicts() {
-        return Lists.newArrayList(events).stream()
-                .filter(event -> event.getAspects().size() == 0)
-                .collect(Collectors.toList());
+        return null;
     }
 
     public boolean hideEventsWithConflicts() {
-        return getEventsWithConflicts().size() == 0;
+        return true;
     }
+    */
 
     @Override
     public int compareTo(final EventSource other) {

@@ -1,14 +1,8 @@
 package org.incode.eurocommercial.relatio.integtests.tests.event;
 
-import javax.inject.Inject;
-
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.clock.ClockService;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import org.incode.eurocommercial.relatio.dom.aspect.AspectRepository;
 import org.incode.eurocommercial.relatio.dom.event.Event;
 import org.incode.eurocommercial.relatio.dom.event.EventRepository;
@@ -18,8 +12,11 @@ import org.incode.eurocommercial.relatio.dom.event.EventSourceType;
 import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectAccessiEventFixture;
 import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectUtentiEventFixture;
 import org.incode.eurocommercial.relatio.integtests.tests.RelatioIntegTest;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import javax.inject.Inject;
 
 @Ignore
 public class EventIntegTest extends RelatioIntegTest {
@@ -50,7 +47,7 @@ public class EventIntegTest extends RelatioIntegTest {
 
             // then
             assertThat(event).isNotNull();
-            assertThat(event.getAspects()).hasSize(3);
+            assertThat(aspectRepository.findByEvent(event)).hasSize(3);
         }
     }
 
@@ -66,7 +63,7 @@ public class EventIntegTest extends RelatioIntegTest {
 
             // then
             assertThat(event).isNotNull();
-            assertThat(event.getAspects()).hasSize(6);
+            assertThat(aspectRepository.findByEvent(event)).hasSize(6);
         }
     }
 

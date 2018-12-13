@@ -1,5 +1,15 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.apache.isis.applib.value.Blob;
+import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
+import org.incode.eurocommercial.relatio.dom.utils.DateFormatUtils;
+import org.joda.time.LocalDate;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -8,21 +18,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import com.google.common.base.Splitter;
-import com.google.common.base.Strings;
-import com.google.common.collect.Maps;
-
-import org.joda.time.LocalDate;
-
-import org.apache.isis.applib.value.Blob;
-
-import org.incode.eurocommercial.relatio.dom.aspect.Aspect;
-import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
-import org.incode.eurocommercial.relatio.dom.utils.DateFormatUtils;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @AllArgsConstructor
 public enum EventSourceType {
@@ -48,9 +43,7 @@ public enum EventSourceType {
     public EventParser getParser(){
         try {
             return (EventParser) parserClass.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return null;
@@ -69,12 +62,7 @@ public enum EventSourceType {
             }
             for (String record = bfReader.readLine(); record != null; record = bfReader.readLine()) {
                 final long time = System.nanoTime();
-                final Event event = eventRepository.create(source, record);
-                for (Aspect aspect : event.getAspects()) {
-                    if (aspect.getProfile() != null) {
-                        aspect.getType().updateProfile(aspect);
-                    }
-                }
+                eventRepository.create(source, record);
                 final double elapsedTime = (System.nanoTime() - time) / 1e9;
                 System.out.println("==========================> Elapsed time: " + elapsedTime);
             }
@@ -87,7 +75,7 @@ public enum EventSourceType {
     }
 
 
-    public interface EventParser<T> {
+    public interface EventParser {
         Map<AspectType, String> toMap(String data);
         int headerSize();
     }
