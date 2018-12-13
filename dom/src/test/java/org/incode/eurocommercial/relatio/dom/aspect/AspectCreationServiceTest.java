@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class AspectCreationServiceTest {
 
@@ -215,5 +216,27 @@ public class AspectCreationServiceTest {
 
         // then
         assertThat(resultingProfiles).hasSize(4);
+    }
+
+    @Test
+    public void updateProfileForAspects_happy_case(){
+        //given
+        Aspect aspect = new Aspect(mockEvent, AspectType.EmailAccount, "hello@yahoo.com");
+        assertThat(aspect.getProfile()).isNull();
+
+        context.checking(new Expectations() {{
+            oneOf(mockEvent).compareTo(mockEvent);
+            will(returnValue(0));
+        }});
+
+        aspect.setProfile(new Profile());
+        SortedSet<Aspect> sortedAspects = new TreeSet<>(Arrays.asList(aspect));
+
+        //when
+        AspectCreationService aspectCreationService = new AspectCreationService();
+        aspectCreationService.updateProfileForAspects(sortedAspects);
+
+        //then
+        assertThat(aspect.getProfile().getEmailAccount()).isEqualTo("hello@yahoo.com");
     }
 }
