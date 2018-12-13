@@ -1,6 +1,14 @@
 package org.incode.eurocommercial.relatio.dom.aspect;
 
-import java.util.Comparator;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.Where;
+import org.incode.eurocommercial.relatio.dom.event.Event;
+import org.incode.eurocommercial.relatio.dom.profile.Profile;
+import org.joda.time.LocalDateTime;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.DatastoreIdentity;
@@ -9,19 +17,7 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Queries;
 import javax.jdo.annotations.Query;
-
-import org.joda.time.LocalDateTime;
-
-import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.Where;
-
-import org.incode.eurocommercial.relatio.dom.event.Event;
-import org.incode.eurocommercial.relatio.dom.profile.Profile;
-
-import lombok.Getter;
-import lombok.Setter;
+import java.util.Comparator;
 
 @PersistenceCapable(
         identityType = IdentityType.DATASTORE
@@ -65,7 +61,7 @@ public class Aspect implements Comparable<Aspect> {
     @Column(allowsNull = "true", name = "profileId")
     @Getter @Setter
     @Property(hidden = Where.REFERENCES_PARENT)
-    private Profile profile;
+    Profile profile;
 
     @Column(allowsNull = "false", name = "eventId")
     @Getter @Setter

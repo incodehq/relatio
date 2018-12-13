@@ -11,6 +11,7 @@ import org.joda.time.LocalDateTime;
 
 import javax.inject.Inject;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -48,7 +49,7 @@ public class AspectCreationService {
     }
 
     @Programmatic
-    private Map<AspectType, String> getAspectMap(Event event) {
+    Map<AspectType, String> getAspectMap(Event event) {
         /* Retrieve all aspects from event data and filter all empty aspects */
         final Map<AspectType, String> map = event.getSource().getType().getParser().toMap(event.getData());
         return map.entrySet().stream()
@@ -65,7 +66,7 @@ public class AspectCreationService {
     }
 
     @Programmatic
-    private Map<AspectType, String> getKeyAspectsFromAspectMap(Map<AspectType, String> aspectMap) {
+    Map<AspectType, String> getKeyAspectsFromAspectMap(Map<AspectType, String> aspectMap) {
         /* Filter all key aspects from existing aspect map */
         return aspectMap.entrySet().stream()
                 .filter(e -> e.getKey().isKey())
@@ -73,7 +74,7 @@ public class AspectCreationService {
     }
 
     @Programmatic
-    private SortedSet<LocalDateTime> getCollectionDatesFromAspectMap(final Map<AspectType, String> aspectMap) {
+    SortedSet<LocalDateTime> getCollectionDatesFromAspectMap(final Map<AspectType, String> aspectMap) {
         return aspectMap.entrySet().stream()
                 .filter(e -> e.getKey().isCollectionDate())
                 .map(e -> LocalDateTime.parse(e.getValue()))
@@ -81,11 +82,12 @@ public class AspectCreationService {
     }
 
     @Programmatic
-    private Set<Profile> getProfilesFromKeyAspects(Map<AspectType, String> keyAspectMap) {
+    Set<Profile> getProfilesFromKeyAspects(Map<AspectType, String> keyAspectMap) {
         /* Retrieve all profiles related to key aspects */
         return keyAspectMap.entrySet().stream()
                 .flatMap(entry -> aspectRepository.findByTypeAndValue(entry.getKey(), entry.getValue()).stream())
                 .map(Aspect::getProfile)
+                .filter(profile -> Objects.nonNull(profile))
                 .collect(Collectors.toSet());
     }
 
@@ -105,6 +107,6 @@ public class AspectCreationService {
     private ProfileRepository profileRepository;
 
     @Inject
-    private AspectRepository aspectRepository;
+    AspectRepository aspectRepository;
 
 }
