@@ -90,6 +90,12 @@
     </build>
 
     <dependencies>
+        
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-core</artifactId>
+            <version>${axon-core.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.isis.core</groupId>
