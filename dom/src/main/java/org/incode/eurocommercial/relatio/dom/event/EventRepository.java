@@ -4,7 +4,6 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.query.QueryDefault;
-import org.apache.isis.applib.services.eventbus.EventBusService;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
 import javax.inject.Inject;
@@ -97,10 +96,6 @@ public class EventRepository {
         event.setSource(source);
         event.setData(data);
         repositoryService.persist(event);
-
-        final Event.EventCreatedEvent domainEvent = new Event.EventCreatedEvent(event);
-        eventBusService.post(domainEvent);
-
         return event;
     }
 
@@ -118,7 +113,4 @@ public class EventRepository {
 
     @Inject
     RepositoryService repositoryService;
-
-    @Inject
-    EventBusService eventBusService;
 }

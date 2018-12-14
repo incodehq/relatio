@@ -1,6 +1,7 @@
 package org.incode.eurocommercial.relatio.integtests.tests.aspect;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.incode.eurocommercial.relatio.dom.aspect.Aspect;
 import org.incode.eurocommercial.relatio.dom.aspect.AspectCreationService;
 import org.incode.eurocommercial.relatio.dom.aspect.AspectRepository;
@@ -14,8 +15,6 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class AspectCreationServiceIntegTest extends RelatioIntegTest {
 
@@ -45,7 +44,6 @@ public class AspectCreationServiceIntegTest extends RelatioIntegTest {
         public void createAspectsFromEvent_happy_case(){
             //given
             Event event = eventRepository.listAll().get(0);
-            int sizeBeforeAction = profileRepository.listAll().size();
 
             //when
             aspectCreationService.createAspectsFromEvent(event);
@@ -53,8 +51,7 @@ public class AspectCreationServiceIntegTest extends RelatioIntegTest {
             //then
             List<Aspect> aspectsList = aspectRepository.findByEvent(event);
             assertThat(aspectsList).isNotEmpty();
-            assertThat(profileRepository.listAll().size()).isGreaterThan(sizeBeforeAction);
-
+            assertThat(aspectsList.size()).isEqualTo(3);
         }
     }
 }

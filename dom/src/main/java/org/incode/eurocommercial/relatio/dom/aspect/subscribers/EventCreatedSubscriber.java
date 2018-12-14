@@ -13,8 +13,8 @@ import javax.inject.Inject;
 public class EventCreatedSubscriber extends AbstractSubscriber {
 
     @EventHandler
-    public void on(final Event.EventCreatedEvent domainEvent) {
-        final Event source = (Event) domainEvent.getSource();
+    public void on(Event.PersistedEvent event) {
+        final Event source = event.getSource();
         aspectCreationService.createAspectsFromEvent(source);
     }
 
