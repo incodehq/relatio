@@ -21,12 +21,16 @@ public enum AspectType {
         }
     },
     MinimumAge(),
-    Birthday() {
+    DateOfBirth() {
         @Override public void updateProfile(final Aspect aspect) {
-            aspect.getProfile().setBirthdate(LocalDate.parse(aspect.getValue()));
+            aspect.getProfile().setDateOfBirth(LocalDate.parse(aspect.getValue()));
         }
     },
-    Age(),
+    ApproximateDateOfBirth() {
+        @Override public void updateProfile(final Aspect aspect) {
+            aspect.getProfile().setApproximateDateOfBirth(LocalDate.parse(aspect.getValue()));
+        }
+    },
     Gender() {
         @Override public void updateProfile(final Aspect aspect) {
             aspect.getProfile().setGender(Profile.Gender.valueOf(aspect.getValue().toUpperCase()));

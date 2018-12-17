@@ -101,7 +101,13 @@ public class Profile implements Comparable<Profile> {
     @Property()
     @Persistent
     @Getter @Setter
-    private LocalDate birthdate;
+    private LocalDate dateOfBirth;
+
+    @Column(allowsNull = "true")
+    @Property()
+    @Persistent
+    @Getter @Setter
+    private LocalDate approximateDateOfBirth;
 
     @Column(allowsNull = "true")
     @Property()
@@ -160,6 +166,6 @@ public class Profile implements Comparable<Profile> {
     public enum Gender {
         MALE,
         FEMALE,
-        OTHER;
+        OTHER
     }
 }

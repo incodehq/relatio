@@ -1,14 +1,11 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
-import java.util.Map;
-
-import org.jmock.Expectations;
+import static org.assertj.core.api.Assertions.assertThat;
+import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.Map;
 
 @Ignore
 public class EventSourceTypeTest {
@@ -28,7 +25,7 @@ public class EventSourceTypeTest {
             // then
             assertThat(map.get(AspectType.FirstName)).isEqualTo("Pattie");
             assertThat(map.get(AspectType.LastName)).isEqualTo("Yeliashev");
-            assertThat(map.get(AspectType.Birthday)).isEqualTo("");
+            assertThat(map.get(AspectType.DateOfBirth)).isEqualTo("");
             assertThat(map.get(AspectType.Gender)).isEqualTo("female");
             assertThat(map.get(AspectType.FacebookAccount)).isEqualTo("1984384839890369");
         }
@@ -37,7 +34,6 @@ public class EventSourceTypeTest {
     public static class WifiProjectsUtentiCsvTest extends EventSourceTypeTest {
 
         @Test
-        @Ignore
         public void happy_case() throws Exception {
 
             // given
@@ -52,11 +48,11 @@ public class EventSourceTypeTest {
 
             assertThat(map.get(AspectType.FirstName)).isEqualTo("Leonid");
             assertThat(map.get(AspectType.LastName)).isEqualTo("Mergue");
-            assertThat(map.get(AspectType.Birthday)).isEqualTo("");
+            assertThat(map.get(AspectType.DateOfBirth)).isEqualTo("");
             assertThat(map.get(AspectType.EmailAccount)).isEqualTo("lmerguem@quantcast.com");
             assertThat(map.get(AspectType.FacebookAccount)).isEqualTo("1240943875699972");
             assertThat(map.get(AspectType.Gender)).isEqualTo("male");
-            assertThat(map.get(AspectType.Access)).isEqualTo("29/03/2017");
+            assertThat(map.get(AspectType.Access)).isEqualTo("2017-03-29");
         }
     }
 
@@ -127,7 +123,7 @@ public class EventSourceTypeTest {
             assertThat(map.get(AspectType.FirstName)).isEqualTo("Rosa");
             assertThat(map.get(AspectType.LastName)).isEqualTo("Di Mamma");
             assertThat(map.get(AspectType.Gender)).isEqualTo("FEMALE");
-            assertThat(map.get(AspectType.Age)).isEqualTo("51");
+//            assertThat(map.get(AspectType.Age)).isEqualTo("51");
             assertThat(map.get(AspectType.EmailAccount)).isEqualTo("");
             assertThat(map.get(AspectType.CellPhoneNumber)).isEqualTo("3288993344");
             assertThat(map.get(AspectType.PostalCode)).isEqualTo("22040");
@@ -152,7 +148,7 @@ public class EventSourceTypeTest {
             assertThat(map.get(AspectType.FirstName)).isEqualTo("Sandrino");
             assertThat(map.get(AspectType.LastName)).isEqualTo("Ginnio");
             assertThat(map.get(AspectType.Gender)).isEqualTo("MALE");
-            assertThat(map.get(AspectType.Age)).isEqualTo("34");
+//            assertThat(map.get(AspectType.Age)).isEqualTo("34");
             assertThat(map.get(AspectType.EmailAccount)).isEqualTo("hello@yahoo.com");
             assertThat(map.get(AspectType.CellPhoneNumber)).isEqualTo("3912345678");
             assertThat(map.get(AspectType.PostalCode)).isEqualTo("23900");
@@ -177,7 +173,7 @@ public class EventSourceTypeTest {
             assertThat(map.get(AspectType.FirstName)).isEqualTo("No");
             assertThat(map.get(AspectType.LastName)).isEqualTo("Gender");
             assertThat(map.get(AspectType.Gender)).isNull();
-            assertThat(map.get(AspectType.Age)).isEqualTo("51");
+            assertThat(map.get(AspectType.ApproximateDateOfBirth)).isEqualTo("1967-01-21");
             assertThat(map.get(AspectType.EmailAccount)).isEqualTo("");
             assertThat(map.get(AspectType.CellPhoneNumber)).isEqualTo("3288993344");
             assertThat(map.get(AspectType.PostalCode)).isEqualTo("22040");
@@ -202,7 +198,7 @@ public class EventSourceTypeTest {
             assertThat(map.get(AspectType.FirstName)).isEqualTo("Rosa");
             assertThat(map.get(AspectType.LastName)).isEqualTo("Di Mamma");
             assertThat(map.get(AspectType.Gender)).isEqualTo("FEMALE");
-            assertThat(map.get(AspectType.Age)).isEqualTo("51");
+            assertThat(map.get(AspectType.ApproximateDateOfBirth)).isEqualTo("1967-01-21");
             assertThat(map.get(AspectType.EmailAccount)).isEqualTo("");
             assertThat(map.get(AspectType.CellPhoneNumber)).isEqualTo("3288993344");
             assertThat(map.get(AspectType.PostalCode)).isEqualTo("22040");

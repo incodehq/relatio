@@ -9,6 +9,7 @@ import org.apache.isis.applib.value.Blob;
 import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
 import org.incode.eurocommercial.relatio.dom.utils.DateFormatUtils;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -138,7 +139,7 @@ public enum EventSourceType {
                     map.put(AspectType.FacebookAccount, stringMap.get("userid"));
                     map.put(AspectType.FirstName, stringMap.get("first_name"));
                     map.put(AspectType.LastName, stringMap.get("last_name"));
-                    map.put(AspectType.Birthday, stringMap.get("birthday"));
+                    map.put(AspectType.DateOfBirth, stringMap.get("birthday"));
                     map.put(AspectType.Gender, stringMap.get("gender"));
                     // TODO: We see age_range, what to do with it?
                     return map;
@@ -212,7 +213,16 @@ public enum EventSourceType {
                 }else if(!values[2].trim().isEmpty()){
                     map.put(AspectType.Gender, "OTHER");
                 }
-                map.put(AspectType.Age, values[3].trim());
+
+                // Approximating DOB because we found an age and a gamePlayedDateAndTime
+                if(!values[3].isEmpty() &&  !values[9].trim().isEmpty()){
+                    LocalDate gamePlayedDateAndTime = LocalDateTime.parse(values[9].trim()).toLocalDate();
+                    Integer age = Integer.parseInt(values[3].trim());
+                    // assuming played in middle of the age, and moving the time from gamePlayed to past of age
+                    LocalDate approximateDateOfBirth = gamePlayedDateAndTime.minusMonths(6).minusYears(age);
+                    map.put(AspectType.ApproximateDateOfBirth, approximateDateOfBirth.toString());
+                }
+
                 map.put(AspectType.EmailAccount, values[4].trim());
                 map.put(AspectType.CellPhoneNumber, values[5].trim());
                 map.put(AspectType.PostalCode, values[6].trim());
@@ -355,7 +365,7 @@ public enum EventSourceType {
                 map.put(AspectType.FirstName, values[0]);
                 map.put(AspectType.LastName, values[1]);
                 try {
-                    map.put(AspectType.Birthday, DateFormatUtils.toISOLocalDate(values[2], "dd/MM/yyyy"));
+                    map.put(AspectType.DateOfBirth, DateFormatUtils.toISOLocalDate(values[2], "dd/MM/yyyy"));
                 } catch (Exception ignored) {
                 }
                 map.put(AspectType.Address, values[3]);
@@ -676,7 +686,7 @@ public enum EventSourceType {
                 map.put(AspectType.PostalCode, values[8]);
                 map.put(AspectType.Province, values[9]);
                 map.put(AspectType.HomePhoneNumber, values[10]);
-                map.put(AspectType.Birthday, DateFormatUtils.toISOLocalDate(values[11],"dd/MM/yyyy"));
+                map.put(AspectType.DateOfBirth, DateFormatUtils.toISOLocalDate(values[11],"dd/MM/yyyy"));
                 map.put(AspectType.EmailAccount, values[12]);
                 if(values[13].trim().equals("SI")) {
                     map.put(AspectType.PrivacyConsent, "true");
@@ -747,7 +757,7 @@ public enum EventSourceType {
                 //values[8]: 'user-phone' useless: only 1 entry, malformed
 
                 try {
-                    map.put(AspectType.Birthday,
+                    map.put(AspectType.DateOfBirth,
                         java.time.LocalDateTime.parse(values[9], formatter)
                             .toLocalDate().toString());
                 }
@@ -794,7 +804,7 @@ public enum EventSourceType {
                     map.put(AspectType.PostalCode, values[8]);
                     map.put(AspectType.Province, values[9]);
                     map.put(AspectType.HomePhoneNumber, values[10]);
-                    map.put(AspectType.Birthday, DateFormatUtils.toISOLocalDate(values[11],"dd/MM/yyyy"));
+                    map.put(AspectType.DateOfBirth, DateFormatUtils.toISOLocalDate(values[11],"dd/MM/yyyy"));
                     map.put(AspectType.EmailAccount, values[12]);
                     if(values[13].trim().equals("SI")) {
                         map.put(AspectType.PrivacyConsent, "true");

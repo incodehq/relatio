@@ -57,7 +57,7 @@ public class AspectCreationServiceTest {
             {
                 put(AspectType.FirstName, "Sandrino");
                 put(AspectType.LastName, "Ginnio");
-                put(AspectType.Age, "34");
+                put(AspectType.ApproximateDateOfBirth, "1984-01-21");
                 put(AspectType.Gender, "MALE");
                 put(AspectType.EmailAccount, "hello@yahoo.com");
                 put(AspectType.CellPhoneNumber, "3912345678");
@@ -85,7 +85,7 @@ public class AspectCreationServiceTest {
             {
                 put(AspectType.FirstName, "Sandrino");
                 put(AspectType.LastName, "Ginnio");
-                put(AspectType.Age, "34");
+                put(AspectType.ApproximateDateOfBirth, "1984-01-21");
                 put(AspectType.Gender, "MALE");
                 put(AspectType.PostalCode, "23900");
                 put(AspectType.PrivacyConsent, "true");
@@ -137,7 +137,7 @@ public class AspectCreationServiceTest {
             {
                 put(AspectType.FirstName, "Sandrino");
                 put(AspectType.LastName, "Ginnio");
-                put(AspectType.Age, "34");
+                put(AspectType.ApproximateDateOfBirth, "1984-01-21");
                 put(AspectType.Gender, "MALE");
                 put(AspectType.EmailAccount, "hello@yahoo.com");
                 put(AspectType.CellPhoneNumber, "3912345678");
