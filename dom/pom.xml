@@ -143,16 +143,14 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <!-- ASL v2.0 -->
-            <!-- in turn, depends on:
-                 * http://highcharts.com/license
-                   (commercial license required unless personal/open source project)
-             -->
+            <groupId>org.isisaddons.wicket.wickedcharts</groupId>
+            <artifactId>isis-wicket-wickedcharts-cpt</artifactId>
+        </dependency>
+<!--        <dependency>
             <groupId>com.googlecode.wicked-charts</groupId>
             <artifactId>wicked-charts-wicket6</artifactId>
             <version>${wicked-charts.version}</version>
             <exclusions>
-                <!-- excluded here but depended on below, in order can exclude its dependencies on jackson -->
                 <exclusion>
                     <groupId>com.googlecode.wicked-charts</groupId>
                     <artifactId>wicked-charts-highcharts</artifactId>
@@ -177,7 +175,7 @@
                     <groupId>com.fasterxml.jackson.core</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
 

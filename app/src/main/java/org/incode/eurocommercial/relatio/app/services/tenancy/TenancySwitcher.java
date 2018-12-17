@@ -25,6 +25,7 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.services.registry.ServiceRegistry;
 
 import org.isisaddons.module.security.app.user.MeService;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
@@ -54,7 +55,7 @@ public class TenancySwitcher extends AbstractService {
     public HomePageViewModel switchTenancy(final ApplicationTenancy applicationTenancy) {
         final ApplicationUser applicationUser = meService.me();
         applicationUser.updateAtPath(applicationTenancy.getPath());
-        return homePageService.homePage();
+        return serviceRegistry.injectServicesInto(new HomePageViewModel());
     }
 
     public List<ApplicationTenancy> choices0SwitchTenancy() {
@@ -70,13 +71,16 @@ public class TenancySwitcher extends AbstractService {
 
     //region > injected services
     @javax.inject.Inject
-    private MeService meService;
+    MeService meService;
 
     @javax.inject.Inject
-    private ApplicationTenancyRepository applicationTenancyRepository;
+    ApplicationTenancyRepository applicationTenancyRepository;
 
     @javax.inject.Inject
-    private HomePageService homePageService;
+    HomePageService homePageService;
+
+    @javax.inject.Inject
+    ServiceRegistry serviceRegistry;
     //endregion
 
 }

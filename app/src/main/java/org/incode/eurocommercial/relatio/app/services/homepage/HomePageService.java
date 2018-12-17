@@ -25,6 +25,8 @@ import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.registry.ServiceRegistry;
 
+import org.isisaddons.wicket.wickedcharts.cpt.applib.WickedChart;
+
 @DomainService(
         nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY // trick to suppress the actions from the top-level menu
 )
@@ -36,8 +38,9 @@ public class HomePageService {
             semantics = SemanticsOf.SAFE
     )
     @HomePage
-    public HomePageViewModel homePage() {
-        return serviceRegistry.injectServicesInto(new HomePageViewModel());
+    public WickedChart homePage() {
+        final HomePageViewModel vm = serviceRegistry.injectServicesInto(new HomePageViewModel());
+        return vm.getChart();
     }
 
     //endregion
