@@ -33,6 +33,7 @@
         <isis-maven-plugin.validate.appManifest>org.incode.eurocommercial.relatio.dom.RelatioDomManifest</isis-maven-plugin.validate.appManifest>
         <mavenmixin-isisvalidate.version>0.0.2</mavenmixin-isisvalidate.version>
         <axon-core.version>2.4</axon-core.version>
+        <wicked-charts.version>1.5.0</wicked-charts.version>
     </properties>
 
     <build>
@@ -146,6 +147,42 @@
             <artifactId>commons-validator</artifactId>
             <version>1.6</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <!-- ASL v2.0 -->
+            <!-- in turn, depends on:
+                 * http://highcharts.com/license
+                   (commercial license required unless personal/open source project)
+             -->
+            <groupId>com.googlecode.wicked-charts</groupId>
+            <artifactId>wicked-charts-wicket6</artifactId>
+            <version>${wicked-charts.version}</version>
+            <exclusions>
+                <!-- excluded here but depended on below, in order can exclude its dependencies on jackson -->
+                <exclusion>
+                    <groupId>com.googlecode.wicked-charts</groupId>
+                    <artifactId>wicked-charts-highcharts</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.wicked-charts</groupId>
+            <artifactId>wicked-charts-highcharts</artifactId>
+            <version>${wicked-charts.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jackson-annotations</artifactId>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jackson-core</artifactId>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jackson-databind</artifactId>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>
