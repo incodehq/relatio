@@ -95,7 +95,7 @@ public class EventRepository {
         final Event event = repositoryService.instantiate(Event.class);
         event.setSource(source);
         event.setData(data);
-        repositoryService.persist(event);
+        repositoryService.persistAndFlush(event);
         return event;
     }
 
