@@ -16,13 +16,23 @@
  */
 package org.incode.eurocommercial.relatio.app.services.homepage;
 
-import com.googlecode.wickedcharts.highcharts.options.*;
+import java.util.Arrays;
+
+import com.googlecode.wickedcharts.highcharts.options.Axis;
+import com.googlecode.wickedcharts.highcharts.options.ChartOptions;
+import com.googlecode.wickedcharts.highcharts.options.HorizontalAlignment;
+import com.googlecode.wickedcharts.highcharts.options.Legend;
+import com.googlecode.wickedcharts.highcharts.options.LegendLayout;
+import com.googlecode.wickedcharts.highcharts.options.Options;
+import com.googlecode.wickedcharts.highcharts.options.SeriesType;
+import com.googlecode.wickedcharts.highcharts.options.Title;
+import com.googlecode.wickedcharts.highcharts.options.VerticalAlignment;
 import com.googlecode.wickedcharts.highcharts.options.series.SimpleSeries;
+
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.ViewModel;
-import org.incode.eurocommercial.relatio.app.services.homepage.chart.WickedChart;
 
-import java.util.Arrays;
+import org.isisaddons.wicket.wickedcharts.cpt.applib.WickedChart;
 
 import static org.apache.isis.applib.annotation.Where.EVERYWHERE;
 
