@@ -220,7 +220,9 @@ public enum EventSourceType {
                     Integer age = Integer.parseInt(values[3].trim());
                     // assuming played in middle of the age, and moving the time from gamePlayed to past of age
                     LocalDate approximateDateOfBirth = gamePlayedDateAndTime.minusMonths(6).minusYears(age);
-                    map.put(AspectType.ApproximateDateOfBirth, approximateDateOfBirth.toString());
+                    if(AspectMapHelperFunctions.isValidDate(approximateDateOfBirth.toString())){
+                        map.put(AspectType.ApproximateDateOfBirth, approximateDateOfBirth.toString());
+                    }
                 }
 
                 map.put(AspectType.EmailAccount, values[4].trim());
