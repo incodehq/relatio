@@ -8,10 +8,11 @@ public class AspectMapHelperFunctions {
 
     public static boolean isValidDate(String pDateString){
         try{
-            DateUtils.parseDate(pDateString, "yyyy-MM-dd");
+            DateUtils.parseDateStrictly(pDateString, "yyyy-MM-dd");
             return true;
         } catch (ParseException e){
             return false;
+
         }
     }
 
