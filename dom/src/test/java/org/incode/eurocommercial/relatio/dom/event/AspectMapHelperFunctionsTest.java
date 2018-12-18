@@ -12,7 +12,7 @@ public class AspectMapHelperFunctionsTest {
 
     @Test
     public void isValidDate_happy_case(){
-        assertThat(AspectMapHelperFunctions.isValidDate("1995-01-22")).isEqualTo(false);
+        assertThat(AspectMapHelperFunctions.isValidDate("1995-01-22")).isEqualTo(true);
     }
 
 }

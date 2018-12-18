@@ -1,17 +1,18 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
+import org.apache.commons.lang3.time.DateUtils;
+
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 public class AspectMapHelperFunctions {
 
     public static boolean isValidDate(String pDateString){
         try{
-            new SimpleDateFormat("MM/dd/yyyy").parse(pDateString);
+            DateUtils.parseDate(pDateString, "yyyy-MM-dd");
             return true;
         } catch (ParseException e){
             return false;
         }
     }
-    
+
 }
