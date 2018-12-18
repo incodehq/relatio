@@ -17,9 +17,9 @@ public class EventCreatedSubscriber extends AbstractSubscriber {
     private static final Logger LOG = LoggerFactory.getLogger(EventCreatedSubscriber.class);
 
     @EventHandler
-    public void on(Event.PersistedEvent event) {
-        final Event source = event.getSource();
-        LOG.debug("Event: {}", event.getSource());
+    public void on(final Event.EventCreatedEvent domainEvent) {
+        final Event source = (Event) domainEvent.getSource();
+        LOG.debug("Event: {}", source);
         aspectCreationService.createAspectsFromEvent(source);
     }
 
