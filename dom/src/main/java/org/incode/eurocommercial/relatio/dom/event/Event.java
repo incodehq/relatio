@@ -6,6 +6,7 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.services.eventbus.ObjectPersistedEvent;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.DatastoreIdentity;
@@ -15,7 +16,6 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Queries;
 import javax.jdo.annotations.Query;
 import java.util.Comparator;
-import java.util.EventObject;
 
 
 @PersistenceCapable(
@@ -47,7 +47,8 @@ import java.util.EventObject;
                         + "WHERE source == :source && data == :data ")
 })
 @DomainObject(
-        editing = Editing.DISABLED
+        editing = Editing.DISABLED,
+        persistedLifecycleEvent=Event.PersistedEvent.class
 )
 public class Event implements Comparable<Event> {
 
@@ -72,13 +73,6 @@ public class Event implements Comparable<Event> {
         return Comparator.comparing(Event::getSource).thenComparing(Event::getData).compare(this, other);
     }
 
-    public static class EventCreatedEvent extends EventObject {
-        private static final long serialVersionUID = 1L;
-
-        public EventCreatedEvent(Event source) {
-            super(source);
-        }
-
-    }
+    public static class PersistedEvent extends ObjectPersistedEvent<Event> { }
 
 }
