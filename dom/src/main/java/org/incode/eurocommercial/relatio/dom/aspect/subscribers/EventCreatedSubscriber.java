@@ -19,7 +19,8 @@ public class EventCreatedSubscriber extends AbstractSubscriber {
     @EventHandler
     public void on(Event.PersistedEvent event) {
         final Event source = event.getSource();
-        LOG.debug("Event: {}", event.getSource());
+        LOG.debug("Event: {}", source.getData());
+        LOG.debug("EventSource: {}", source.getSource());
         aspectCreationService.createAspectsFromEvent(source);
     }
 
