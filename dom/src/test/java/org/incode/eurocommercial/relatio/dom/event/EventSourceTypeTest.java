@@ -123,11 +123,10 @@ public class EventSourceTypeTest {
             assertThat(map.get(AspectType.FirstName)).isEqualTo("Rosa");
             assertThat(map.get(AspectType.LastName)).isEqualTo("Di Mamma");
             assertThat(map.get(AspectType.Gender)).isEqualTo("FEMALE");
-//            assertThat(map.get(AspectType.Age)).isEqualTo("51");
             assertThat(map.get(AspectType.EmailAccount)).isEqualTo("");
             assertThat(map.get(AspectType.CellPhoneNumber)).isEqualTo("3288993344");
             assertThat(map.get(AspectType.PostalCode)).isEqualTo("22040");
-            assertThat(map.get(AspectType.MarketingConsent)).isEqualTo("NO");
+            assertThat(map.get(AspectType.MarketingConsent)).isEqualTo("false");
             assertThat(map.get(AspectType.PrivacyConsent)).isEqualTo("true");
             assertThat(map.get(AspectType.GamePlayDateAndTime)).isEqualTo("2018-07-21T08:19:23");
             assertThat(map.get(AspectType.GameType)).isEqualTo("BENVENUTO");
@@ -148,7 +147,6 @@ public class EventSourceTypeTest {
             assertThat(map.get(AspectType.FirstName)).isEqualTo("Sandrino");
             assertThat(map.get(AspectType.LastName)).isEqualTo("Ginnio");
             assertThat(map.get(AspectType.Gender)).isEqualTo("MALE");
-//            assertThat(map.get(AspectType.Age)).isEqualTo("34");
             assertThat(map.get(AspectType.EmailAccount)).isEqualTo("hello@yahoo.com");
             assertThat(map.get(AspectType.CellPhoneNumber)).isEqualTo("3912345678");
             assertThat(map.get(AspectType.PostalCode)).isEqualTo("23900");
@@ -178,7 +176,7 @@ public class EventSourceTypeTest {
             assertThat(map.get(AspectType.CellPhoneNumber)).isEqualTo("3288993344");
             assertThat(map.get(AspectType.PostalCode)).isEqualTo("22040");
             assertThat(map.get(AspectType.MarketingConsent)).isEqualTo("true");
-            assertThat(map.get(AspectType.PrivacyConsent)).isEqualTo("NO");
+            assertThat(map.get(AspectType.PrivacyConsent)).isEqualTo("false");
             assertThat(map.get(AspectType.GamePlayDateAndTime)).isEqualTo("2018-07-21T08:19:23");
             assertThat(map.get(AspectType.GameType)).isEqualTo("BENVENUTO");
 
@@ -202,7 +200,7 @@ public class EventSourceTypeTest {
             assertThat(map.get(AspectType.EmailAccount)).isEqualTo("");
             assertThat(map.get(AspectType.CellPhoneNumber)).isEqualTo("3288993344");
             assertThat(map.get(AspectType.PostalCode)).isEqualTo("22040");
-            assertThat(map.get(AspectType.MarketingConsent)).isEqualTo("NO");
+            assertThat(map.get(AspectType.MarketingConsent)).isEqualTo("false");
             assertThat(map.get(AspectType.PrivacyConsent)).isEqualTo("true");
             assertThat(map.get(AspectType.GamePlayDateAndTime)).isEqualTo("2018-07-21T08:19:23");
             assertThat(map.get(AspectType.GameType)).isEqualTo("BENVENUTO");

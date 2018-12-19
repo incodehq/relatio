@@ -22,6 +22,18 @@ public class ProfileRepository {
     }
 
     @Programmatic
+    public List<Profile> findByUuid(
+            final String uuid
+    ){
+        return repositoryService.allMatches(
+                new org.apache.isis.applib.query.QueryDefault<>(
+                        Profile.class,
+                        "findByUuid",
+                        "uuid", uuid)
+        );
+    }
+
+    @Programmatic
     public List<Profile> findByLastNameContains(
             final String lastName
     ) {
@@ -62,7 +74,13 @@ public class ProfileRepository {
     @Programmatic
     public Profile create() {
         final Profile profile = repositoryService.instantiate(Profile.class);
-        profile.setUuid(UUID.randomUUID().toString());
+        String uuid = UUID.randomUUID().toString();
+
+        while(!findByUuid(uuid).isEmpty()){
+            uuid = UUID.randomUUID().toString();
+        }
+
+        profile.setUuid(uuid);
         repositoryService.persist(profile);
         return profile;
     }

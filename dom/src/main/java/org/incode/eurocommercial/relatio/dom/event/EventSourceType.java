@@ -232,12 +232,12 @@ public enum EventSourceType {
                 if(values[7].trim().equals("YES")) {
                     map.put(AspectType.MarketingConsent, "true");
                 } else{
-                    map.put(AspectType.MarketingConsent, values[7].trim());
+                    map.put(AspectType.MarketingConsent, "false");
                 }
                 if(values[8].trim().equals("YES")) {
                     map.put(AspectType.PrivacyConsent, "true");
                 } else{
-                    map.put(AspectType.PrivacyConsent, values[8].trim());
+                    map.put(AspectType.PrivacyConsent, "false");
                 }
 
                 map.put(AspectType.GamePlayDateAndTime, values[9].trim());

@@ -46,6 +46,12 @@ import java.util.TreeSet;
                         + "FROM org.incode.eurocommercial.relatio.dom.profile.Profile "
         ),
         @Query(
+                name = "findByUuid", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM org.incode.eurocommercial.relatio.dom.profile.Profile "
+                        + "WHERE uuid == :uuid "
+        ),
+        @Query(
                 name = "findByFullNameContains", language = "JDOQL",
                 value = "SELECT "
                         + "FROM org.incode.eurocommercial.relatio.dom.profile.Profile "
@@ -132,12 +138,12 @@ public class Profile implements Comparable<Profile> {
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
-    private String marketingConsent;
+    private Boolean marketingConsent;
 
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
-    private String privacyConsent;
+    private Boolean privacyConsent;
 
     @Persistent(mappedBy = "profile", dependentElement = "false")
     @Collection

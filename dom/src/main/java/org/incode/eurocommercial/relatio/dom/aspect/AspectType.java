@@ -84,7 +84,7 @@ public enum AspectType {
     PrivacyConsent(),
     MarketingConsent() {
         @Override public void updateProfile(final Aspect aspect) {
-            aspect.getProfile().setMarketingConsent(aspect.getValue());
+            aspect.getProfile().setMarketingConsent(Boolean.valueOf((aspect.getValue())));
         }
     },
 
