@@ -16,12 +16,12 @@
  */
 package org.incode.eurocommercial.relatio.app.services.homepage;
 
-import com.googlecode.wickedcharts.highcharts.options.Axis;
 import com.googlecode.wickedcharts.highcharts.options.ChartOptions;
 import com.googlecode.wickedcharts.highcharts.options.Options;
 import com.googlecode.wickedcharts.highcharts.options.SeriesType;
 import com.googlecode.wickedcharts.highcharts.options.Title;
-import com.googlecode.wickedcharts.highcharts.options.series.SimpleSeries;
+import com.googlecode.wickedcharts.highcharts.options.series.Point;
+import com.googlecode.wickedcharts.highcharts.options.series.PointSeries;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.ViewModel;
 import static org.apache.isis.applib.annotation.Where.EVERYWHERE;
@@ -30,7 +30,6 @@ import org.incode.eurocommercial.relatio.dom.profile.ProfileRepository;
 import org.isisaddons.wicket.wickedcharts.cpt.applib.WickedChart;
 
 import javax.inject.Inject;
-import java.util.Arrays;
 import java.util.List;
 
 @ViewModel
@@ -49,15 +48,16 @@ public class HomePageViewModel {
         options.setChartOptions(new ChartOptions().setType(SeriesType.PIE));
         options.setTitle(new Title("Marketing consent True/False"));
 
-        options.setxAxis(new Axis().setCategories(Arrays.asList(new String[] { "True", "False"})));
-
-
         List<Profile> profiles = profileRepository.listAll();
-
         Number numberOfProfilesWithMarketingConsentTrue = profiles.stream().filter(profile -> profile.getMarketingConsent() != null && profile.getMarketingConsent().equals(Boolean.TRUE)).count();
         Number numberOfProfilesWithMarketingConsentFalse = profiles.stream().filter(profile -> profile.getMarketingConsent() != null && profile.getMarketingConsent().equals(Boolean.FALSE)).count();
 
-        options.addSeries(new SimpleSeries().setName("Data").setData(Arrays.asList(new Number[] { numberOfProfilesWithMarketingConsentTrue, numberOfProfilesWithMarketingConsentFalse })));
+        options.addSeries(new PointSeries()
+                .setType(SeriesType.PIE)
+                .setName("Relation Marketing Consent")
+                .addPoint(new Point("True", numberOfProfilesWithMarketingConsentTrue))
+                .addPoint(new Point("False", numberOfProfilesWithMarketingConsentFalse)));
+
 
         return new WickedChart(options);
     }
