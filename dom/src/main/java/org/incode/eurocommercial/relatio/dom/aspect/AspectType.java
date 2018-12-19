@@ -81,7 +81,11 @@ public enum AspectType {
     MailConfirmedAt(false, true),
 
     //Legal
-    PrivacyConsent(),
+    PrivacyConsent(){
+        @Override public void updateProfile(final Aspect aspect) {
+            aspect.getProfile().setPrivacyConsent(Boolean.valueOf((aspect.getValue())));
+        }
+    },
     MarketingConsent() {
         @Override public void updateProfile(final Aspect aspect) {
             aspect.getProfile().setMarketingConsent(Boolean.valueOf((aspect.getValue())));
