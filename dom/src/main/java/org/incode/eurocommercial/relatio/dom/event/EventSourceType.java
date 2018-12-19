@@ -1,5 +1,16 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.apache.isis.applib.value.Blob;
+import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
+import org.incode.eurocommercial.relatio.dom.utils.DateFormatUtils;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -8,21 +19,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import com.google.common.base.Splitter;
-import com.google.common.base.Strings;
-import com.google.common.collect.Maps;
-
-import org.joda.time.LocalDate;
-
-import org.apache.isis.applib.value.Blob;
-
-import org.incode.eurocommercial.relatio.dom.aspect.Aspect;
-import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
-import org.incode.eurocommercial.relatio.dom.utils.DateFormatUtils;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @AllArgsConstructor
 public enum EventSourceType {
@@ -48,9 +44,7 @@ public enum EventSourceType {
     public EventParser getParser(){
         try {
             return (EventParser) parserClass.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return null;
@@ -69,12 +63,7 @@ public enum EventSourceType {
             }
             for (String record = bfReader.readLine(); record != null; record = bfReader.readLine()) {
                 final long time = System.nanoTime();
-                final Event event = eventRepository.create(source, record);
-                for (Aspect aspect : event.getAspects()) {
-                    if (aspect.getProfile() != null) {
-                        aspect.getType().updateProfile(aspect);
-                    }
-                }
+                eventRepository.create(source, record);
                 final double elapsedTime = (System.nanoTime() - time) / 1e9;
                 System.out.println("==========================> Elapsed time: " + elapsedTime);
             }
@@ -87,7 +76,7 @@ public enum EventSourceType {
     }
 
 
-    public interface EventParser<T> {
+    public interface EventParser {
         Map<AspectType, String> toMap(String data);
         int headerSize();
     }
@@ -150,7 +139,7 @@ public enum EventSourceType {
                     map.put(AspectType.FacebookAccount, stringMap.get("userid"));
                     map.put(AspectType.FirstName, stringMap.get("first_name"));
                     map.put(AspectType.LastName, stringMap.get("last_name"));
-                    map.put(AspectType.Birthday, stringMap.get("birthday"));
+                    map.put(AspectType.DateOfBirth, stringMap.get("birthday"));
                     map.put(AspectType.Gender, stringMap.get("gender"));
                     // TODO: We see age_range, what to do with it?
                     return map;
@@ -224,7 +213,18 @@ public enum EventSourceType {
                 }else if(!values[2].trim().isEmpty()){
                     map.put(AspectType.Gender, "OTHER");
                 }
-                map.put(AspectType.Age, values[3].trim());
+
+                // Approximating DOB because we found an age and a gamePlayedDateAndTime
+                if(!values[3].isEmpty() &&  !values[9].trim().isEmpty()){
+                    LocalDate gamePlayedDateAndTime = LocalDateTime.parse(values[9].trim()).toLocalDate();
+                    Integer age = Integer.parseInt(values[3].trim());
+                    // assuming played in middle of the age, and moving the time from gamePlayed to past of age
+                    LocalDate approximateDateOfBirth = gamePlayedDateAndTime.minusMonths(6).minusYears(age);
+                    if(AspectMapHelperFunctions.isValidDate(approximateDateOfBirth.toString())){
+                        map.put(AspectType.ApproximateDateOfBirth, approximateDateOfBirth.toString());
+                    }
+                }
+
                 map.put(AspectType.EmailAccount, values[4].trim());
                 map.put(AspectType.CellPhoneNumber, values[5].trim());
                 map.put(AspectType.PostalCode, values[6].trim());
@@ -232,12 +232,12 @@ public enum EventSourceType {
                 if(values[7].trim().equals("YES")) {
                     map.put(AspectType.MarketingConsent, "true");
                 } else{
-                    map.put(AspectType.MarketingConsent, values[7].trim());
+                    map.put(AspectType.MarketingConsent, "false");
                 }
                 if(values[8].trim().equals("YES")) {
                     map.put(AspectType.PrivacyConsent, "true");
                 } else{
-                    map.put(AspectType.PrivacyConsent, values[8].trim());
+                    map.put(AspectType.PrivacyConsent, "false");
                 }
 
                 map.put(AspectType.GamePlayDateAndTime, values[9].trim());
@@ -367,7 +367,7 @@ public enum EventSourceType {
                 map.put(AspectType.FirstName, values[0]);
                 map.put(AspectType.LastName, values[1]);
                 try {
-                    map.put(AspectType.Birthday, DateFormatUtils.toISOLocalDate(values[2], "dd/MM/yyyy"));
+                    map.put(AspectType.DateOfBirth, DateFormatUtils.toISOLocalDate(values[2], "dd/MM/yyyy"));
                 } catch (Exception ignored) {
                 }
                 map.put(AspectType.Address, values[3]);
@@ -688,7 +688,7 @@ public enum EventSourceType {
                 map.put(AspectType.PostalCode, values[8]);
                 map.put(AspectType.Province, values[9]);
                 map.put(AspectType.HomePhoneNumber, values[10]);
-                map.put(AspectType.Birthday, DateFormatUtils.toISOLocalDate(values[11],"dd/MM/yyyy"));
+                map.put(AspectType.DateOfBirth, DateFormatUtils.toISOLocalDate(values[11],"dd/MM/yyyy"));
                 map.put(AspectType.EmailAccount, values[12]);
                 if(values[13].trim().equals("SI")) {
                     map.put(AspectType.PrivacyConsent, "true");
@@ -759,7 +759,7 @@ public enum EventSourceType {
                 //values[8]: 'user-phone' useless: only 1 entry, malformed
 
                 try {
-                    map.put(AspectType.Birthday,
+                    map.put(AspectType.DateOfBirth,
                         java.time.LocalDateTime.parse(values[9], formatter)
                             .toLocalDate().toString());
                 }
@@ -806,7 +806,7 @@ public enum EventSourceType {
                     map.put(AspectType.PostalCode, values[8]);
                     map.put(AspectType.Province, values[9]);
                     map.put(AspectType.HomePhoneNumber, values[10]);
-                    map.put(AspectType.Birthday, DateFormatUtils.toISOLocalDate(values[11],"dd/MM/yyyy"));
+                    map.put(AspectType.DateOfBirth, DateFormatUtils.toISOLocalDate(values[11],"dd/MM/yyyy"));
                     map.put(AspectType.EmailAccount, values[12]);
                     if(values[13].trim().equals("SI")) {
                         map.put(AspectType.PrivacyConsent, "true");
