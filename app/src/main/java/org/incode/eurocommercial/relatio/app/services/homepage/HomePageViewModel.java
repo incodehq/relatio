@@ -46,7 +46,7 @@ public class HomePageViewModel {
     }
     public WickedChart setChart() {
         Options options = new Options();
-        options.setChartOptions(new ChartOptions().setType(SeriesType.PIE).);
+        options.setChartOptions(new ChartOptions().setType(SeriesType.PIE));
         options.setTitle(new Title("Marketing consent True/False"));
 
         options.setxAxis(new Axis().setCategories(Arrays.asList(new String[] { "True", "False"})));
