@@ -8,6 +8,7 @@ import static org.incode.eurocommercial.relatio.dom.event.EventSourceType.GamePl
 import org.incode.eurocommercial.relatio.dom.profile.Profile;
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Rule;
 import org.junit.Test;
@@ -24,6 +25,16 @@ import java.util.TreeSet;
 
 public class AspectCreationServiceTest {
 
+    public static final String FIRST_NAME = "fooFirstName";
+    public static final String LAST_NAME = "fooLastName";
+    public static final String DATE_OF_BIRTH = "2001-01-01";
+    public static final String APPROXIMATE_DATE_OF_BIRTH = "2000-01-01";
+    public static final String CELLPHONE_NUMBER = "0623447891";
+    public static final String FACE_BOOK_ACCOUNT = "fooFaceBookAccount";
+    public static final String PRIVACY_CONSENT = "true";
+    public static final String MARKETING_CONSENT = "true";
+    public static final String EMAIL = "hello@yahoo.com";
+    public static final String MALE = "MALE";
     @Rule
     public JUnitRuleMockery2 context = JUnitRuleMockery2.createFor(JUnitRuleMockery2.Mode.INTERFACES_AND_CLASSES);
 
@@ -238,5 +249,51 @@ public class AspectCreationServiceTest {
 
         //then
         assertThat(aspect.getProfile().getEmailAccount()).isEqualTo("hello@yahoo.com");
+    }
+
+    // test for all aspects being set
+    @Test
+    public void updateProfileForAspectsMany_happy_case(){
+        //given
+        Aspect aspectFirstName = new Aspect(mockEvent, AspectType.FirstName, FIRST_NAME);
+        Aspect aspectLastName = new Aspect(mockEvent, AspectType.LastName, LAST_NAME);
+        Aspect aspectDateOfBirth = new Aspect(mockEvent, AspectType.DateOfBirth, DATE_OF_BIRTH);
+        Aspect aspectApproxmiatedDateOfBirth = new Aspect(mockEvent, AspectType.ApproximateDateOfBirth, APPROXIMATE_DATE_OF_BIRTH);
+        Aspect aspectGender = new Aspect(mockEvent, AspectType.Gender, MALE);
+        Aspect aspectCellPhoneNumber = new Aspect(mockEvent, AspectType.CellPhoneNumber, CELLPHONE_NUMBER);
+        Aspect aspectFacebookAccount = new Aspect(mockEvent, AspectType.FacebookAccount, FACE_BOOK_ACCOUNT);
+        Aspect aspectPrivacyConsent = new Aspect(mockEvent, AspectType.PrivacyConsent, PRIVACY_CONSENT);
+        Aspect aspectMarketingConsent = new Aspect(mockEvent, AspectType.MarketingConsent, MARKETING_CONSENT);
+        Aspect aspectEmailAccount = new Aspect(mockEvent, AspectType.EmailAccount, EMAIL);
+
+        context.checking(new Expectations() {{
+            allowing (mockEvent).compareTo(mockEvent);
+            will(returnValue(0));
+        }});
+
+        Profile profile = new Profile();
+        SortedSet<Aspect> sortedAspects = new TreeSet<>(Arrays.asList(aspectFirstName, aspectLastName, aspectDateOfBirth, aspectApproxmiatedDateOfBirth, aspectGender, aspectCellPhoneNumber, aspectFacebookAccount, aspectPrivacyConsent, aspectMarketingConsent, aspectEmailAccount));
+
+        for(Aspect aspect : sortedAspects){
+            aspect.setProfile(profile);
+        }
+
+        //when
+        AspectCreationService aspectCreationService = new AspectCreationService();
+        aspectCreationService.updateProfileForAspects(sortedAspects);
+
+        //then
+        assertThat(aspectFirstName.getProfile().getFirstName()).isEqualTo(FIRST_NAME);
+        assertThat(aspectLastName.getProfile().getLastName()).isEqualTo(LAST_NAME);
+        assertThat(aspectDateOfBirth.getProfile().getDateOfBirth()).isEqualTo(new LocalDate(DATE_OF_BIRTH));
+        assertThat(aspectApproxmiatedDateOfBirth.getProfile().getApproximateDateOfBirth()).isEqualTo(new LocalDate(APPROXIMATE_DATE_OF_BIRTH));
+        assertThat(aspectGender.getProfile().getGender()).isEqualTo(Profile.Gender.MALE);
+        assertThat(aspectCellPhoneNumber.getProfile().getCellPhoneNumber()).isEqualTo(CELLPHONE_NUMBER);
+        assertThat(aspectFacebookAccount.getProfile().getFacebookAccount()).isEqualTo(FACE_BOOK_ACCOUNT);
+        assertThat(aspectPrivacyConsent.getProfile().getPrivacyConsent()).isEqualTo(Boolean.TRUE);
+        assertThat(aspectMarketingConsent.getProfile().getMarketingConsent()).isEqualTo(Boolean.TRUE);
+        assertThat(aspectEmailAccount.getProfile().getEmailAccount()).isEqualTo(EMAIL);
+
+
     }
 }

@@ -123,7 +123,7 @@ public class Profile implements Comparable<Profile> {
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
-    private String emailAccount;
+    private String cellPhoneNumber;
 
     @Column(allowsNull = "true")
     @Property()
@@ -133,7 +133,7 @@ public class Profile implements Comparable<Profile> {
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
-    private String cellPhoneNumber;
+    private Boolean privacyConsent;
 
     @Column(allowsNull = "true")
     @Property()
@@ -143,7 +143,7 @@ public class Profile implements Comparable<Profile> {
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
-    private Boolean privacyConsent;
+    private String emailAccount;
 
     @Persistent(mappedBy = "profile", dependentElement = "false")
     @Collection

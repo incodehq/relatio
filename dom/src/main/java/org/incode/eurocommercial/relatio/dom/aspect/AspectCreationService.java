@@ -3,14 +3,11 @@ package org.incode.eurocommercial.relatio.dom.aspect;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
-import org.incode.eurocommercial.relatio.dom.aspect.subscribers.EventCreatedSubscriber;
 import org.incode.eurocommercial.relatio.dom.event.Event;
 import org.incode.eurocommercial.relatio.dom.profile.Profile;
 import org.incode.eurocommercial.relatio.dom.profile.ProfileRepository;
 import org.incode.eurocommercial.relatio.dom.service.EmailCleaningService;
 import org.joda.time.LocalDateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -23,7 +20,7 @@ import java.util.stream.Collectors;
 @DomainService(nature = NatureOfService.DOMAIN)
 public class AspectCreationService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(EventCreatedSubscriber.class);
+//    private static final Logger LOG = LoggerFactory.getLogger(EventCreatedSubscriber.class);
 
 
     @Programmatic
@@ -50,7 +47,7 @@ public class AspectCreationService {
             LocalDateTime collectionDate = collectionDates.size() == 0 ? null : collectionDates.last();
             Aspect aspect = aspectRepository.findOrCreate(profile, event, entry.getKey(), entry.getValue(), collectionDate);
 
-            LOG.debug("aspect to add: {}", aspect.getValue());
+//            LOG.debug("aspect to add: {}", aspect.getValue());
 
             aspects.add(aspect);
         }
