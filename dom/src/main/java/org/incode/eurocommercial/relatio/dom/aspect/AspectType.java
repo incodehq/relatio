@@ -1,9 +1,5 @@
 package org.incode.eurocommercial.relatio.dom.aspect;
 
-import org.joda.time.LocalDate;
-
-import org.incode.eurocommercial.relatio.dom.profile.Profile;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,44 +8,44 @@ public enum AspectType {
     //Identity
     FirstName() {
         @Override public void updateProfile(final Aspect aspect) {
-            aspect.getProfile().setFirstName(aspect.getValue());
+            aspect.getProfile().setFirstNameAspect(aspect);
         }
     },
     LastName() {
         @Override public void updateProfile(final Aspect aspect) {
-            aspect.getProfile().setLastName(aspect.getValue());
+            aspect.getProfile().setLastNameAspect(aspect);
         }
     },
     MinimumAge(),
     DateOfBirth() {
         @Override public void updateProfile(final Aspect aspect) {
-            aspect.getProfile().setDateOfBirth(LocalDate.parse(aspect.getValue()));
+            aspect.getProfile().setDateOfBirthAspect(aspect);
         }
     },
     ApproximateDateOfBirth() {
         @Override public void updateProfile(final Aspect aspect) {
-            aspect.getProfile().setApproximateDateOfBirth(LocalDate.parse(aspect.getValue()));
+            aspect.getProfile().setApproximateDateOfBirthAspect(aspect);
         }
     },
     Gender() {
         @Override public void updateProfile(final Aspect aspect) {
-            aspect.getProfile().setGender(Profile.Gender.valueOf(aspect.getValue().toUpperCase()));
+            aspect.getProfile().setGenderAspect(aspect);
         }
     },
     EmailAccount(true) {
         @Override public void updateProfile(final Aspect aspect) {
-            aspect.getProfile().setEmailAccount(aspect.getValue());
+            aspect.getProfile().setEmailAccountAspect(aspect);
         }
     },
     HomePhoneNumber(),
     CellPhoneNumber(true) {
         @Override public void updateProfile(final Aspect aspect) {
-            aspect.getProfile().setCellPhoneNumber(aspect.getValue());
+            aspect.getProfile().setCellPhoneNumberAspect(aspect);
         }
     },
     FacebookAccount(true) {
         @Override public void updateProfile(final Aspect aspect) {
-            aspect.getProfile().setFacebookAccount(aspect.getValue());
+            aspect.getProfile().setFacebookAccountAspect(aspect);
         }
     },
 
@@ -83,12 +79,12 @@ public enum AspectType {
     //Legal
     PrivacyConsent(){
         @Override public void updateProfile(final Aspect aspect) {
-            aspect.getProfile().setPrivacyConsent(Boolean.valueOf((aspect.getValue())));
+            aspect.getProfile().setPrivacyConsentAspect(aspect);
         }
     },
     MarketingConsent() {
         @Override public void updateProfile(final Aspect aspect) {
-            aspect.getProfile().setMarketingConsent(Boolean.valueOf((aspect.getValue())));
+            aspect.getProfile().setMarketingConsentAspect(aspect);
         }
     },
 

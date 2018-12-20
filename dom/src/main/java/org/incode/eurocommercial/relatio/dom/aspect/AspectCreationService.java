@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @DomainService(nature = NatureOfService.DOMAIN)
 public class AspectCreationService {
 
+    //TODO: remove this after debugging finished.
 //    private static final Logger LOG = LoggerFactory.getLogger(EventCreatedSubscriber.class);
 
 
