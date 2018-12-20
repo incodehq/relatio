@@ -16,6 +16,18 @@ public class EmailCleaningServiceTest {
 
 
     @Test
+    public void happyCase(){
+        //given
+        String emailBefore = "Johndoe@yahoo.com";
+
+        //when
+        String emailAfter = emailCleaningService.process(emailBefore);
+
+        //then
+        assertThat(emailAfter).isEqualTo("johndoe@yahoo.com");
+    }
+
+    @Test
     public void addAtSymbolBasedOnTLDs_happyCase(){
         //given
         String withoutAtSymbol = "johndoeyahoo.com";
@@ -258,6 +270,5 @@ public class EmailCleaningServiceTest {
         //then
         assertThat(withFixedTLD).isEqualTo("johndoe@gmail.com");
     }
-
 
 }

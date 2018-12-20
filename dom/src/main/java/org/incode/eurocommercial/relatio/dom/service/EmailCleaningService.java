@@ -15,12 +15,13 @@ public class EmailCleaningService {
 
     public String process(final String input) {
         EmailValidator validator = EmailValidator.getInstance();
-        return validator.isValid(input) ? input : clean(input);
+        String emailLowerCased = input.toLowerCase();
+        return validator.isValid(emailLowerCased) ? emailLowerCased : clean(emailLowerCased);
     }
 
     private String clean(final String input) {
         //If email is smaller then 6 chars then we can't service it.
-        String cleanMail = input.toLowerCase();
+        String cleanMail = input;
         if (cleanMail.length() < 6) {
             return cleanMail;
         }
