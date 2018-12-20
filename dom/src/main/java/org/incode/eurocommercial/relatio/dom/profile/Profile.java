@@ -1,6 +1,5 @@
 package org.incode.eurocommercial.relatio.dom.profile;
 
-import static java.util.Objects.isNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
@@ -10,7 +9,6 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.Where;
 import org.incode.eurocommercial.relatio.dom.aspect.Aspect;
 import org.joda.time.LocalDate;
@@ -84,10 +82,10 @@ import java.util.TreeSet;
 public class Profile implements Comparable<Profile> {
 
     public String title() {
-        String keyAspect = Optional.ofNullable(getEmailAccount())
-                .orElse(Optional.ofNullable(getCellPhoneNumber())
-                        .orElse(getFacebookAccount()));
-        return "[" + keyAspect + "] " + getFirstName() + " " + getLastName();
+        String keyAspect = Optional.ofNullable(emailAccount)
+                .orElse(Optional.ofNullable(cellPhoneNumber)
+                        .orElse(facebookAccount));
+        return "[" + keyAspect + "] " + firstName + " " + lastName;
     }
 
     @Column(allowsNull = "false")
@@ -95,107 +93,57 @@ public class Profile implements Comparable<Profile> {
     @Getter @Setter
     private String uuid;
 
-    @PropertyLayout(hidden = Where.EVERYWHERE)
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
-    private Aspect firstNameAspect;
+    private String firstName;
 
-    public String getFirstName(){
-        return isNull(getFirstNameAspect()) ? null : getFirstNameAspect().getValue();
-    }
-
-    @PropertyLayout(hidden = Where.EVERYWHERE)
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
-    private Aspect lastNameAspect;
+    private String lastName;
 
-    public String getLastName(){
-        return isNull(getLastNameAspect()) ? null : getLastNameAspect().getValue();
-    }
-
-    @PropertyLayout(hidden = Where.EVERYWHERE)
     @Column(allowsNull = "true")
     @Property()
     @Persistent
     @Getter @Setter
-    private Aspect dateOfBirthAspect;
+    private LocalDate dateOfBirth;
 
-    public LocalDate getDateOfBirth(){
-        return isNull(getDateOfBirthAspect()) ? null : LocalDate.parse(getDateOfBirthAspect().getValue());
-    }
-
-    @PropertyLayout(hidden = Where.EVERYWHERE)
     @Column(allowsNull = "true")
     @Property()
     @Persistent
     @Getter @Setter
-    private Aspect approximateDateOfBirthAspect;
+    private LocalDate approximateDateOfBirth;
 
-    public LocalDate getApproximateDateOfBirth(){
-        return isNull(getApproximateDateOfBirthAspect()) ? null : LocalDate.parse(getApproximateDateOfBirthAspect().getValue());
-    }
-
-    @PropertyLayout(hidden = Where.EVERYWHERE)
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
-    private Aspect genderAspect;
+    private Gender gender;
 
-    public Gender getGender(){
-        return isNull(getGenderAspect()) ? null : Gender.valueOf(getGenderAspect().getValue().toUpperCase());
-    }
-
-    @PropertyLayout(hidden = Where.EVERYWHERE)
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
-    private Aspect cellPhoneNumberAspect;
+    private String cellPhoneNumber;
 
-    public String getCellPhoneNumber(){
-        return isNull(getCellPhoneNumberAspect()) ? null : getCellPhoneNumberAspect().getValue();
-    }
-
-    @PropertyLayout(hidden = Where.EVERYWHERE)
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
-    private Aspect facebookAccountAspect;
+    private String facebookAccount;
 
-    public String getFacebookAccount(){
-        return isNull(getFacebookAccountAspect()) ? null : getFacebookAccountAspect().getValue();
-    }
-
-    @PropertyLayout(hidden = Where.EVERYWHERE)
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
-    private Aspect privacyConsentAspect;
+    private Boolean privacyConsent;
 
-    public Boolean getPrivacyConsent(){
-        return isNull(getPrivacyConsentAspect()) ? null : Boolean.valueOf(getPrivacyConsentAspect().getValue());
-    }
-
-    @PropertyLayout(hidden = Where.EVERYWHERE)
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
-    private Aspect marketingConsentAspect;
+    private Boolean marketingConsent;
 
-    public Boolean getMarketingConsent(){
-        return isNull(getMarketingConsentAspect()) ? null : Boolean.valueOf(getMarketingConsentAspect().getValue());
-    }
-
-    @PropertyLayout(hidden = Where.EVERYWHERE)
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
-    private Aspect emailAccountAspect;
-
-    public String getEmailAccount(){
-        return isNull(getEmailAccountAspect()) ? null : getEmailAccountAspect().getValue();
-    }
+    private String emailAccount;
 
     @Persistent(mappedBy = "profile", dependentElement = "false")
     @Collection
