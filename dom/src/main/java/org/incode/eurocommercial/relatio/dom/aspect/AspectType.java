@@ -92,7 +92,7 @@ public enum AspectType {
         }
     },
 
-    GamePlayDateAndTime(),
+    GamePlayDateAndTime(false, true),
     GameType()
     ;
 

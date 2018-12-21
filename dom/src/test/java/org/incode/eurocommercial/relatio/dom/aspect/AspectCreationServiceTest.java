@@ -142,6 +142,7 @@ public class AspectCreationServiceTest {
         LocalDateTime firstDate = LocalDateTime.parse("2000-01-01");
         LocalDateTime secondDate = LocalDateTime.parse("2001-01-01");
         LocalDateTime thirdDate = LocalDateTime.parse("2002-01-01");
+        LocalDateTime fourthDate = LocalDateTime.parse("2018-07-21T08:26:51");
 
         Map<AspectType, String> givenMap = new HashMap<AspectType, String>()
         {
@@ -155,7 +156,7 @@ public class AspectCreationServiceTest {
                 put(AspectType.PostalCode, "23900");
                 put(AspectType.PrivacyConsent, "true");
                 put(AspectType.MarketingConsent, "true");
-                put(AspectType.GamePlayDateAndTime, "2018-07-21T08:26:51");
+                put(AspectType.GamePlayDateAndTime, fourthDate.toString()); // also collectionDate
                 put(AspectType.GameType, "BENVENUTO");
                 //collectionDates in map
                 put(AspectType.Access, firstDate.toString());
@@ -169,6 +170,7 @@ public class AspectCreationServiceTest {
         expectedLocalDateTimes.add(firstDate);
         expectedLocalDateTimes.add(secondDate);
         expectedLocalDateTimes.add(thirdDate);
+        expectedLocalDateTimes.add(fourthDate);
 
         // when
         AspectCreationService aspectCreationService = new AspectCreationService();
@@ -258,7 +260,7 @@ public class AspectCreationServiceTest {
         Aspect aspectFirstName = new Aspect(mockEvent, AspectType.FirstName, FIRST_NAME);
         Aspect aspectLastName = new Aspect(mockEvent, AspectType.LastName, LAST_NAME);
         Aspect aspectDateOfBirth = new Aspect(mockEvent, AspectType.DateOfBirth, DATE_OF_BIRTH);
-        Aspect aspectApproxmiatedDateOfBirth = new Aspect(mockEvent, AspectType.ApproximateDateOfBirth, APPROXIMATE_DATE_OF_BIRTH);
+        Aspect aspectApproximatedDateOfBirth = new Aspect(mockEvent, AspectType.ApproximateDateOfBirth, APPROXIMATE_DATE_OF_BIRTH);
         Aspect aspectGender = new Aspect(mockEvent, AspectType.Gender, MALE);
         Aspect aspectCellPhoneNumber = new Aspect(mockEvent, AspectType.CellPhoneNumber, CELLPHONE_NUMBER);
         Aspect aspectFacebookAccount = new Aspect(mockEvent, AspectType.FacebookAccount, FACE_BOOK_ACCOUNT);
@@ -272,7 +274,7 @@ public class AspectCreationServiceTest {
         }});
 
         Profile profile = new Profile();
-        SortedSet<Aspect> sortedAspects = new TreeSet<>(Arrays.asList(aspectFirstName, aspectLastName, aspectDateOfBirth, aspectApproxmiatedDateOfBirth, aspectGender, aspectCellPhoneNumber, aspectFacebookAccount, aspectPrivacyConsent, aspectMarketingConsent, aspectEmailAccount));
+        SortedSet<Aspect> sortedAspects = new TreeSet<>(Arrays.asList(aspectFirstName, aspectLastName, aspectDateOfBirth, aspectApproximatedDateOfBirth, aspectGender, aspectCellPhoneNumber, aspectFacebookAccount, aspectPrivacyConsent, aspectMarketingConsent, aspectEmailAccount));
 
         for(Aspect aspect : sortedAspects){
             aspect.setProfile(profile);
@@ -286,7 +288,7 @@ public class AspectCreationServiceTest {
         assertThat(aspectFirstName.getProfile().getFirstName()).isEqualTo(FIRST_NAME);
         assertThat(aspectLastName.getProfile().getLastName()).isEqualTo(LAST_NAME);
         assertThat(aspectDateOfBirth.getProfile().getDateOfBirth()).isEqualTo(new LocalDate(DATE_OF_BIRTH));
-        assertThat(aspectApproxmiatedDateOfBirth.getProfile().getApproximateDateOfBirth()).isEqualTo(new LocalDate(APPROXIMATE_DATE_OF_BIRTH));
+        assertThat(aspectApproximatedDateOfBirth.getProfile().getApproximateDateOfBirth()).isEqualTo(new LocalDate(APPROXIMATE_DATE_OF_BIRTH));
         assertThat(aspectGender.getProfile().getGender()).isEqualTo(Profile.Gender.MALE);
         assertThat(aspectCellPhoneNumber.getProfile().getCellPhoneNumber()).isEqualTo(CELLPHONE_NUMBER);
         assertThat(aspectFacebookAccount.getProfile().getFacebookAccount()).isEqualTo(FACE_BOOK_ACCOUNT);
