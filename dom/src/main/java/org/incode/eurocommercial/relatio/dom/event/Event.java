@@ -48,7 +48,8 @@ import java.util.Comparator;
 })
 @DomainObject(
         editing = Editing.DISABLED,
-        persistedLifecycleEvent=Event.PersistedEvent.class
+        persistedLifecycleEvent=Event.PersistedEvent.class,
+        objectType = "Event"
 )
 public class Event implements Comparable<Event> {
 

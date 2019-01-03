@@ -49,7 +49,8 @@ import java.util.Comparator;
 
 })
 @DomainObject(
-        editing = Editing.DISABLED
+        editing = Editing.DISABLED,
+        objectType = "Aspect"
 )
 public class Aspect implements Comparable<Aspect> {
 

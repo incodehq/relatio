@@ -18,21 +18,13 @@
  */
 package org.incode.eurocommercial.relatio.app.services.settings;
 
-import java.util.List;
-
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.ActionLayout;
-import org.apache.isis.applib.annotation.DomainService;
-import org.apache.isis.applib.annotation.DomainServiceLayout;
-import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.Programmatic;
-import org.apache.isis.applib.annotation.SemanticsOf;
-
+import org.apache.isis.applib.annotation.*;
 import org.isisaddons.module.settings.dom.ApplicationSettingsServiceRW;
 import org.isisaddons.module.settings.dom.UserSettingsServiceRW;
 import org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo;
 import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
+
+import java.util.List;
 
 /**
  * A wrapper around {@link org.isisaddons.module.settings.dom.UserSettingsService}.
@@ -43,6 +35,7 @@ import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
         named = "Settings",
         menuOrder = "500"
 )
+@DomainObject(objectType = "RelatioSettingsService")
 public class RelatioSettingsService {
 
     //region > listAllSettings (for application)

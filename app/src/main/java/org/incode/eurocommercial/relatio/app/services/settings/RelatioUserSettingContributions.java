@@ -24,6 +24,7 @@ import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
 
 import java.util.List;
 @DomainService(nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY)
+@DomainObject(objectType = "RelatioUserSettingContributions")
 public class RelatioUserSettingContributions {
 
     //region > settings

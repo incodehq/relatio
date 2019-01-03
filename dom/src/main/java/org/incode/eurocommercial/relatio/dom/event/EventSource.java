@@ -45,7 +45,8 @@ import java.util.TreeSet;
                         + "&& type == :type ")
 })
 @DomainObject(
-        editing = Editing.DISABLED
+        editing = Editing.DISABLED,
+        objectType = "EventSource"
 )
 public class EventSource implements Comparable<EventSource> {
 

@@ -22,9 +22,9 @@ import com.googlecode.wickedcharts.highcharts.options.SeriesType;
 import com.googlecode.wickedcharts.highcharts.options.Title;
 import com.googlecode.wickedcharts.highcharts.options.series.Point;
 import com.googlecode.wickedcharts.highcharts.options.series.PointSeries;
+import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.ViewModel;
-import static org.apache.isis.applib.annotation.Where.EVERYWHERE;
 import org.incode.eurocommercial.relatio.dom.profile.Profile;
 import org.incode.eurocommercial.relatio.dom.profile.ProfileRepository;
 import org.isisaddons.wicket.wickedcharts.cpt.applib.WickedChart;
@@ -32,7 +32,10 @@ import org.isisaddons.wicket.wickedcharts.cpt.applib.WickedChart;
 import javax.inject.Inject;
 import java.util.List;
 
+import static org.apache.isis.applib.annotation.Where.EVERYWHERE;
+
 @ViewModel
+@DomainObject(objectType = "HomePageViewModel")
 public class HomePageViewModel {
 
     public String title() {

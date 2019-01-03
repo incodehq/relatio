@@ -18,23 +18,15 @@
  */
 package org.incode.eurocommercial.relatio.app.services.prototyping;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.ActionLayout;
-import org.apache.isis.applib.annotation.DomainService;
-import org.apache.isis.applib.annotation.DomainServiceLayout;
-import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.RestrictTo;
+import org.apache.isis.applib.annotation.*;
 import org.apache.isis.applib.fixturescripts.FixtureResult;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
-
 import org.incode.eurocommercial.relatio.app.services.homepage.HomePageService;
 import org.incode.eurocommercial.relatio.fixture.scenarios.test.IntegTestFixture;
+
+import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Enables fixtures to be installed from the application.
@@ -46,6 +38,7 @@ import org.incode.eurocommercial.relatio.fixture.scenarios.test.IntegTestFixture
         named = "Prototyping",
         menuBar = DomainServiceLayout.MenuBar.SECONDARY,
         menuOrder = "500.10")
+@DomainObject(objectType = "RelatioPrototypingExtensions")
 public class RelatioPrototypingExtensions {
 
     @Action(

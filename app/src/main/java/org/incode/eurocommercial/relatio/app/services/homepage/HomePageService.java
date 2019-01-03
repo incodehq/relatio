@@ -18,17 +18,16 @@
  */
 package org.incode.eurocommercial.relatio.app.services.homepage;
 
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.DomainService;
-import org.apache.isis.applib.annotation.HomePage;
-import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.*;
 import org.apache.isis.applib.services.registry.ServiceRegistry;
 
 import org.isisaddons.wicket.wickedcharts.cpt.applib.WickedChart;
 
 @DomainService(
         nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY // trick to suppress the actions from the top-level menu
+)
+@DomainObject(
+        objectType = "HomePageService"
 )
 public class HomePageService {
 

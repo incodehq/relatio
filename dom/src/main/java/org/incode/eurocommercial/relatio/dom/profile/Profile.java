@@ -74,7 +74,8 @@ import java.util.TreeSet;
 })
 @Unique(name = "Profile_fullName_UNQ", members = { "uuid" })
 @DomainObject(
-        editing = Editing.DISABLED
+        editing = Editing.DISABLED,
+        objectType = "Profile"
 )
 @DomainObjectLayout(
         bookmarking = BookmarkPolicy.AS_ROOT

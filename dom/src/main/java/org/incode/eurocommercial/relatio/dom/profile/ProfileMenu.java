@@ -1,19 +1,10 @@
 package org.incode.eurocommercial.relatio.dom.profile;
 
-import java.util.List;
+import org.apache.isis.applib.annotation.*;
+import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
 
 import javax.inject.Inject;
-
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.DomainService;
-import org.apache.isis.applib.annotation.DomainServiceLayout;
-import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.Optionality;
-import org.apache.isis.applib.annotation.Parameter;
-import org.apache.isis.applib.annotation.RestrictTo;
-import org.apache.isis.applib.annotation.SemanticsOf;
-
-import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
+import java.util.List;
 
 @DomainService(
         nature = NatureOfService.VIEW_MENU_ONLY
@@ -22,6 +13,7 @@ import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
         named = "Profiles",
         menuOrder = "20"
 )
+@DomainObject(objectType = "ProfileMenu")
 public class ProfileMenu {
 
     @Action(
