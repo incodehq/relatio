@@ -10,15 +10,12 @@ import org.isisaddons.module.settings.dom.UserSettingsService;
 import org.isisaddons.module.settings.dom.UserSettingsServiceRW;
 import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
 
-import javax.inject.Inject;
-
 public class RelatioUserSettingsThemeProvider implements ActiveThemeProvider {
 
     static final String ACTIVE_THEME = "activeTheme";
 
     private final IBootstrapSettings settings;
 
-    @Inject
     public RelatioUserSettingsThemeProvider(final IBootstrapSettings settings) {
         this.settings = settings;
     }
@@ -80,6 +77,7 @@ public class RelatioUserSettingsThemeProvider implements ActiveThemeProvider {
     }
 
     protected String currentUserName() {
+        final UserService userService = getServicesInjector().lookupService(UserService.class);
         return userService.getUser().getName();
     }
 
@@ -93,7 +91,5 @@ public class RelatioUserSettingsThemeProvider implements ActiveThemeProvider {
         return IsisContext.getSessionFactory();
     }
 
-    @Inject
-    UserService userService;
 
 }

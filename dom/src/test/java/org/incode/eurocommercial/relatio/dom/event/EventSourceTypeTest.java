@@ -1,20 +1,20 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
-import org.apache.isis.applib.annotation.Programmatic;
 import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Programmatic
+@Ignore
 public class EventSourceTypeTest {
 
     public static class SocialAccountTest extends EventSourceTypeTest {
 
         @Test
-        @Programmatic
+        @Ignore
         public void xxx() throws Exception {
 
             // given
@@ -60,7 +60,7 @@ public class EventSourceTypeTest {
     public static class WifiProjectsAccessiCsvTest extends EventSourceTypeTest {
 
         @Test
-        @Programmatic
+        @Ignore
         public void happy_case_with_facebook() throws Exception {
 
             // given
@@ -77,7 +77,7 @@ public class EventSourceTypeTest {
         }
 
         @Test
-        @Programmatic
+        @Ignore
         public void happy_case_with_sms() throws Exception {
 
             // given
@@ -93,7 +93,7 @@ public class EventSourceTypeTest {
         }
 
         @Test
-        @Programmatic
+        @Ignore
         public void cant_find_method() throws Exception {
 
             // given

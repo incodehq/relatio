@@ -1,6 +1,5 @@
 package org.incode.eurocommercial.relatio.integtests.tests.event;
 
-import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.clock.ClockService;
 import org.incode.eurocommercial.relatio.dom.aspect.AspectRepository;
@@ -9,13 +8,14 @@ import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectAccessiEve
 import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectUtentiEventFixture;
 import org.incode.eurocommercial.relatio.integtests.tests.RelatioIntegTest;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.inject.Inject;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Programmatic
+@Ignore
 public class EventIntegTest extends RelatioIntegTest {
 
     @Inject private FixtureScripts fixtureScripts;
