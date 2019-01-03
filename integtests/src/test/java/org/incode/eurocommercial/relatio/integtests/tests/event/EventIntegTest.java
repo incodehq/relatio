@@ -1,24 +1,21 @@
 package org.incode.eurocommercial.relatio.integtests.tests.event;
 
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.clock.ClockService;
-import static org.assertj.core.api.Assertions.assertThat;
 import org.incode.eurocommercial.relatio.dom.aspect.AspectRepository;
-import org.incode.eurocommercial.relatio.dom.event.Event;
-import org.incode.eurocommercial.relatio.dom.event.EventRepository;
-import org.incode.eurocommercial.relatio.dom.event.EventSource;
-import org.incode.eurocommercial.relatio.dom.event.EventSourceRepository;
-import org.incode.eurocommercial.relatio.dom.event.EventSourceType;
+import org.incode.eurocommercial.relatio.dom.event.*;
 import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectAccessiEventFixture;
 import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectUtentiEventFixture;
 import org.incode.eurocommercial.relatio.integtests.tests.RelatioIntegTest;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.inject.Inject;
 
-@Ignore
+import static org.assertj.core.api.Assertions.assertThat;
+
+@Programmatic
 public class EventIntegTest extends RelatioIntegTest {
 
     @Inject private FixtureScripts fixtureScripts;

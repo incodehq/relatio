@@ -18,12 +18,10 @@
  */
 package org.incode.eurocommercial.relatio.integtests.tests;
 
-import org.junit.BeforeClass;
-
 import org.apache.isis.core.integtestsupport.IntegrationTestAbstract;
 import org.apache.isis.core.integtestsupport.scenarios.ScenarioExecutionForIntegration;
-
 import org.incode.eurocommercial.relatio.integtests.bootstrap.RelatioSystemInitializer;
+import org.junit.BeforeClass;
 
 public abstract class RelatioIntegTest extends IntegrationTestAbstract {
 
@@ -34,6 +32,7 @@ public abstract class RelatioIntegTest extends IntegrationTestAbstract {
 
         // instantiating will install onto ThreadLocal
         new ScenarioExecutionForIntegration();
+
     }
 
 }

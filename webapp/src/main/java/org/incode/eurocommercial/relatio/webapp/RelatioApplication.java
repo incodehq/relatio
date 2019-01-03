@@ -18,33 +18,31 @@
  */
 package org.incode.eurocommercial.relatio.webapp;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.google.common.base.Joiner;
 import com.google.common.io.Resources;
 import com.google.inject.AbstractModule;
+import com.google.inject.Inject;
 import com.google.inject.Module;
 import com.google.inject.name.Names;
 import com.google.inject.util.Modules;
 import com.google.inject.util.Providers;
-
+import de.agilecoders.wicket.core.Bootstrap;
+import de.agilecoders.wicket.core.settings.IBootstrapSettings;
+import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchTheme;
+import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchThemeProvider;
+import org.apache.isis.applib.services.registry.ServiceRegistry2;
+import org.apache.isis.viewer.wicket.viewer.IsisWicketApplication;
+import org.apache.isis.viewer.wicket.viewer.integration.wicket.AuthenticatedWebSessionForIsis;
 import org.apache.wicket.Session;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.http.WebRequest;
 
-import org.apache.isis.viewer.wicket.viewer.IsisWicketApplication;
-import org.apache.isis.viewer.wicket.viewer.integration.wicket.AuthenticatedWebSessionForIsis;
-
-import de.agilecoders.wicket.core.Bootstrap;
-import de.agilecoders.wicket.core.settings.IBootstrapSettings;
-import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchTheme;
-import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchThemeProvider;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.util.List;
 
 /**
  * As specified in <tt>web.xml</tt>.
@@ -84,7 +82,7 @@ public class RelatioApplication extends IsisWicketApplication {
         final IBootstrapSettings settings = Bootstrap.getSettings();
         settings.setThemeProvider(new BootswatchThemeProvider(BootswatchTheme.Flatly));
 
-        settings.setActiveThemeProvider(new RelatioUserSettingsThemeProvider(settings));
+        settings.setActiveThemeProvider(serviceRegistry.injectServicesInto(new RelatioUserSettingsThemeProvider(settings)));
     }
 
 
@@ -152,5 +150,8 @@ public class RelatioApplication extends IsisWicketApplication {
             return "This is an Apache Isis Quickstart app";
         }
     }
+
+    @Inject
+    ServiceRegistry2 serviceRegistry;
 
 }

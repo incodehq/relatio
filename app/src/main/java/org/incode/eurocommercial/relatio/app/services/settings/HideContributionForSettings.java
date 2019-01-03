@@ -18,17 +18,15 @@
  */
 package org.incode.eurocommercial.relatio.app.services.settings;
 
-import java.util.List;
-
 import org.apache.isis.applib.AbstractSubscriber;
-import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
-
 import org.isisaddons.module.command.dom.HasUsername_recentCommandsByUser;
 import org.isisaddons.module.sessionlogger.dom.HasUsername_recentSessionsForUser;
 import org.isisaddons.module.settings.dom.UserSetting;
+
+import java.util.List;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
@@ -58,9 +56,6 @@ public class HideContributionForSettings extends AbstractSubscriber {
 
 
     //region > injected services
-    @javax.inject.Inject
-    private DomainObjectContainer container;
-
     @javax.inject.Inject
     private RelatioSettingsService applicationSettingsService;
     //endregion

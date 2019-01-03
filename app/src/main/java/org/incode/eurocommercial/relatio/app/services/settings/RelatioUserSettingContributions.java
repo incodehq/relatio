@@ -18,19 +18,11 @@
  */
 package org.incode.eurocommercial.relatio.app.services.settings;
 
-import java.util.List;
-
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.ActionLayout;
-import org.apache.isis.applib.annotation.CollectionLayout;
-import org.apache.isis.applib.annotation.Contributed;
-import org.apache.isis.applib.annotation.DomainService;
-import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.RenderType;
-import org.apache.isis.applib.annotation.SemanticsOf;
-
+import org.apache.isis.applib.annotation.*;
 import org.isisaddons.module.security.dom.user.ApplicationUser;
 import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
+
+import java.util.List;
 @DomainService(nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY)
 public class RelatioUserSettingContributions {
 
@@ -44,7 +36,7 @@ public class RelatioUserSettingContributions {
     )
     @CollectionLayout(
             named = "Settings",
-            render = RenderType.EAGERLY
+            defaultView = "table"
     )
     public List<UserSettingJdo> userSettingsFor(final ApplicationUser applicationUser) {
         return settingsService.listAllSettings(applicationUser.getUsername());
