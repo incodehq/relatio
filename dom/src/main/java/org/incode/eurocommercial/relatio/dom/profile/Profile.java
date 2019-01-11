@@ -2,6 +2,7 @@ package org.incode.eurocommercial.relatio.dom.profile;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.CollectionLayout;
@@ -9,7 +10,9 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.Publishing;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.incode.eurocommercial.relatio.dom.aspect.Aspect;
 import org.joda.time.LocalDate;
 
@@ -162,6 +165,13 @@ public class Profile implements Comparable<Profile> {
 
     //endregion
 
+    public static class CreateDomainEvent extends ActionDomainEvent<Profile> {}
+
+    @Action(domainEvent = Profile.CreateDomainEvent.class, publishing = Publishing.ENABLED)
+    public Profile updateToMailChimp(){
+        return this;
+    }
+
     public Profile updateFromAspects() {
         for (Aspect aspect : getAspects()) {
             aspect.getType().updateProfile(aspect);
@@ -170,8 +180,15 @@ public class Profile implements Comparable<Profile> {
     }
 
     public enum Gender {
-        MALE,
-        FEMALE,
-        OTHER
+        MALE("male"),
+        FEMALE("female"),
+        OTHER("other");
+
+        @Getter
+        private String value;
+
+        Gender(final String value) {
+            this.value = value;
+        }
     }
 }
