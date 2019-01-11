@@ -159,6 +159,17 @@
             <version>2.0.0-M1.20190107-1559-b7dbd7ef</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.isisaddons.module.publishmq</groupId>
+            <artifactId>isis-module-publishmq-dom-servicespi</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.isisaddons.module.publishmq</groupId>
+            <artifactId>isis-module-publishmq-dom-jdo</artifactId>
+        </dependency>
+
         <!--        <dependency>
                     <groupId>com.googlecode.wicked-charts</groupId>
                     <artifactId>wicked-charts-wicket6</artifactId>

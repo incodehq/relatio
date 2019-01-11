@@ -49,7 +49,8 @@ public class RelatioAppManifest extends AppManifestAbstract2 {
                 RelatioAppModule.class
                 , org.isisaddons.module.excel.ExcelModule.class // to run fixtures
                 , org.isisaddons.module.settings.SettingsModule.class // used by DomainAppUserSettingsThemeProvider
-                , org.isisaddons.module.security.SecurityModule.class
+                , org.isisaddons.module.security.SecurityModule.class,
+                org.isisaddons.module.publishmq.PublishMqModule.class
         );
     }
 

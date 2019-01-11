@@ -1,12 +1,13 @@
-package org.incode.eurocommercial.relatio.canonical.v1;
-
-import org.apache.isis.applib.services.dto.DtoMappingHelper;
-import org.joda.time.LocalDate;
+package org.incode.eurocommercial.relatio.app.services.restful.v1;
 
 import javax.inject.Inject;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.joda.time.LocalDate;
+
+import org.apache.isis.applib.services.dto.DtoMappingHelper;
 
 public class DtoFactoryAbstract {
     protected static XMLGregorianCalendar asXMLGregorianCalendar(final LocalDate date) {

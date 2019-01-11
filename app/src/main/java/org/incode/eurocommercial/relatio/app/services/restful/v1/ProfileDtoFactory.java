@@ -1,12 +1,18 @@
-package org.incode.eurocommercial.relatio.canonical.v1;
+package org.incode.eurocommercial.relatio.app.services.restful.v1;
 
+import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
+
 import org.incode.eurocommercial.relatio.canonical.profile.v1.ProfileDto;
 import org.incode.eurocommercial.relatio.dom.profile.Profile;
 
+@DomainService(
+        nature = NatureOfService.DOMAIN
+)
 public class ProfileDtoFactory extends DtoFactoryAbstract {
-    @Programmatic
 
+    @Programmatic
     public ProfileDto newDto(final Profile profile){
         final ProfileDto dto = new ProfileDto();
 
