@@ -25,11 +25,13 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.services.eventbus.AbstractDomainEvent;
 import org.apache.isis.applib.services.eventbus.EventBusService;
 
-import org.isisaddons.module.settings.SettingsModule;
+import org.incode.example.settings.SettingsModule;
+import org.incode.example.settings.dom.ApplicationSettingsService;
+import org.incode.example.settings.dom.UserSettingsService;
 
 /**
- * This service simply permanently hides the menus from the {@link org.isisaddons.module.settings.dom.ApplicationSettingsService} and
- * {@link org.isisaddons.module.settings.dom.UserSettingsService} implementations.
+ * This service simply permanently hides the menus from the {@link ApplicationSettingsService} and
+ * {@link UserSettingsService} implementations.
  *
  * <p>
  *     Instead we expose settings using the {@link RelatioSettingsService} wrapper.

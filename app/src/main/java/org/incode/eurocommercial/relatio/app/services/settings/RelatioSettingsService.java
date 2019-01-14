@@ -18,17 +18,23 @@
  */
 package org.incode.eurocommercial.relatio.app.services.settings;
 
-import org.apache.isis.applib.annotation.*;
-import org.isisaddons.module.settings.dom.ApplicationSettingsServiceRW;
-import org.isisaddons.module.settings.dom.UserSettingsServiceRW;
-import org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo;
-import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
-
 import java.util.List;
 
-/**
- * A wrapper around {@link org.isisaddons.module.settings.dom.UserSettingsService}.
- */
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
+import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.DomainServiceLayout;
+import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.annotation.SemanticsOf;
+
+import org.incode.example.settings.dom.ApplicationSettingsServiceRW;
+import org.incode.example.settings.dom.UserSettingsServiceRW;
+import org.incode.example.settings.dom.jdo.ApplicationSettingJdo;
+import org.incode.example.settings.dom.jdo.UserSettingJdo;
+
 @DomainService(nature = NatureOfService.VIEW_MENU_ONLY)
 @DomainServiceLayout(
         menuBar = DomainServiceLayout.MenuBar.TERTIARY,

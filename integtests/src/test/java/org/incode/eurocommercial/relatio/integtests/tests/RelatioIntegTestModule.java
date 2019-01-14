@@ -16,26 +16,23 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.relatio.integtests.bootstrap;
+package org.incode.eurocommercial.relatio.integtests.tests;
 
-import org.apache.isis.core.integtestsupport.IsisSystemForTest;
-import org.apache.isis.objectstore.jdo.datanucleus.IsisConfigurationForJdoIntegTests;
+import java.util.Set;
 
-import org.incode.eurocommercial.relatio.app.RelatioAppManifest;
+import javax.xml.bind.annotation.XmlRootElement;
 
-public class RelatioSystemInitializer {
+import com.google.common.collect.Sets;
 
-    public static void initIsft() {
-        IsisSystemForTest isft = IsisSystemForTest.getElseNull();
-        if(isft == null) {
-            isft = new IsisSystemForTest.Builder()
-                    .withLoggingAt(org.apache.log4j.Level.INFO)
-                    .with(new RelatioAppManifest())
-                    .with(new IsisConfigurationForJdoIntegTests())
-                    .build();
-            isft.setUpSystem();
-            IsisSystemForTest.set(isft);
-        }
+import org.apache.isis.applib.Module;
+import org.apache.isis.applib.ModuleAbstract;
+
+import org.incode.eurocommercial.relatio.app.RelatioAppModule;
+
+@XmlRootElement(name = "module")
+public class RelatioIntegTestModule extends ModuleAbstract {
+
+    @Override public Set<Module> getDependencies() {
+        return Sets.newHashSet(new RelatioAppModule());
     }
-
 }

@@ -18,11 +18,21 @@
  */
 package org.incode.eurocommercial.relatio.app.services.settings;
 
-import org.apache.isis.applib.annotation.*;
-import org.isisaddons.module.security.dom.user.ApplicationUser;
-import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
-
 import java.util.List;
+
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
+import org.apache.isis.applib.annotation.CollectionLayout;
+import org.apache.isis.applib.annotation.Contributed;
+import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.SemanticsOf;
+
+import org.isisaddons.module.security.dom.user.ApplicationUser;
+
+import org.incode.example.settings.dom.jdo.UserSettingJdo;
+
 @DomainService(nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY)
 @DomainObject(objectType = "RelatioUserSettingContributions")
 public class RelatioUserSettingContributions {

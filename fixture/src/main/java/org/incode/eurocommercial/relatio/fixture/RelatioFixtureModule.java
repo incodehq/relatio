@@ -18,7 +18,24 @@
  */
 package org.incode.eurocommercial.relatio.fixture;
 
-public final class RelatioFixtureModule {
+import java.util.Set;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.google.common.collect.Sets;
+
+import org.apache.isis.applib.Module;
+import org.apache.isis.applib.ModuleAbstract;
+
+import org.isisaddons.module.excel.ExcelModule;
+
+import org.incode.eurocommercial.relatio.dom.RelatioDomainModule;
+
+@XmlRootElement(name = "module")
+public class RelatioFixtureModule extends ModuleAbstract {
+
+    @Override public Set<Module> getDependencies() {
+        return Sets.newHashSet(new RelatioDomainModule(), new ExcelModule());
+    }
 
 }

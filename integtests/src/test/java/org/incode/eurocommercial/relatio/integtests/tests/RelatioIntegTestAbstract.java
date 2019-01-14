@@ -19,27 +19,11 @@
 package org.incode.eurocommercial.relatio.integtests.tests;
 
 import org.apache.isis.core.integtestsupport.IntegrationTestAbstract3;
-import org.incode.eurocommercial.relatio.app.RelatioAppModule;
 
 public abstract class RelatioIntegTestAbstract extends IntegrationTestAbstract3 {
 
-
     protected RelatioIntegTestAbstract() {
-        super(new RelatioAppModule());
+        super(new RelatioIntegTestModule());
     }
-
-
-
-//    @BeforeClass
-//    public static void initClass() {
-//        org.apache.log4j.PropertyConfigurator.configure("logging.properties");
-//        RelatioSystemInitializer.initIsft();
-//
-//        // instantiating will install onto ThreadLocal
-//        new ScenarioExecutionForIntegration();
-//
-//
-//    }
-
 
 }
