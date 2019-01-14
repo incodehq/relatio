@@ -6,7 +6,7 @@ import org.incode.eurocommercial.relatio.dom.aspect.AspectRepository;
 import org.incode.eurocommercial.relatio.dom.event.*;
 import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectAccessiEventFixture;
 import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectUtentiEventFixture;
-import org.incode.eurocommercial.relatio.integtests.tests.RelatioIntegTest;
+import org.incode.eurocommercial.relatio.integtests.tests.RelatioIntegTestAbstract;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -16,7 +16,7 @@ import javax.inject.Inject;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Ignore
-public class EventIntegTest extends RelatioIntegTest {
+public class EventIntegTest extends RelatioIntegTestAbstract {
 
     @Inject private FixtureScripts fixtureScripts;
     @Inject ClockService clockService;
@@ -32,6 +32,7 @@ public class EventIntegTest extends RelatioIntegTest {
         fixtureScripts.runFixtureScript(new WifiprojectUtentiEventFixture(), null);
     }
 
+    @Ignore
     public static class ImportAccessi extends EventIntegTest {
         @Test
         public void can_import_accessi() {
@@ -48,6 +49,7 @@ public class EventIntegTest extends RelatioIntegTest {
         }
     }
 
+    @Ignore
     public static class ImportUtenti extends EventIntegTest {
         @Test
         public void can_import_utenti() {

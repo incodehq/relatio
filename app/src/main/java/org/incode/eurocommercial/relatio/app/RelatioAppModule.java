@@ -18,9 +18,9 @@
  */
 package org.incode.eurocommercial.relatio.app;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 import org.apache.isis.applib.ModuleAbstract;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "module")
 public class RelatioAppModule extends ModuleAbstract {

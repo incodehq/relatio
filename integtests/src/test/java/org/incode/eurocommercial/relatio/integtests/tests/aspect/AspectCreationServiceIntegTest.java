@@ -1,7 +1,6 @@
 package org.incode.eurocommercial.relatio.integtests.tests.aspect;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
-import static org.assertj.core.api.Assertions.assertThat;
 import org.incode.eurocommercial.relatio.dom.aspect.Aspect;
 import org.incode.eurocommercial.relatio.dom.aspect.AspectCreationService;
 import org.incode.eurocommercial.relatio.dom.aspect.AspectRepository;
@@ -9,14 +8,16 @@ import org.incode.eurocommercial.relatio.dom.event.Event;
 import org.incode.eurocommercial.relatio.dom.event.EventRepository;
 import org.incode.eurocommercial.relatio.dom.profile.ProfileRepository;
 import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectAccessiEventFixture;
-import org.incode.eurocommercial.relatio.integtests.tests.RelatioIntegTest;
+import org.incode.eurocommercial.relatio.integtests.tests.RelatioIntegTestAbstract;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.inject.Inject;
 import java.util.List;
 
-public class AspectCreationServiceIntegTest extends RelatioIntegTest {
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class AspectCreationServiceIntegTest extends RelatioIntegTestAbstract {
 
     @Inject
     private FixtureScripts fixtureScripts;
