@@ -93,5 +93,5 @@ public class ProfileMenu {
     }
 
     @Inject ProfileRepository profileRepository;
-    @Inject private WrapperFactory wrapperFactory;
+    @Inject WrapperFactory wrapperFactory;
 }
