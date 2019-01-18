@@ -1,19 +1,18 @@
 package org.incode.eurocommercial.relatio.dom.profile;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
-import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.SemanticsOf;
-
+import org.apache.isis.applib.services.wrapper.WrapperFactory;
 import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
+
+import javax.inject.Inject;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @DomainService(
         nature = NatureOfService.VIEW_MENU_ONLY
@@ -25,8 +24,7 @@ import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
 public class ProfileMenu {
 
     @Action(
-            semantics = SemanticsOf.SAFE,
-            restrictTo = RestrictTo.PROTOTYPING
+            semantics = SemanticsOf.SAFE
     )
     public List<Profile> allUpdatedProfiles() {
         for (Profile profile : profileRepository.listAll()) {
@@ -37,12 +35,21 @@ public class ProfileMenu {
     }
 
     @Action(
-            semantics = SemanticsOf.SAFE,
-            restrictTo = RestrictTo.PROTOTYPING
+            semantics = SemanticsOf.SAFE
     )
     public List<Profile> allProfiles() {
         return profileRepository.listAll();
     }
+
+    public List<Profile> updateMailChimpProfiles(){
+        List <Profile> profiles = profileRepository.listAll();
+        profiles = profiles.stream().filter(profile -> profile.getThirdPartyConsent() == Boolean.TRUE).collect(Collectors.toList()); // only want profiles which have consent
+        for(Profile profile : profiles){
+            wrapperFactory.wrap(profile).updateToMailChimp();
+        }
+        return profiles;
+    }
+
 
     @Action(
             semantics = SemanticsOf.SAFE
@@ -86,4 +93,5 @@ public class ProfileMenu {
     }
 
     @Inject ProfileRepository profileRepository;
+    @Inject WrapperFactory wrapperFactory;
 }

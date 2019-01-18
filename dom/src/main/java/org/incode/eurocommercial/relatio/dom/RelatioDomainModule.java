@@ -20,5 +20,4 @@ package org.incode.eurocommercial.relatio.dom;
 
 public final class RelatioDomainModule {
 
-
 }
