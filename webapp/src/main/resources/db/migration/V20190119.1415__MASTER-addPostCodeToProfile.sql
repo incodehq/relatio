@@ -1,2 +1,2 @@
 ALTER TABLE [dbo].[Profile]
-add [thirdPartyConsent] BIT
+add [postalCode] varchar(255)
