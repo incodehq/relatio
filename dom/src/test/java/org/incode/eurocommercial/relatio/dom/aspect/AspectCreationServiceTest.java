@@ -35,6 +35,8 @@ public class AspectCreationServiceTest {
     public static final String MARKETING_CONSENT = "true";
     public static final String EMAIL = "hello@yahoo.com";
     public static final String MALE = "MALE";
+    public static final String POSTALCODE = "33333";
+
     @Rule
     public JUnitRuleMockery2 context = JUnitRuleMockery2.createFor(JUnitRuleMockery2.Mode.INTERFACES_AND_CLASSES);
 
@@ -267,6 +269,7 @@ public class AspectCreationServiceTest {
         Aspect aspectPrivacyConsent = new Aspect(mockEvent, AspectType.PrivacyConsent, PRIVACY_CONSENT);
         Aspect aspectMarketingConsent = new Aspect(mockEvent, AspectType.MarketingConsent, MARKETING_CONSENT);
         Aspect aspectEmailAccount = new Aspect(mockEvent, AspectType.EmailAccount, EMAIL);
+        Aspect aspectPostCode = new Aspect(mockEvent, AspectType.PostalCode, POSTALCODE);
 
         context.checking(new Expectations() {{
             allowing (mockEvent).compareTo(mockEvent);
@@ -274,7 +277,7 @@ public class AspectCreationServiceTest {
         }});
 
         Profile profile = new Profile();
-        SortedSet<Aspect> sortedAspects = new TreeSet<>(Arrays.asList(aspectFirstName, aspectLastName, aspectDateOfBirth, aspectApproximatedDateOfBirth, aspectGender, aspectCellPhoneNumber, aspectFacebookAccount, aspectPrivacyConsent, aspectMarketingConsent, aspectEmailAccount));
+        SortedSet<Aspect> sortedAspects = new TreeSet<>(Arrays.asList(aspectFirstName, aspectLastName, aspectDateOfBirth, aspectApproximatedDateOfBirth, aspectGender, aspectCellPhoneNumber, aspectFacebookAccount, aspectPrivacyConsent, aspectMarketingConsent, aspectEmailAccount, aspectPostCode));
 
         for(Aspect aspect : sortedAspects){
             aspect.setProfile(profile);
@@ -295,6 +298,7 @@ public class AspectCreationServiceTest {
         assertThat(aspectPrivacyConsent.getProfile().getPrivacyConsent()).isEqualTo(Boolean.TRUE);
         assertThat(aspectMarketingConsent.getProfile().getMarketingConsent()).isEqualTo(Boolean.TRUE);
         assertThat(aspectEmailAccount.getProfile().getEmailAccount()).isEqualTo(EMAIL);
+        assertThat(aspectPostCode.getProfile().getPostalCode()).isEqualTo(POSTALCODE);
 
 
     }

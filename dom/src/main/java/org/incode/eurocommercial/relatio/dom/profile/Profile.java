@@ -153,6 +153,11 @@ public class Profile implements Comparable<Profile> {
     @Getter @Setter
     private String emailAccount;
 
+    @Column(allowsNull = "true")
+    @Property()
+    @Getter @Setter
+    private String postalCode;
+
     @Persistent(mappedBy = "profile", dependentElement = "false")
     @Collection
     @CollectionLayout(defaultView = "table")
