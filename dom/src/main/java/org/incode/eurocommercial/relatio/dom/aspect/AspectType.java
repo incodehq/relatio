@@ -56,7 +56,11 @@ public enum AspectType {
     // Address
     City(),
     Address(),
-    PostalCode(),
+    PostalCode(){
+        @Override public void updateProfile(final Aspect aspect) {
+            aspect.getProfile().setPostalCode(aspect.getValue());
+        }
+    },
     Country(),
     Province(),
     Belongings(),
