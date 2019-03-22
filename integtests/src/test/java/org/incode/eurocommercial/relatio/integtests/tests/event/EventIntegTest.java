@@ -31,8 +31,8 @@ public class EventIntegTest extends RelatioIntegTest {
     @Before
     public void setUp() throws Exception {
         // given
-        // fixtureScripts.runFixtureScript(new WifiprojectAccessiEventFixture(), null);
-        // fixtureScripts.runFixtureScript(new WifiprojectUtentiEventFixture(), null);
+        fixtureScripts.runFixtureScript(new WifiprojectAccessiEventFixture(), null);
+        fixtureScripts.runFixtureScript(new WifiprojectUtentiEventFixture(), null);
     }
 
     public static class ImportAccessi extends EventIntegTest {
