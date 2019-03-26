@@ -31,8 +31,8 @@ public class EventIntegTest extends RelatioIntegTest {
     @Before
     public void setUp() throws Exception {
         // given
-        // fixtureScripts.runFixtureScript(new WifiprojectAccessiEventFixture(), null);
-        // fixtureScripts.runFixtureScript(new WifiprojectUtentiEventFixture(), null);
+        fixtureScripts.runFixtureScript(new WifiprojectAccessiEventFixture(), null);
+        fixtureScripts.runFixtureScript(new WifiprojectUtentiEventFixture(), null);
     }
 
     public static class ImportAccessi extends EventIntegTest {
@@ -71,7 +71,7 @@ public class EventIntegTest extends RelatioIntegTest {
         @Test
         public void can_import_QuickTapSurvey() {
             // given
-            String data = "2019-01-27 19:27:33.0000000;2019-01-27 19:27:33.0000000;174;ECPIpad3;0;0;No;Ingresso DESIGUAL;Yes;Potato;Mattavelli;orndo@tim.it;3666666612;1923-02-20;No;Yes;Male;passeggiare - fare un giro - vetrine;1 volta ogni 2 mesi;;Più di 10 anni;Automobile;8;7;7;7;7;7;8;7;1;MAI USATO;MAI USATO;MAI USATO;MAI USATO;MAI USATO;MAI USATO;10;MAI USATO;No;;;;;Esselunga (Monza),Esselunga (Vimercate),Il Gigante (Vimercate);30;Yes;Zara;0;No;Pizza,Hamburger,Pasta;Gluten Free;No;;;;Non uso / Non ho internet / non ci penso;Non ricordo alcuna campagna pubblicitaria o evento;Ristorante,Moda donna,Scarpe,Accessori,Moda uomo,Intimo;8;5;Yes;TORRI BIANCHE,GLOBO;20864;Agrate Brianza;;;;No;No;Solo;4";
+            String data = "2019-01-27 19:27:33.0000000;2019-01-27 19:27:33.0000000;174;ECPIpad3;0;0;No;Ingresso DESIGUAL;Yes;Potato;Mattavelli;orndo@tim.it;3666666612;1923-02-20;No;Yes;Male;passeggiare - fare un giro - vetrine;1 volta ogni 2 mesi;;Più di 10 anni;Automobile;8;7;7;7;7;7;8;7;1;MAI USATO;MAI USATO;MAI USATO;MAI USATO;MAI USATO;MAI USATO;10;MAI USATO;No;;;;;Esselunga (Monza),Esselunga (Vimercate),Il Gigante (Vimercate);30;Yes;Zara;0;No;Pizza,Hamburger,Pasta;Gluten Free;No;;;;Non uso / Non ho internet / non ci penso;Non ricordo alcuna campagna pubblicitaria o evento;Ristorante,Moda donna,Scarpe,Accessori,Moda uomo,Intimo;8;5;Yes;TORRI BIANCHE,GLOBO;20864;Agrate Brianza;;;;No;No;Solo;4;1953";
 
             // when
             EventSource source = eventSourceRepository.findOrCreate(EventSourceType.QuickTapSurveyCarosello, "integ test");
@@ -79,7 +79,7 @@ public class EventIntegTest extends RelatioIntegTest {
 
             // then
             assertThat(event).isNotNull();
-            assertThat(aspectRepository.findByEvent(event)).hasSize(26);
+            assertThat(aspectRepository.findByEvent(event)).hasSize(27);
         }
     }
 
