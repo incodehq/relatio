@@ -83,6 +83,7 @@ public enum AspectType {
     Access(false, true),
     MacAddress(),
     DateCollected(false, true),
+    Source(),
 
     RegisteredAt(false, true),
     MailConfirmedAt(false, true),
@@ -132,6 +133,7 @@ public enum AspectType {
     InfopointRating(),
     CarwashUser(),
     CarwashRating(),
+    AgeGroup(),
 
     // Device
     DeviceId(),

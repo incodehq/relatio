@@ -83,4 +83,20 @@ public class EventIntegTest extends RelatioIntegTest {
         }
     }
 
+    public static class PTA_CouponingCampaignIntegTest extends EventIntegTest {
+        @Test
+        public void can_import_PTA_CouponingCampaign() {
+            // given
+            String data = "InfoPad;massimo;pistacio  ;dontcallmepistacio@hotmail.com;M;+40;YES;YES;YES;1969-06-26;via cavour";
+
+            // when
+            EventSource source = eventSourceRepository.findOrCreate(EventSourceType.PTA_CouponingCampaignData, "integ test");
+            Event event = eventRepository.findOrCreate(source, data);
+
+            // then
+            assertThat(event).isNotNull();
+            assertThat(aspectRepository.findByEvent(event)).hasSize(11);
+        }
+    }
+
 }

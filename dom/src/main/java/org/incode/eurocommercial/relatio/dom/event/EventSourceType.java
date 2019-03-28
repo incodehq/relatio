@@ -37,7 +37,8 @@ public enum EventSourceType {
     Wifi_Old_Csv(WifiOldCsv.class),
     Infopoint_Csv(InfoPointCsv.class),
     GamePlayedEventV1(GamePlayedEventV1.class),
-    QuickTapSurveyCarosello(QuickTapSurveyCarosello.class);
+    QuickTapSurveyCarosello(QuickTapSurveyCarosello.class),
+    PTA_CouponingCampaignData(PTA_CouponingCampaignData.class);
 
 
     @Getter
@@ -324,6 +325,72 @@ public enum EventSourceType {
                 }
                 map.put(AspectType.FamilySize, values[70].trim());
                 map.put(AspectType.YearOfBirth, values[71].trim());
+
+
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw e;
+            }
+            return map;
+        }
+    }
+
+    public static class PTA_CouponingCampaignData implements EventParserForCsv {
+        public String header() {
+            return "Source;FirstName;LastName;EmailAccount;Gender;AgeGroup;PrivacyConsent;MarketingConsent;ThirdPartyConsent;DateOfBirth;Address";
+        }
+
+        public int headerSize() {
+            return  1;
+        }
+
+        @Override
+        public String separator() {
+            return ";";
+        }
+
+        @Override
+        public Map<AspectType, String> toMap(String data) {
+            Map<AspectType, String> map = Maps.newHashMap();
+
+            try {
+                final String[] values = data.split(separator());
+
+                //map.put(AspectType.Source, values[0].trim()); column 0 source
+                map.put(AspectType.FirstName, values[1].trim());
+                map.put(AspectType.LastName, values[2].trim());
+                map.put(AspectType.EmailAccount, values[3].trim());
+                if(values[4].trim().toUpperCase().equals("F")){
+                    map.put(AspectType.Gender, "FEMALE");
+                }else if(values[4].trim().toUpperCase().equals("M")){
+                    map.put(AspectType.Gender, "MALE");
+                }else if(!values[4].trim().isEmpty()){
+                    map.put(AspectType.Gender, "OTHER");
+                    // ND OR OTHER
+                }
+                map.put(AspectType.AgeGroup, values[5].trim());
+                if(values[6].trim().equals("YES")) {
+                    map.put(AspectType.PrivacyConsent, "true");
+                } else {
+                    map.put(AspectType.PrivacyConsent, "false");
+                }
+                if(values[7].trim().equals("YES")) {
+                    map.put(AspectType.MarketingConsent, "true");
+                } else {
+                    map.put(AspectType.MarketingConsent, "false");
+                }
+                // In this source the marketing consent and profiling consent had the same column.
+                if(values[7].trim().equals("YES")) {
+                    map.put(AspectType.ProfilingConsent, "true");
+                } else {
+                    map.put(AspectType.ProfilingConsent, "false");
+                }
+                if(values[8].trim().equals("YES")) {
+                    map.put(AspectType.ThirdPartyConsent, "true");
+                } else {
+                    map.put(AspectType.ThirdPartyConsent, "false");
+                }
+                map.put(AspectType.DateOfBirth, values[9].trim());
+                map.put(AspectType.Address, values[10].trim());
 
 
             } catch (ArrayIndexOutOfBoundsException e) {
