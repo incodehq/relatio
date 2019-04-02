@@ -1,16 +1,5 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
-import com.google.common.base.Splitter;
-import com.google.common.base.Strings;
-import com.google.common.collect.Maps;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.apache.isis.applib.value.Blob;
-import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
-import org.incode.eurocommercial.relatio.dom.utils.DateFormatUtils;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -19,6 +8,21 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
+
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+
+import org.apache.isis.applib.value.Blob;
+
+import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
+import org.incode.eurocommercial.relatio.dom.utils.DateFormatUtils;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
 public enum EventSourceType {
@@ -353,7 +357,7 @@ public enum EventSourceType {
             Map<AspectType, String> map = Maps.newHashMap();
 
             try {
-                final String[] values = data.split(separator());
+                final String[] values = data.split(separator(), -1);
 
                 //map.put(AspectType.Source, values[0].trim()); column 0 source
                 map.put(AspectType.FirstName, values[1].trim());
@@ -415,7 +419,7 @@ public enum EventSourceType {
             Map<AspectType, String> map = Maps.newHashMap();
 
             try{
-                final String[] values = data.split(separator());
+                final String[] values = data.split(separator(), -1);
                 map.put(AspectType.FirstName, values[0].trim());
                 map.put(AspectType.LastName, values[1].trim());
                 if(values[2].trim().toUpperCase().equals("F")){
@@ -479,7 +483,7 @@ public enum EventSourceType {
             Map<AspectType, String> map = Maps.newHashMap();
 
             try {
-                final String[] values = data.split(separator());
+                final String[] values = data.split(separator(), -1);
                 map.put(AspectType.MacAddress, values[2]);
                 map.put(AspectType.Access, DateFormatUtils.toISOLocalDateTime(values[3], "yyyy-MM-dd HH:mm:ss"));
                 map.putAll(Accesso.from(values));
@@ -536,7 +540,7 @@ public enum EventSourceType {
             Map<AspectType, String> map = Maps.newHashMap();
 
             try {
-                final String[] values = data.replaceAll("\\[NULL]", "").replaceAll("\\{ }", "").split(separator());
+                final String[] values = data.replaceAll("\\[NULL]", "").replaceAll("\\{ }", "").split(separator(), -1);
                 map.put(AspectType.FirstName, values[0]);
                 map.put(AspectType.LastName, values[1]);
                 map.put(AspectType.EmailAccount, values[4]);
@@ -575,7 +579,7 @@ public enum EventSourceType {
             Map<AspectType, String> map = Maps.newHashMap();
 
             try {
-                final String[] values = data.split(separator());
+                final String[] values = data.split(separator(),-1);
                 map.put(AspectType.FirstName, values[0]);
                 map.put(AspectType.LastName, values[1]);
                 try {
@@ -613,7 +617,7 @@ public enum EventSourceType {
             Map<AspectType, String> map = Maps.newHashMap();
 
             try {
-                final String[] values = data.split(separator());
+                final String[] values = data.split(separator(), -1);
                 map.put(AspectType.Address, values[0]);
                 map.put(AspectType.EmailAccount, values[1]);
                 map.put(AspectType.City, values[2]);
@@ -640,7 +644,7 @@ public enum EventSourceType {
             Map<AspectType, String> map = Maps.newHashMap();
 
             try {
-                final String[] values = data.split(separator());
+                final String[] values = data.split(separator(), -1);
 
                 map.put(AspectType.FirstName, values[0]);
                 map.put(AspectType.LastName, values[1]);
@@ -680,7 +684,7 @@ public enum EventSourceType {
             Map<AspectType, String> map = Maps.newHashMap();
 
             try {
-                final String[] values = data.split(separator());
+                final String[] values = data.split(separator(), -1);
 
                 map.put(AspectType.FirstName, values[0]);
                 map.put(AspectType.LastName, values[3]);
@@ -708,7 +712,7 @@ public enum EventSourceType {
             Map<AspectType, String> map = Maps.newHashMap();
 
             try {
-                final String[] values = data.split(separator());
+                final String[] values = data.split(separator(), -1);
 
                 map.put(AspectType.FirstName, values[0]);
                 map.put(AspectType.LastName, values[1]);
@@ -744,7 +748,7 @@ public enum EventSourceType {
             Map<AspectType, String> map = Maps.newHashMap();
 
             try {
-                final String[] values = data.split(separator());
+                final String[] values = data.split(separator(), -1);
 
                 map.put(AspectType.Address, values[0]);
                 map.put(AspectType.EmailAccount, values[1]);
@@ -773,7 +777,7 @@ public enum EventSourceType {
             Map<AspectType, String> map = Maps.newHashMap();
 
             try {
-                final String[] values = data.split(separator());
+                final String[] values = data.split(separator(), -1);
 
                 map.put(AspectType.Access, DateFormatUtils.toISOLocalDateTime(values[0], "yyyy-MM-dd HH:mm:ss Z"));
                 map.put(AspectType.LastName, values[1]);
@@ -837,7 +841,7 @@ public enum EventSourceType {
             Map<AspectType, String> map = Maps.newHashMap();
 
             try {
-                final String[] values = data.split(separator());
+                final String[] values = data.split(separator(), -1);
 
                 String format = "dd/MM/yy";
                 LocalDate result = DateFormatUtils.parseStringToLocalDateOrNull(values[0], format);
@@ -887,7 +891,7 @@ public enum EventSourceType {
             Map<AspectType, String> map = Maps.newHashMap();
 
             try {
-                final String[] values = data.split(separator());
+                final String[] values = data.split(separator(), -1);
 
                 map.put(AspectType.RegisteredAt, DateFormatUtils.toISOLocalDate(values[0],"dd/MM/yyyy"));
                 map.put(AspectType.Access, DateFormatUtils.toISOLocalDate(values[1],"dd/MM/yyyy"));
@@ -1005,7 +1009,7 @@ public enum EventSourceType {
                 Map<AspectType, String> map = Maps.newHashMap();
 
                 try {
-                    final String[] values = data.split(separator());
+                    final String[] values = data.split(separator(), -1);
 
                     map.put(AspectType.RegisteredAt, DateFormatUtils.toISOLocalDate(values[0],"dd/MM/yyyy"));
                     map.put(AspectType.Access, DateFormatUtils.toISOLocalDate(values[1],"dd/MM/yyyy"));
