@@ -19,10 +19,28 @@
 
 package org.incode.eurocommercial.relatio.fixture.scenarios.demo;
 
+import org.incode.eurocommercial.relatio.fixture.dom.event.AnagraficheFixture;
+import org.incode.eurocommercial.relatio.fixture.dom.event.CaroselloAngrybirdsAnagraficheFixture;
+import org.incode.eurocommercial.relatio.fixture.dom.event.GamePlayedEventV1Fixture;
+import org.incode.eurocommercial.relatio.fixture.dom.event.QuickTapSurveyFixture;
+import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectUtentiEventFixture;
 import org.incode.eurocommercial.relatio.fixture.scenarios.RelatioFixture;
 
 public class DemoFixture extends RelatioFixture {
     public DemoFixture() {
         super();
+    }
+
+    @Override protected void execute(final ExecutionContext executionContext) {
+        super.execute(executionContext);
+
+        executionContext.executeChildren(
+                this,
+                new AnagraficheFixture(),
+                new CaroselloAngrybirdsAnagraficheFixture(),
+                new GamePlayedEventV1Fixture(),
+                new QuickTapSurveyFixture(),
+                new WifiprojectUtentiEventFixture());
+
     }
 }

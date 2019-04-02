@@ -1,22 +1,23 @@
 package org.incode.eurocommercial.relatio.integtests.tests.event;
 
+import javax.inject.Inject;
+
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.clock.ClockService;
-import static org.assertj.core.api.Assertions.assertThat;
+
 import org.incode.eurocommercial.relatio.dom.aspect.AspectRepository;
 import org.incode.eurocommercial.relatio.dom.event.Event;
 import org.incode.eurocommercial.relatio.dom.event.EventRepository;
 import org.incode.eurocommercial.relatio.dom.event.EventSource;
 import org.incode.eurocommercial.relatio.dom.event.EventSourceRepository;
 import org.incode.eurocommercial.relatio.dom.event.EventSourceType;
-import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectAccessiEventFixture;
-import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectUtentiEventFixture;
 import org.incode.eurocommercial.relatio.integtests.tests.RelatioIntegTest;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
-import javax.inject.Inject;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Ignore
 public class EventIntegTest extends RelatioIntegTest {
@@ -31,8 +32,8 @@ public class EventIntegTest extends RelatioIntegTest {
     @Before
     public void setUp() throws Exception {
         // given
-        fixtureScripts.runFixtureScript(new WifiprojectAccessiEventFixture(), null);
-        fixtureScripts.runFixtureScript(new WifiprojectUtentiEventFixture(), null);
+//        fixtureScripts.runFixtureScript(new WifiprojectAccessiEventFixture(), null);
+//        fixtureScripts.runFixtureScript(new WifiprojectUtentiEventFixture(), null);
     }
 
     public static class ImportAccessi extends EventIntegTest {
@@ -87,16 +88,26 @@ public class EventIntegTest extends RelatioIntegTest {
         @Test
         public void can_import_PTA_CouponingCampaign() {
             // given
-            String data = "InfoPad;massimo;pistacio  ;dontcallmepistacio@hotmail.com;M;+40;YES;YES;YES;1969-06-26;via cavour";
 
+            test( "Coupon;;Salmoiraghi;salmoiraghi2@salmoiraghi.com;ND;-40;YES;YES;YES;;", 8);
+
+            test("InfoPad;massimo;pistacio  ;dontcallmepistacio@hotmail.com;M;+40;YES;YES;YES;1969-06-26;via cavour", 11);
+
+
+        }
+
+        private void test(final String data, final int expectedAspectSize) {
             // when
             EventSource source = eventSourceRepository.findOrCreate(EventSourceType.PTA_CouponingCampaignData, "integ test");
             Event event = eventRepository.findOrCreate(source, data);
 
             // then
             assertThat(event).isNotNull();
-            assertThat(aspectRepository.findByEvent(event)).hasSize(11);
+            assertThat(aspectRepository.findByEvent(event)).hasSize(expectedAspectSize);
         }
     }
+
+
+
 
 }

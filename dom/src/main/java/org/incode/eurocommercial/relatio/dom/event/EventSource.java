@@ -1,13 +1,10 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.apache.isis.applib.annotation.Collection;
-import org.apache.isis.applib.annotation.CollectionLayout;
-import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.Editing;
-import org.joda.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
+import javax.inject.Inject;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.DatastoreIdentity;
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -16,9 +13,17 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.Queries;
 import javax.jdo.annotations.Query;
-import java.util.Comparator;
-import java.util.SortedSet;
-import java.util.TreeSet;
+
+import org.joda.time.LocalDateTime;
+
+import org.apache.isis.applib.annotation.Collection;
+import org.apache.isis.applib.annotation.CollectionLayout;
+import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.services.wrapper.WrapperFactory;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @PersistenceCapable(
         identityType = IdentityType.DATASTORE
@@ -96,5 +101,15 @@ public class EventSource implements Comparable<EventSource> {
         SUCCESS,
         FAILURE
     }
+
+    public EventSource updateEvents() {
+
+        getEvents().stream().forEach(e -> wrapperFactory.wrap(e).update());
+        return this;
+
+    }
+
+    @Inject
+    private WrapperFactory wrapperFactory;
 
 }

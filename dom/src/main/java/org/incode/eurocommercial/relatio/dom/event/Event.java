@@ -1,12 +1,6 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.Where;
-import org.apache.isis.applib.services.eventbus.ObjectPersistedEvent;
+import java.util.Comparator;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.DatastoreIdentity;
@@ -15,7 +9,17 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Queries;
 import javax.jdo.annotations.Query;
-import java.util.Comparator;
+
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
+import org.apache.isis.applib.services.eventbus.ObjectPersistedEvent;
+
+import lombok.Getter;
+import lombok.Setter;
 
 
 @PersistenceCapable(
@@ -73,6 +77,14 @@ public class Event implements Comparable<Event> {
         return Comparator.comparing(Event::getSource).thenComparing(Event::getData).compare(this, other);
     }
 
+    @Action(domainEvent = Event.UpdatedEvent.class)
+    public Event update() {
+        //Does nothing except triggering the event
+        return this;
+    }
+
     public static class PersistedEvent extends ObjectPersistedEvent<Event> { }
+
+    public static class UpdatedEvent extends ActionDomainEvent<Event> { }
 
 }

@@ -1,15 +1,5 @@
 package org.incode.eurocommercial.relatio.dom.aspect;
 
-import org.apache.isis.applib.annotation.DomainService;
-import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.Programmatic;
-import org.incode.eurocommercial.relatio.dom.event.Event;
-import org.incode.eurocommercial.relatio.dom.profile.Profile;
-import org.incode.eurocommercial.relatio.dom.profile.ProfileRepository;
-import org.incode.eurocommercial.relatio.dom.service.EmailCleaningService;
-import org.joda.time.LocalDateTime;
-
-import javax.inject.Inject;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -17,10 +7,23 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import javax.inject.Inject;
+
+import org.joda.time.LocalDateTime;
+
+import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.Programmatic;
+
+import org.incode.eurocommercial.relatio.dom.event.Event;
+import org.incode.eurocommercial.relatio.dom.profile.Profile;
+import org.incode.eurocommercial.relatio.dom.profile.ProfileRepository;
+import org.incode.eurocommercial.relatio.dom.service.EmailCleaningService;
+
 @DomainService(nature = NatureOfService.DOMAIN)
 public class AspectCreationService {
 
-//    private static final Logger LOG = LoggerFactory.getLogger(EventCreatedSubscriber.class);
+//    private static final Logger LOG = LoggerFactory.getLogger(EventPersistedSubscriber.class);
 
 
     @Programmatic

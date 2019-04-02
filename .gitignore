@@ -42,3 +42,4 @@ JArchitectOut/
 
 rebel.xml
 .flattened-pom.xml
+activemq-data/
