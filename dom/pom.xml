@@ -33,6 +33,9 @@
         <isis-maven-plugin.validate.appManifest>org.incode.eurocommercial.relatio.dom.RelatioDomManifest</isis-maven-plugin.validate.appManifest>
         <mavenmixin-isisvalidate.version>0.0.2</mavenmixin-isisvalidate.version>
         <axon-core.version>2.4</axon-core.version>
+<!--        <wicked-charts.version>1.5.0</wicked-charts.version>-->
+        <relatio-canonical.version>2.0.0-M1.20190107-1559-b7dbd7ef</relatio-canonical.version>
+
     </properties>
 
     <build>
@@ -78,13 +81,11 @@
                             <artifactId>datanucleusenhance</artifactId>
                         </mixin>
                         <!-- hmm: doesn't seem to be validating correctly (didn't detect an error we had) -->
-                        <!--
-                        <mixin>
-                            <groupId>com.danhaywood.mavenmixin</groupId>
-                            <artifactId>isisvalidate</artifactId>
-                            <version>${mavenmixin-isisvalidate.version}</version>
-                        </mixin>
-                        -->
+<!--                        <mixin>-->
+<!--                            <groupId>com.danhaywood.mavenmixin</groupId>-->
+<!--                            <artifactId>isisvalidate</artifactId>-->
+<!--                            <version>${mavenmixin-isisvalidate.version}</version>-->
+<!--                        </mixin>-->
                     </mixins>
                 </configuration>
             </plugin>
@@ -130,41 +131,62 @@
             <version>1.6</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
             <groupId>org.isisaddons.wicket.wickedcharts</groupId>
             <artifactId>isis-wicket-wickedcharts-cpt</artifactId>
         </dependency>
 
-        <!--        <dependency>
-            <groupId>com.googlecode.wicked-charts</groupId>
-            <artifactId>wicked-charts-wicket6</artifactId>
-            <version>${wicked-charts.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.googlecode.wicked-charts</groupId>
-                    <artifactId>wicked-charts-highcharts</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.wicked-charts</groupId>
-            <artifactId>wicked-charts-highcharts</artifactId>
-            <version>${wicked-charts.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>jackson-annotations</artifactId>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jackson-core</artifactId>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jackson-databind</artifactId>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>-->
+    <dependency>
+        <groupId>org.incode.eurocommercial</groupId>
+        <artifactId>relatio-canonical</artifactId>
+        <version>2.0.0-M1.20190107-1559-b7dbd7ef</version>
+        <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.isisaddons.module.publishmq</groupId>
+        <artifactId>isis-module-publishmq-dom-servicespi</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.isisaddons.module.publishmq</groupId>
+        <artifactId>isis-module-publishmq-dom-jdo</artifactId>
+    </dependency>
+
+
+<!--    <dependency>-->
+<!--        <groupId>com.googlecode.wicked-charts</groupId>-->
+<!--        <artifactId>wicked-charts-wicket6</artifactId>-->
+<!--        <version>${wicked-charts.version}</version>-->
+<!--        <exclusions>-->
+<!--            <exclusion>-->
+<!--                <groupId>com.googlecode.wicked-charts</groupId>-->
+<!--                <artifactId>wicked-charts-highcharts</artifactId>-->
+<!--            </exclusion>-->
+<!--        </exclusions>-->
+<!--    </dependency>-->
+
+<!--    <dependency>-->
+<!--        <groupId>com.googlecode.wicked-charts</groupId>-->
+<!--        <artifactId>wicked-charts-highcharts</artifactId>-->
+<!--        <version>${wicked-charts.version}</version>-->
+<!--        <exclusions>-->
+<!--            <exclusion>-->
+<!--                <artifactId>jackson-annotations</artifactId>-->
+<!--                <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--            </exclusion>-->
+<!--            <exclusion>-->
+<!--                <artifactId>jackson-core</artifactId>-->
+<!--                <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--            </exclusion>-->
+<!--            <exclusion>-->
+<!--                <artifactId>jackson-databind</artifactId>-->
+<!--                <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--            </exclusion>-->
+<!--        </exclusions>-->
+<!--    </dependency>-->
+
 
         <!-- testing -->
 

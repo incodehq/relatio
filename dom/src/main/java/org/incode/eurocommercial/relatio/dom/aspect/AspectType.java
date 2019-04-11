@@ -26,6 +26,7 @@ public enum AspectType {
             aspect.getProfile().setDateOfBirth(LocalDate.parse(aspect.getValue()));
         }
     },
+    YearOfBirth(),
     ApproximateDateOfBirth() {
         @Override public void updateProfile(final Aspect aspect) {
             aspect.getProfile().setApproximateDateOfBirth(LocalDate.parse(aspect.getValue()));
@@ -42,6 +43,7 @@ public enum AspectType {
         }
     },
     HomePhoneNumber(),
+    GeneralPhoneNumber(),
     CellPhoneNumber(true) {
         @Override public void updateProfile(final Aspect aspect) {
             aspect.getProfile().setCellPhoneNumber(aspect.getValue());
@@ -56,7 +58,11 @@ public enum AspectType {
     // Address
     City(),
     Address(),
-    PostalCode(),
+    PostalCode(){
+        @Override public void updateProfile(final Aspect aspect) {
+            aspect.getProfile().setPostalCode(aspect.getValue());
+        }
+    },
     Country(),
     Province(),
     Belongings(),
@@ -76,6 +82,8 @@ public enum AspectType {
     // Interactions
     Access(false, true),
     MacAddress(),
+    DateCollected(false, true),
+    Source(),
 
     RegisteredAt(false, true),
     MailConfirmedAt(false, true),
@@ -91,9 +99,47 @@ public enum AspectType {
             aspect.getProfile().setMarketingConsent(Boolean.valueOf((aspect.getValue())));
         }
     },
+    ProfilingConsent(),
+    ThirdPartyConsent(),
+    PrivacyConsentParty(),
+    MarketingConsentParty(),
+    ProfilingConsentParty(),
+    ThirdPartyConsentParty(),
 
+    // Game play
     GamePlayDateAndTime(false, true),
-    GameType()
+    GameType(),
+
+
+    // Attributes
+    Employee(),
+    DogOwner(),
+    Parent(),
+    FamilySize(),
+    OnlineShopper(),
+    CarOwner(),
+    TransportUsed(),
+    CentreRestroomsUsed(),
+    CentreRestroomsRating(),
+    WifiUser(),
+    WifiRating(),
+    PlaygroundUser(),
+    PlaygroundRating(),
+    NurseryUser(),
+    NurseryRating(),
+    RelaxAreaUser(),
+    RelaxAreaRating(),
+    InfopointUser(),
+    InfopointRating(),
+    CarwashUser(),
+    CarwashRating(),
+    AgeGroup(),
+
+    // Device
+    DeviceId(),
+
+
+
     ;
 
     @Getter

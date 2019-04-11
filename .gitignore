@@ -1,3 +1,5 @@
+integtests/activemq-data/
+
 webapp/src/main/webapp/WEB-INF/authentication.properties
 
 *~
@@ -40,3 +42,4 @@ JArchitectOut/
 
 rebel.xml
 .flattened-pom.xml
+activemq-data/

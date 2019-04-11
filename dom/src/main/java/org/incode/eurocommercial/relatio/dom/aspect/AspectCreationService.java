@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @DomainService(nature = NatureOfService.DOMAIN)
 public class AspectCreationService {
 
-//    private static final Logger LOG = LoggerFactory.getLogger(EventCreatedSubscriber.class);
+//    private static final Logger LOG = LoggerFactory.getLogger(EventPersistedSubscriber.class);
 
 
     @Programmatic

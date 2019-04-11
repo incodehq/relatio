@@ -2,10 +2,12 @@ package org.incode.eurocommercial.relatio.dom.event;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.eventbus.ObjectPersistedEvent;
 
 import javax.jdo.annotations.Column;
@@ -74,6 +76,14 @@ public class Event implements Comparable<Event> {
         return Comparator.comparing(Event::getSource).thenComparing(Event::getData).compare(this, other);
     }
 
+    @Action(domainEvent = Event.UpdatedEvent.class)
+    public Event update() {
+        //Does nothing except triggering the event
+        return this;
+    }
+
     public static class PersistedEvent extends ObjectPersistedEvent<Event> { }
+
+    public static class UpdatedEvent extends ActionDomainEvent<Event> { }
 
 }

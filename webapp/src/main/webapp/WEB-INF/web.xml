@@ -260,6 +260,11 @@
     </listener>
 
     <context-param>
+        <param-name>javax.ws.rs.Application</param-name>
+        <param-value>org.apache.isis.viewer.restfulobjects.server.RestfulObjectsApplication</param-value>
+    </context-param>
+
+    <context-param>
         <param-name>resteasy.servlet.mapping.prefix</param-name>
         <param-value>/restful/</param-value>
     </context-param>

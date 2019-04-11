@@ -19,6 +19,10 @@
 package org.incode.eurocommercial.relatio.app;
 
 import org.apache.isis.applib.AppManifestAbstract2;
+import org.incode.eurocommercial.relatio.fixture.RelatioFixtureModule;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class RelatioAppManifest extends AppManifestAbstract2 {
 
@@ -34,5 +38,18 @@ public class RelatioAppManifest extends AppManifestAbstract2 {
         super(BUILDER);
     }
 
+    public static List<Class<?>> myModules() {
+        return Arrays.asList(
+                RelatioAppModule.class,
+                RelatioFixtureModule.class,
+                org.isisaddons.module.publishmq.PublishMqModule.class
+        );
+    }
+
+    public static List<Class<?>> myAdditionalServices() {
+        return Arrays.asList(
+                org.isisaddons.module.security.dom.password.PasswordEncryptionServiceUsingJBcrypt.class
+        );
+    }
 
 }

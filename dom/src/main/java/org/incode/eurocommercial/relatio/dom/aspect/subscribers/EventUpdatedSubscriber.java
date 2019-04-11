@@ -12,16 +12,18 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 
 @DomainService(nature = NatureOfService.DOMAIN)
-public class EventCreatedSubscriber extends AbstractSubscriber {
+public class EventUpdatedSubscriber extends AbstractSubscriber {
 
-    private static final Logger LOG = LoggerFactory.getLogger(EventCreatedSubscriber.class);
+    private static final Logger LOG = LoggerFactory.getLogger(EventUpdatedSubscriber.class);
 
     @EventHandler
-    public void on(Event.PersistedEvent event) {
-        final Event source = event.getSource();
-        LOG.debug("Event: {}", source.getData());
-        LOG.debug("EventSource: {}", source.getSource());
-        aspectCreationService.createAspectsFromEvent(source);
+    public void on(Event.UpdatedEvent event) {
+        if (event.getEventPhase().isExecuting()) {
+            final Event source = event.getSource();
+            LOG.debug("Event: {}", source.getData());
+            LOG.debug("EventSource: {}", source.getSource());
+            aspectCreationService.createAspectsFromEvent(source);
+        }
     }
 
     @Inject
