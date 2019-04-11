@@ -15,12 +15,18 @@ import org.incode.eurocommercial.relatio.dom.event.EventRepository;
 import org.incode.eurocommercial.relatio.dom.event.EventSource;
 import org.incode.eurocommercial.relatio.dom.event.EventSourceRepository;
 import org.incode.eurocommercial.relatio.dom.event.EventSourceType;
-import org.incode.eurocommercial.relatio.integtests.tests.RelatioIntegTest;
+import org.incode.eurocommercial.relatio.fixture.dom.event.PTA_CouponingCampaignFixture;
+import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectAccessiEventFixture;
+import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectUtentiEventFixture;
+import org.incode.eurocommercial.relatio.integtests.tests.RelatioIntegTestAbstract;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Ignore
-public class EventIntegTest extends RelatioIntegTest {
+public class EventIntegTest extends RelatioIntegTestAbstract {
 
     @Inject private FixtureScripts fixtureScripts;
     @Inject ClockService clockService;
@@ -32,8 +38,9 @@ public class EventIntegTest extends RelatioIntegTest {
     @Before
     public void setUp() throws Exception {
         // given
-//        fixtureScripts.runFixtureScript(new WifiprojectAccessiEventFixture(), null);
-//        fixtureScripts.runFixtureScript(new WifiprojectUtentiEventFixture(), null);
+        fixtureScripts.runFixtureScript(new WifiprojectAccessiEventFixture(), null);
+        fixtureScripts.runFixtureScript(new WifiprojectUtentiEventFixture(), null);
+        fixtureScripts.runFixtureScript(new PTA_CouponingCampaignFixture(), null);
     }
 
     public static class ImportAccessi extends EventIntegTest {
@@ -60,7 +67,7 @@ public class EventIntegTest extends RelatioIntegTest {
 
             // when
             EventSource source = eventSourceRepository.findOrCreate(EventSourceType.WifiProjects_Utenti_Csv, "integ test");
-            Event event = eventRepository.findOrCreate(source, data);
+            Event event = wrap(eventRepository).findOrCreate(source, data);
 
             // then
             assertThat(event).isNotNull();

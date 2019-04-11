@@ -18,6 +18,11 @@
  */
 package org.incode.eurocommercial.relatio.dom;
 
-public final class RelatioDomainModule {
+import org.apache.isis.applib.ModuleAbstract;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "module")
+public final class RelatioDomainModule extends ModuleAbstract {
 
 }

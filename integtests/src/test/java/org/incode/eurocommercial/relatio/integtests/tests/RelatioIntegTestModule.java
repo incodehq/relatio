@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.relatio.fixture;
+package org.incode.eurocommercial.relatio.integtests.tests;
 
 import java.util.Set;
 
@@ -27,15 +27,12 @@ import com.google.common.collect.Sets;
 import org.apache.isis.applib.Module;
 import org.apache.isis.applib.ModuleAbstract;
 
-import org.isisaddons.module.excel.ExcelModule;
-
-import org.incode.eurocommercial.relatio.dom.RelatioDomainModule;
+import org.incode.eurocommercial.relatio.app.RelatioAppModule;
 
 @XmlRootElement(name = "module")
-public class RelatioFixtureModule extends ModuleAbstract {
+public class RelatioIntegTestModule extends ModuleAbstract {
 
     @Override public Set<Module> getDependencies() {
-        return Sets.newHashSet(new RelatioDomainModule(), new ExcelModule());
+        return Sets.newHashSet(new RelatioAppModule());
     }
-
 }

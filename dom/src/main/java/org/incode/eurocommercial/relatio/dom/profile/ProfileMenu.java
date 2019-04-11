@@ -1,6 +1,7 @@
 package org.incode.eurocommercial.relatio.dom.profile;
 
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.NatureOfService;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
         named = "Profiles",
         menuOrder = "20"
 )
+@DomainObject(objectType = "ProfileMenu")
 public class ProfileMenu {
 
     @Action(

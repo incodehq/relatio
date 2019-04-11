@@ -1,14 +1,14 @@
 package org.incode.eurocommercial.relatio.webapp;
 
-import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.services.user.UserService;
 import org.apache.isis.core.metamodel.services.ServicesInjector;
 import org.apache.isis.core.runtime.system.context.IsisContext;
-
 import org.apache.isis.core.runtime.system.session.IsisSessionFactory;
-import org.isisaddons.module.settings.dom.UserSetting;
-import org.isisaddons.module.settings.dom.UserSettingsService;
-import org.isisaddons.module.settings.dom.UserSettingsServiceRW;
-import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
+
+import org.incode.example.settings.dom.UserSetting;
+import org.incode.example.settings.dom.UserSettingsService;
+import org.incode.example.settings.dom.UserSettingsServiceRW;
+import org.incode.example.settings.dom.jdo.UserSettingJdo;
 
 import de.agilecoders.wicket.core.settings.ActiveThemeProvider;
 import de.agilecoders.wicket.core.settings.IBootstrapSettings;
@@ -83,8 +83,8 @@ public class RelatioUserSettingsThemeProvider implements ActiveThemeProvider {
     }
 
     protected String currentUserName() {
-        final DomainObjectContainer container = getServicesInjector().lookupService(DomainObjectContainer.class);
-        return container.getUser().getName();
+        final UserService userService = getServicesInjector().lookupService(UserService.class);
+        return userService.getUser().getName();
     }
 
     // //////////////////////////////////////
@@ -96,7 +96,6 @@ public class RelatioUserSettingsThemeProvider implements ActiveThemeProvider {
     IsisSessionFactory getIsisSessionFactory() {
         return IsisContext.getSessionFactory();
     }
-
 
 
 }

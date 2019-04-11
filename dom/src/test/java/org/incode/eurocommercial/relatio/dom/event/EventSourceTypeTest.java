@@ -1,11 +1,12 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import org.incode.eurocommercial.relatio.dom.aspect.AspectType;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Ignore
 public class EventSourceTypeTest {

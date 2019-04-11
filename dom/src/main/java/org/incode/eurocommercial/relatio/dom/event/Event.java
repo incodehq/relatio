@@ -1,15 +1,8 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
 import java.util.Comparator;
-
-import javax.jdo.annotations.Column;
-import javax.jdo.annotations.DatastoreIdentity;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Queries;
-import javax.jdo.annotations.Query;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
@@ -18,9 +11,13 @@ import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.eventbus.ObjectPersistedEvent;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.DatastoreIdentity;
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Queries;
+import javax.jdo.annotations.Query;
 
 @PersistenceCapable(
         identityType = IdentityType.DATASTORE
@@ -52,7 +49,8 @@ import lombok.Setter;
 })
 @DomainObject(
         editing = Editing.DISABLED,
-        persistedLifecycleEvent=Event.PersistedEvent.class
+        persistedLifecycleEvent=Event.PersistedEvent.class,
+        objectType = "Event"
 )
 public class Event implements Comparable<Event> {
 
