@@ -18,11 +18,13 @@
  */
 package org.incode.eurocommercial.relatio.app;
 
-import org.apache.isis.applib.AppManifestAbstract2;
-import org.incode.eurocommercial.relatio.fixture.RelatioFixtureModule;
-
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.isis.applib.AppManifestAbstract2;
+
+import org.incode.eurocommercial.relatio.dom.RelatioDomainModule;
+import org.incode.eurocommercial.relatio.fixture.RelatioFixtureModule;
 
 public class RelatioAppManifest extends AppManifestAbstract2 {
 
@@ -44,7 +46,7 @@ public class RelatioAppManifest extends AppManifestAbstract2 {
                 RelatioFixtureModule.class,
                 RelatioAppModule.class
                 , org.isisaddons.module.excel.ExcelModule.class // to run fixtures
-                , org.isisaddons.module.settings.SettingsModule.class // used by DomainAppUserSettingsThemeProvider
+                , org.incode.example.settings.SettingsModule.class // used by DomainAppUserSettingsThemeProvider
                 , org.isisaddons.module.security.SecurityModule.class,
                 org.isisaddons.module.publishmq.PublishMqModule.class
         );

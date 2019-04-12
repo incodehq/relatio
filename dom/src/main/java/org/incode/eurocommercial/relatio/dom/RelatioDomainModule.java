@@ -18,11 +18,23 @@
  */
 package org.incode.eurocommercial.relatio.dom;
 
-import org.apache.isis.applib.ModuleAbstract;
+import java.util.Set;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.common.collect.Sets;
+
+import org.apache.isis.applib.Module;
+import org.apache.isis.applib.ModuleAbstract;
+
+import org.isisaddons.module.excel.ExcelModule;
+import org.isisaddons.module.security.SecurityModule;
+
 @XmlRootElement(name = "module")
 public final class RelatioDomainModule extends ModuleAbstract {
+
+    @Override public Set<Module> getDependencies() {
+        return Sets.newHashSet(new SecurityModule(), new ExcelModule());
+    }
 
 }
