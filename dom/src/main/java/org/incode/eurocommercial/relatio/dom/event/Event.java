@@ -1,15 +1,6 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
 import java.util.Comparator;
-import lombok.Getter;
-import lombok.Setter;
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.Where;
-import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
-import org.apache.isis.applib.services.eventbus.ObjectPersistedEvent;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.DatastoreIdentity;
@@ -18,6 +9,17 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Queries;
 import javax.jdo.annotations.Query;
+
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
+import org.apache.isis.applib.services.eventbus.ObjectPersistedEvent;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @PersistenceCapable(
         identityType = IdentityType.DATASTORE
@@ -53,6 +55,13 @@ import javax.jdo.annotations.Query;
         objectType = "Event"
 )
 public class Event implements Comparable<Event> {
+
+    public Event(
+            final EventSource source,
+            final String data) {
+        this.source = source;
+        this.data = data;
+    }
 
     public String title() {
         return source.title();

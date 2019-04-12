@@ -59,6 +59,16 @@ public class EventSource implements Comparable<EventSource> {
         return "[" + type + "]" + " - " + createdAt;
     }
 
+
+    public EventSource(
+            final EventSourceType type,
+            final LocalDateTime createdAt,
+            final String name) {
+        this.type = type;
+        this.createdAt = createdAt;
+        this.name = name;
+    }
+
     @Column(allowsNull = "false")
     @Getter @Setter
     private EventSourceType type;

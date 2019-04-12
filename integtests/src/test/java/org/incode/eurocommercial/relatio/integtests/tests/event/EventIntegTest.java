@@ -3,7 +3,6 @@ package org.incode.eurocommercial.relatio.integtests.tests.event;
 import javax.inject.Inject;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
@@ -19,13 +18,9 @@ import org.incode.eurocommercial.relatio.fixture.dom.event.PTA_CouponingCampaign
 import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectAccessiEventFixture;
 import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectUtentiEventFixture;
 import org.incode.eurocommercial.relatio.integtests.tests.RelatioIntegTestAbstract;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore
 public class EventIntegTest extends RelatioIntegTestAbstract {
 
     @Inject private FixtureScripts fixtureScripts;
@@ -67,7 +62,7 @@ public class EventIntegTest extends RelatioIntegTestAbstract {
 
             // when
             EventSource source = eventSourceRepository.findOrCreate(EventSourceType.WifiProjects_Utenti_Csv, "integ test");
-            Event event = wrap(eventRepository).findOrCreate(source, data);
+            Event event = eventRepository.findOrCreate(source, data);
 
             // then
             assertThat(event).isNotNull();

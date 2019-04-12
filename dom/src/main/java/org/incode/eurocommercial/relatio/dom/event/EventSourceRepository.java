@@ -77,12 +77,7 @@ public class EventSourceRepository {
             final EventSourceType type,
             final LocalDateTime createdAt,
             final String name) {
-        final EventSource eventSource = repositoryService.instantiate(EventSource.class);
-        eventSource.setType(type);
-        eventSource.setCreatedAt(createdAt);
-        eventSource.setName(name);
-        repositoryService.persist(eventSource);
-        return eventSource;
+        return repositoryService.persist(new EventSource(type, createdAt, name));
     }
 
     @Programmatic

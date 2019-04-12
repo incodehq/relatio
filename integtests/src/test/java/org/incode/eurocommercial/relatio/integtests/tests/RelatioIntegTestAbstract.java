@@ -20,10 +20,14 @@ package org.incode.eurocommercial.relatio.integtests.tests;
 
 import org.apache.isis.core.integtestsupport.IntegrationTestAbstract3;
 
+import org.incode.eurocommercial.relatio.app.RelatioAppManifest;
+
 public abstract class RelatioIntegTestAbstract extends IntegrationTestAbstract3 {
 
     protected RelatioIntegTestAbstract() {
-        super(new RelatioIntegTestModule());
+        super(
+                new RelatioIntegTestModule()
+                        .withConfigurationPropertiesFile(RelatioAppManifest.class, "isis-non-changing.properties"));
     }
 
 }
