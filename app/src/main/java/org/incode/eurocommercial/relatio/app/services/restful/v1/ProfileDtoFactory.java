@@ -5,7 +5,7 @@ import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 
 import org.incode.eurocommercial.relatio.canonical.profile.v1.ProfileDto;
-import org.incode.eurocommercial.relatio.dom.profile.Profile;
+import org.incode.eurocommercial.relatio.module.profile.dom.Profile;
 
 @DomainService(
         nature = NatureOfService.DOMAIN

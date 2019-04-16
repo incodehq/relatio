@@ -29,13 +29,13 @@ import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
 
-import org.isisaddons.module.settings.dom.ApplicationSettingsServiceRW;
-import org.isisaddons.module.settings.dom.UserSettingsServiceRW;
-import org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo;
-import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
+import org.incode.example.settings.dom.ApplicationSettingsServiceRW;
+import org.incode.example.settings.dom.UserSettingsServiceRW;
+import org.incode.example.settings.dom.jdo.ApplicationSettingJdo;
+import org.incode.example.settings.dom.jdo.UserSettingJdo;
 
 /**
- * A wrapper around {@link org.isisaddons.module.settings.dom.UserSettingsService}.
+ * A wrapper around {@link org.incode.example.settings.dom.UserSettingsService}.
  */
 @DomainService(nature = NatureOfService.VIEW_MENU_ONLY)
 @DomainServiceLayout(

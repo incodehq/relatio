@@ -18,13 +18,7 @@
  */
 package org.incode.eurocommercial.relatio.app;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.apache.isis.applib.AppManifestAbstract2;
-
-import org.incode.eurocommercial.relatio.dom.RelatioDomainModule;
-import org.incode.eurocommercial.relatio.fixture.RelatioFixtureModule;
 
 public class RelatioAppManifest extends AppManifestAbstract2 {
 
@@ -34,30 +28,10 @@ public class RelatioAppManifest extends AppManifestAbstract2 {
                     .withConfigurationPropertiesFile(
                             RelatioAppManifest.class, "isis-non-changing.properties")
                     .withConfigurationPropertiesFile(
-                            RelatioAppManifest.class, "git.estatio.properties")
-                    .withAdditionalModules(myModules())
-                    .withAdditionalServices(myAdditionalServices());
+                            RelatioAppManifest.class, "git.estatio.properties");
 
     public RelatioAppManifest() {
         super(BUILDER);
-    }
-
-    public static List<Class<?>> myModules() {
-        return Arrays.asList(
-                RelatioDomainModule.class,
-                RelatioFixtureModule.class,
-                RelatioAppModule.class
-                , org.isisaddons.module.excel.ExcelModule.class // to run fixtures
-                , org.isisaddons.module.settings.SettingsModule.class // used by DomainAppUserSettingsThemeProvider
-                , org.isisaddons.module.security.SecurityModule.class,
-                org.isisaddons.module.publishmq.PublishMqModule.class
-        );
-    }
-
-    public static List<Class<?>> myAdditionalServices() {
-        return Arrays.asList(
-                org.isisaddons.module.security.dom.password.PasswordEncryptionServiceUsingJBcrypt.class
-        );
     }
 
 }

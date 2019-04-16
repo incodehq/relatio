@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-import org.incode.eurocommercial.relatio.fixture.scenarios.demo.DemoFixture;
+import org.incode.eurocommercial.relatio.app.scenarios.demo.DemoFixture;
 
 public class RelatioAppManifestWithDemoFixtures extends RelatioAppManifest {
 
