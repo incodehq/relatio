@@ -30,7 +30,7 @@
     <name>Relatio Application</name>
 
     <properties>
-        <isis-maven-plugin.validate.appManifest>org.incode.eurocommercial.relatio.dom.RelatioDomManifest</isis-maven-plugin.validate.appManifest>
+        <isis-maven-plugin.validate.appManifest>org.incode.eurocommercial.relatio.app.RelatioAppManifest</isis-maven-plugin.validate.appManifest>
         <mavenmixin-isisvalidate.version>0.0.2</mavenmixin-isisvalidate.version>
         <axon-core.version>2.4</axon-core.version>
         <wicked-charts.version>1.5.0</wicked-charts.version>

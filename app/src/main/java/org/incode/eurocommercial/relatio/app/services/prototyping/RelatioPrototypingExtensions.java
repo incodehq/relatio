@@ -34,7 +34,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
 import org.incode.eurocommercial.relatio.app.services.homepage.HomePageService;
-import org.incode.eurocommercial.relatio.fixture.scenarios.test.IntegTestFixture;
+import org.incode.eurocommercial.relatio.app.scenarios.IntegTestFixture;
 
 /**
  * Enables fixtures to be installed from the application.

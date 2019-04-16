@@ -25,8 +25,8 @@ import com.googlecode.wickedcharts.highcharts.options.series.PointSeries;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.ViewModel;
 import static org.apache.isis.applib.annotation.Where.EVERYWHERE;
-import org.incode.eurocommercial.relatio.dom.profile.Profile;
-import org.incode.eurocommercial.relatio.dom.profile.ProfileRepository;
+import org.incode.eurocommercial.relatio.module.profile.dom.Profile;
+import org.incode.eurocommercial.relatio.module.profile.dom.ProfileRepository;
 import org.isisaddons.wicket.wickedcharts.cpt.applib.WickedChart;
 
 import javax.inject.Inject;

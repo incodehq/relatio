@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-import org.incode.eurocommercial.relatio.fixture.scenarios.event.EventFixture;
+import org.incode.eurocommercial.relatio.app.scenarios.event.EventFixture;
 
 public class RelatioAppManifestWithEventFixtures extends RelatioAppManifest {
 

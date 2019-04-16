@@ -26,16 +26,16 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
-import org.incode.eurocommercial.relatio.dom.seed.roles.AuditModuleRoleAndPermissions;
-import org.incode.eurocommercial.relatio.dom.seed.roles.CommandModuleRoleAndPermissions;
-import org.incode.eurocommercial.relatio.dom.seed.roles.DevUtilsModuleRoleAndPermissions;
-import org.incode.eurocommercial.relatio.dom.seed.roles.PublishingModuleRoleAndPermissions;
-import org.incode.eurocommercial.relatio.dom.seed.roles.RelatioFixtureServiceRoleAndPermissions;
-import org.incode.eurocommercial.relatio.dom.seed.roles.RelatioRegularRoleAndPermissions;
-import org.incode.eurocommercial.relatio.dom.seed.roles.SessionLoggerModuleRoleAndPermissions;
-import org.incode.eurocommercial.relatio.dom.seed.roles.SettingsModuleRoleAndPermissions;
-import org.incode.eurocommercial.relatio.dom.seed.roles.TranslationServicePoMenuRoleAndPermissions;
-import org.incode.eurocommercial.relatio.dom.seed.users.RelatioAdminUser;
+import org.incode.eurocommercial.relatio.module.base.seed.roles.AuditModuleRoleAndPermissions;
+import org.incode.eurocommercial.relatio.module.base.seed.roles.CommandModuleRoleAndPermissions;
+import org.incode.eurocommercial.relatio.module.base.seed.roles.DevUtilsModuleRoleAndPermissions;
+import org.incode.eurocommercial.relatio.module.base.seed.roles.PublishingModuleRoleAndPermissions;
+import org.incode.eurocommercial.relatio.module.base.seed.roles.RelatioFixtureServiceRoleAndPermissions;
+import org.incode.eurocommercial.relatio.module.base.seed.roles.RelatioRegularRoleAndPermissions;
+import org.incode.eurocommercial.relatio.module.base.seed.roles.SessionLoggerModuleRoleAndPermissions;
+import org.incode.eurocommercial.relatio.module.base.seed.roles.SettingsModuleRoleAndPermissions;
+import org.incode.eurocommercial.relatio.module.base.seed.roles.TranslationServicePoMenuRoleAndPermissions;
+import org.incode.eurocommercial.relatio.module.base.seed.users.RelatioAdminUser;
 
 @DomainService(
         nature = NatureOfService.DOMAIN

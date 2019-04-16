@@ -32,7 +32,7 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.conmap.ContentMappingService;
 
 import org.incode.eurocommercial.relatio.app.services.restful.v1.ProfileDtoFactory;
-import org.incode.eurocommercial.relatio.dom.profile.Profile;
+import org.incode.eurocommercial.relatio.module.profile.dom.Profile;
 
 @DomainService(
         nature = NatureOfService.DOMAIN

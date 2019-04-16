@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-mvn -pl dom datanucleus:enhance -o -B
+mvn -pl app datanucleus:enhance -o -B
