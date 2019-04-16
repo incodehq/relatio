@@ -35,7 +35,7 @@ import org.incode.eurocommercial.relatio.module.aspect.RelatioAspectModule;
 import org.incode.eurocommercial.relatio.module.base.RelatioBaseModule;
 import org.incode.eurocommercial.relatio.module.event.RelatioEventModule;
 import org.incode.eurocommercial.relatio.module.profile.RelatioProfileModule;
-import org.incode.example.settings.SettingsModule;
+import org.incode.module.settings.SettingsModule;
 
 @XmlRootElement(name = "module")
 public class RelatioAppModule extends ModuleAbstract {
