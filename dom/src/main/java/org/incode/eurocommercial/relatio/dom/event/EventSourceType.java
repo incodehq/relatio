@@ -242,7 +242,7 @@ public enum EventSourceType {
                 } else if(!values[16].trim().isEmpty()) {
                     map.put(AspectType.Gender, "OTHER");
                 }
-
+                map.put(AspectType.reasonToVisitMall, values[17].trim());
                 if(values[21].trim().equals("Automobile")) {
                     map.put(AspectType.CarOwner, "true");
                     map.put(AspectType.TransportUsed, "Car");
@@ -307,12 +307,16 @@ public enum EventSourceType {
 
                 // column 46 DINNER PREFERENCE
 
+                map.put(AspectType.foodPrefenceForDinner, values[50].trim());
+
                 if(values[52].trim().equals("Yes")) {
                     map.put(AspectType.OnlineShopper, "true");
                 } else {
                     map.put(AspectType.OnlineShopper, "false");
                 }
 
+
+                map.put(AspectType.ratingOverallShoppingMall, values[59].trim());
                 map.put(AspectType.PostalCode, values[63].trim());
                 map.put(AspectType.City, values[64].trim());
 

@@ -134,6 +134,9 @@ public enum AspectType {
     CarwashUser(),
     CarwashRating(),
     AgeGroup(),
+    reasonToVisitMall(),
+    ratingOverallShoppingMall(),
+    foodPrefenceForDinner(),
 
     // Device
     DeviceId(),

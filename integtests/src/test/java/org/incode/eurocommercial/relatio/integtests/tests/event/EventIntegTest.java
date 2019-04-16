@@ -80,7 +80,7 @@ public class EventIntegTest extends RelatioIntegTest {
 
             // then
             assertThat(event).isNotNull();
-            assertThat(aspectRepository.findByEvent(event)).hasSize(27);
+            assertThat(aspectRepository.findByEvent(event)).hasSize(30);
         }
     }
 
