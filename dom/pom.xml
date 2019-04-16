@@ -117,6 +117,11 @@
             <artifactId>isis-core-unittestsupport</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.isis.core</groupId>
+            <artifactId>isis-core-integtestsupport</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <!-- Bytecode libraries (for mocking) -->
         <dependency>
