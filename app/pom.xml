@@ -29,6 +29,14 @@
     <artifactId>relatio-app</artifactId>
     <name>Relatio Application</name>
 
+    <properties>
+        <isis-maven-plugin.validate.appManifest>org.incode.eurocommercial.relatio.dom.RelatioDomManifest</isis-maven-plugin.validate.appManifest>
+        <mavenmixin-isisvalidate.version>0.0.2</mavenmixin-isisvalidate.version>
+        <axon-core.version>2.4</axon-core.version>
+        <wicked-charts.version>1.5.0</wicked-charts.version>
+        <relatio-canonical.version>2.0.0-M1.20190107-1559-b7dbd7ef</relatio-canonical.version>
+    </properties>
+
     <build>
         <resources>
             <resource>
@@ -63,6 +71,22 @@
                             <groupId>com.danhaywood.mavenmixin</groupId>
                             <artifactId>enforcerrelaxed</artifactId>
                         </mixin>
+                        <mixin>
+                            <groupId>com.danhaywood.mavenmixin</groupId>
+                            <artifactId>surefire</artifactId>
+                        </mixin>
+                        <mixin>
+                            <groupId>com.danhaywood.mavenmixin</groupId>
+                            <artifactId>datanucleusenhance</artifactId>
+                        </mixin>
+                        <!-- hmm: doesn't seem to be validating correctly (didn't detect an error we had) -->
+<!--
+                        <mixin>
+                            <groupId>com.danhaywood.mavenmixin</groupId>
+                            <artifactId>isisvalidate</artifactId>
+                            <version>${mavenmixin-isisvalidate.version}</version>
+                        </mixin>
+-->
                     </mixins>
                 </configuration>
             </plugin>
@@ -70,10 +94,12 @@
     </build>
 
     <dependencies>
+
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>relatio-dom</artifactId>
+            <groupId>org.apache.isis.core</groupId>
+            <artifactId>isis-core-applib</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.apache.isis.core</groupId>
             <artifactId>isis-core-wrapper</artifactId>
@@ -84,10 +110,14 @@
             <artifactId>isis-core-viewer-restfulobjects-rendering</artifactId>
         </dependency>
 
-
         <dependency>
             <groupId>org.isisaddons.metamodel.paraname8</groupId>
             <artifactId>isis-metamodel-paraname8-dom</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.isisaddons.module.fakedata</groupId>
+            <artifactId>isis-module-fakedata-dom</artifactId>
         </dependency>
 
         <dependency>
@@ -96,22 +126,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.isis.core</groupId>
-            <artifactId>isis-core-unittestsupport</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Bytecode libraries (for mocking) -->
-        <dependency>
-            <groupId>org.objenesis</groupId>
-            <artifactId>objenesis</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <scope>test</scope>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-core</artifactId>
+            <version>${axon-core.version}</version>
         </dependency>
 
         <dependency>
@@ -124,85 +141,137 @@
             <artifactId>commons-csv</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ecwid</groupId>
+            <artifactId>maleorang</artifactId>
+            <version>3.0-0.9.6</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.incode.eurocommercial</groupId>
+            <artifactId>relatio-canonical</artifactId>
+            <version>2.0.0-M1.20190107-1559-b7dbd7ef</version>
+            <scope>compile</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.isisaddons.module.audit</groupId>
+            <artifactId>isis-module-audit-dom</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.isisaddons.module.command</groupId>
+            <artifactId>isis-module-command-dom</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.isisaddons.module.docx</groupId>
+            <artifactId>isis-module-docx-dom</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.isisaddons.module.excel</groupId>
+            <artifactId>isis-module-excel-dom</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.isisaddons.module.publishmq</groupId>
+            <artifactId>isis-module-publishmq-dom-servicespi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.isisaddons.module.publishmq</groupId>
+            <artifactId>isis-module-publishmq-dom-jdo</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.isisaddons.module.security</groupId>
+            <artifactId>isis-module-security-dom</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.isisaddons.module.sessionlogger</groupId>
+            <artifactId>isis-module-sessionlogger-dom</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.incode.example.settings</groupId>
+            <artifactId>incode-example-settings-dom</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.isisaddons.wicket.excel</groupId>
+            <artifactId>isis-wicket-excel-cpt</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.isisaddons.wicket.fullcalendar2</groupId>
+            <artifactId>isis-wicket-fullcalendar2-cpt</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.codehaus.jackson</groupId>
+                    <artifactId>jackson-core-asl</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.codehaus.jackson</groupId>
+                    <artifactId>jackson-mapper-asl</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.isisaddons.wicket.gmap3</groupId>
+            <artifactId>isis-wicket-gmap3-cpt</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.isisaddons.wicket.wickedcharts</groupId>
+            <artifactId>isis-wicket-wickedcharts-cpt</artifactId>
+        </dependency>
+
+        <!-- test -->
+        <dependency>
+            <groupId>org.apache.isis.core</groupId>
+            <artifactId>isis-core-unittestsupport</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.isis.core</groupId>
+            <artifactId>isis-core-integtestsupport</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.objenesis</groupId>
+            <artifactId>objenesis</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
     </dependencies>
 
-    <profiles>
-        <profile>
-            <id>incode-platform</id>
-            <activation>
-                <property>
-                    <name>!skip.incode-platform</name>
-                </property>
-            </activation>
-            <dependencies>
-
-                <dependency>
-                    <groupId>org.isisaddons.module.audit</groupId>
-                    <artifactId>isis-module-audit-dom</artifactId>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.isisaddons.module.command</groupId>
-                    <artifactId>isis-module-command-dom</artifactId>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.isisaddons.module.docx</groupId>
-                    <artifactId>isis-module-docx-dom</artifactId>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.isisaddons.module.publishmq</groupId>
-                    <artifactId>isis-module-publishmq-dom-servicespi</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.isisaddons.module.publishmq</groupId>
-                    <artifactId>isis-module-publishmq-dom-jdo</artifactId>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.mindrot</groupId>
-                    <artifactId>jbcrypt</artifactId>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.isisaddons.module.sessionlogger</groupId>
-                    <artifactId>isis-module-sessionlogger-dom</artifactId>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.incode.example.settings</groupId>
-                    <artifactId>incode-example-settings-dom</artifactId>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.isisaddons.wicket.excel</groupId>
-                    <artifactId>isis-wicket-excel-cpt</artifactId>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.isisaddons.wicket.fullcalendar2</groupId>
-                    <artifactId>isis-wicket-fullcalendar2-cpt</artifactId>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>org.codehaus.jackson</groupId>
-                            <artifactId>jackson-core-asl</artifactId>
-                        </exclusion>
-                        <exclusion>
-                            <groupId>org.codehaus.jackson</groupId>
-                            <artifactId>jackson-mapper-asl</artifactId>
-                        </exclusion>
-                    </exclusions>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.isisaddons.wicket.gmap3</groupId>
-                    <artifactId>isis-wicket-gmap3-cpt</artifactId>
-                </dependency>
-            </dependencies>
-        </profile>
-
-    </profiles>
 
 
 </project>
