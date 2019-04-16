@@ -1,17 +1,15 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
-import org.joda.time.LocalDateTime;
-
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.clock.ClockService;
 import org.apache.isis.applib.services.repository.RepositoryService;
+import org.joda.time.LocalDateTime;
+
+import javax.inject.Inject;
+import java.util.List;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
@@ -77,7 +75,7 @@ public class EventSourceRepository {
             final EventSourceType type,
             final LocalDateTime createdAt,
             final String name) {
-        return repositoryService.persist(new EventSource(type, createdAt, name));
+        return repositoryService.persist(new EventSource(type, createdAt, name, EventSource.Status.IN_PROGRESS));
     }
 
     @Programmatic

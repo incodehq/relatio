@@ -1,25 +1,21 @@
 package org.incode.eurocommercial.relatio.integtests.tests.event;
 
-import javax.inject.Inject;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.clock.ClockService;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import org.incode.eurocommercial.relatio.dom.aspect.AspectRepository;
 import org.incode.eurocommercial.relatio.dom.event.Event;
 import org.incode.eurocommercial.relatio.dom.event.EventRepository;
 import org.incode.eurocommercial.relatio.dom.event.EventSource;
 import org.incode.eurocommercial.relatio.dom.event.EventSourceRepository;
 import org.incode.eurocommercial.relatio.dom.event.EventSourceType;
-import org.incode.eurocommercial.relatio.fixture.dom.event.PTA_CouponingCampaignFixture;
 import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectAccessiEventFixture;
 import org.incode.eurocommercial.relatio.fixture.dom.event.WifiprojectUtentiEventFixture;
 import org.incode.eurocommercial.relatio.integtests.tests.RelatioIntegTestAbstract;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import javax.inject.Inject;
 
 public class EventIntegTest extends RelatioIntegTestAbstract {
 
@@ -35,7 +31,6 @@ public class EventIntegTest extends RelatioIntegTestAbstract {
         // given
         fixtureScripts.runFixtureScript(new WifiprojectAccessiEventFixture(), null);
         fixtureScripts.runFixtureScript(new WifiprojectUtentiEventFixture(), null);
-        fixtureScripts.runFixtureScript(new PTA_CouponingCampaignFixture(), null);
     }
 
     public static class ImportAccessi extends EventIntegTest {
@@ -108,8 +103,5 @@ public class EventIntegTest extends RelatioIntegTestAbstract {
             assertThat(aspectRepository.findByEvent(event)).hasSize(expectedAspectSize);
         }
     }
-
-
-
 
 }

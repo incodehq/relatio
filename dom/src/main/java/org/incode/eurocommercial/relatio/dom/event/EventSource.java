@@ -1,8 +1,13 @@
 package org.incode.eurocommercial.relatio.dom.event;
 
-import java.util.Comparator;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.isis.applib.annotation.Collection;
+import org.apache.isis.applib.annotation.CollectionLayout;
+import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.services.wrapper.WrapperFactory;
+import org.joda.time.LocalDateTime;
 
 import javax.inject.Inject;
 import javax.jdo.annotations.Column;
@@ -13,17 +18,9 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.Queries;
 import javax.jdo.annotations.Query;
-
-import org.joda.time.LocalDateTime;
-
-import org.apache.isis.applib.annotation.Collection;
-import org.apache.isis.applib.annotation.CollectionLayout;
-import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.services.wrapper.WrapperFactory;
-
-import lombok.Getter;
-import lombok.Setter;
+import java.util.Comparator;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @PersistenceCapable(
         identityType = IdentityType.DATASTORE
@@ -63,10 +60,12 @@ public class EventSource implements Comparable<EventSource> {
     public EventSource(
             final EventSourceType type,
             final LocalDateTime createdAt,
-            final String name) {
+            final String name,
+            final Status status) {
         this.type = type;
         this.createdAt = createdAt;
         this.name = name;
+        this.status = status;
     }
 
     @Column(allowsNull = "false")
@@ -110,7 +109,8 @@ public class EventSource implements Comparable<EventSource> {
 
     public enum Status {
         SUCCESS,
-        FAILURE
+        FAILURE,
+        IN_PROGRESS
     }
 
     public EventSource updateEvents() {
