@@ -133,7 +133,6 @@
     <modules>
         <module>app</module>
         <module>dom</module>
-        <module>fixture</module>
         <module>integtests</module>
         <module>webapp</module>
     </modules>
@@ -183,11 +182,6 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>relatio-dom</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>relatio-fixture</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
