@@ -24,7 +24,7 @@
     <parent>
         <groupId>org.incode</groupId>
         <artifactId>incode-parent</artifactId>
-        <version>1.16.2.20180707-1320-eca4c55a</version>
+        <version>1.17.0.20190418-0755-7d3f32e7</version>
     </parent>
 
     <groupId>org.incode.eurocommercial</groupId>
@@ -59,16 +59,12 @@
     </developers>
 
     <properties>
-        <revision>1.16.2-SNAPSHOT</revision>
+        <revision>1.0.0-SNAPSHOT</revision>
 
-        <isis.version>1.16.2</isis.version>
+        <isis.version>1.17.0.20190207-2036-bccfeda5</isis.version>
 
         <!-- NB: also update the parent of this pom.  -->
-        <incode-platform.version>1.16.2.20180707-1320-eca4c55a</incode-platform.version>
-
-
-        <isis-module-settings.version>1.16.2</isis-module-settings.version>
-
+        <incode-platform.version>1.17.0.20190418-0755-7d3f32e7</incode-platform.version>
 
         <jbcrypt.version>0.3m</jbcrypt.version>
 
@@ -221,17 +217,17 @@
     <profiles>
         <!-- required to pull down parent pom (incode-parent) -->
         <profile>
-            <id>incode-cloud-maven</id>
+            <id>repo-incode-work</id>
             <activation>
                 <property>
-                    <name>!skip.incode-cloud-maven</name>
+                    <name>!skip.repo-incode-work</name>
                 </property>
             </activation>
             <repositories>
                 <repository>
-                    <id>incode-cloud-maven</id>
-                    <url>https://repo.incode.cloud/repository/maven/</url>
-                    <name>Incode Cloud (maven)</name>
+                    <id>repo-incode-work</id>
+                    <url>https://repo.incode.work</url>
+                    <name>repo.incode.work</name>
                     <releases>
                         <enabled>true</enabled>
                         <updatePolicy>always</updatePolicy>
@@ -245,19 +241,6 @@
                     <layout>default</layout>
                 </repository>
             </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>incode-cloud-maven</id>
-                    <name>Incode Cloud (maven)</name>
-                    <releases>
-                        <enabled>true</enabled>
-                        <updatePolicy>never</updatePolicy>
-                        <checksumPolicy>fail</checksumPolicy>
-                    </releases>
-                    <url>https://repo.incode.cloud/repository/maven/</url>
-                    <layout>default</layout>
-                </pluginRepository>
-            </pluginRepositories>
         </profile>
 
         <profile>
@@ -421,14 +404,15 @@
                     </dependency>
 
                     <dependency>
-                        <groupId>org.incode.example.settings</groupId>
-                        <artifactId>incode-example-settings-dom</artifactId>
-                        <version>${isis-module-settings.version}</version>
+                        <groupId>org.incode.module.settings</groupId>
+                        <artifactId>incode-module-settings-dom</artifactId>
+                        <version>${incode-platform.version}</version>
                     </dependency>
+
                     <dependency>
-                        <groupId>org.incode.example.settings</groupId>
-                        <artifactId>incode-example-settings-dom</artifactId>
-                        <version>${isis-module-settings.version}</version>
+                        <groupId>org.incode.module.settings</groupId>
+                        <artifactId>incode-module-settings-dom</artifactId>
+                        <version>${incode-platform.version}</version>
                         <type>test-jar</type>
                         <scope>test</scope>
                     </dependency>
@@ -460,6 +444,50 @@
             </dependencyManagement>
         </profile>
 
+
+        <profile>
+            <id>fix-wicked-charts-dependency</id>
+            <activation>
+                <property>
+                    <name>!skip.fix-wicked-charts-dependency</name>
+                </property>
+            </activation>
+            <dependencyManagement>
+                <!-- not sure why these are resolving to some other non-existent versions... -->
+                <dependencies>
+                    <dependency>
+                        <groupId>com.googlecode.wicked-charts</groupId>
+                        <artifactId>wicked-charts-wicket7</artifactId>
+                        <version>2.0.1</version>
+                        <exclusions>
+                            <exclusion>
+                                <artifactId>highcharts-wrapper</artifactId>
+                                <groupId>com.googlecode.wicked-charts</groupId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.googlecode.wicked-charts</groupId>
+                        <artifactId>highcharts-wrapper</artifactId>
+                        <version>2.0.1</version>
+                        <exclusions>
+                            <exclusion>
+                                <artifactId>jackson-annotations</artifactId>
+                                <groupId>com.fasterxml.jackson.core</groupId>
+                            </exclusion>
+                            <exclusion>
+                                <artifactId>jackson-core</artifactId>
+                                <groupId>com.fasterxml.jackson.core</groupId>
+                            </exclusion>
+                            <exclusion>
+                                <artifactId>jackson-databind</artifactId>
+                                <groupId>com.fasterxml.jackson.core</groupId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+        </profile>
 
         <profile>
             <id>m2e</id>

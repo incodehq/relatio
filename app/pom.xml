@@ -34,7 +34,7 @@
         <mavenmixin-isisvalidate.version>0.0.2</mavenmixin-isisvalidate.version>
         <axon-core.version>2.4</axon-core.version>
         <wicked-charts.version>1.5.0</wicked-charts.version>
-        <relatio-canonical.version>2.0.0-M1.20190107-1559-b7dbd7ef</relatio-canonical.version>
+        <relatio-canonical.version>2.0.0.20190416-1657-bf834673</relatio-canonical.version>
     </properties>
 
     <build>
@@ -177,7 +177,7 @@
         <dependency>
             <groupId>org.incode.eurocommercial</groupId>
             <artifactId>relatio-canonical</artifactId>
-            <version>2.0.0-M1.20190107-1559-b7dbd7ef</version>
+            <version>${relatio-canonical.version}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -227,8 +227,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.incode.example.settings</groupId>
-            <artifactId>incode-example-settings-dom</artifactId>
+            <groupId>org.incode.module.settings</groupId>
+            <artifactId>incode-module-settings-dom</artifactId>
         </dependency>
 
         <dependency>
