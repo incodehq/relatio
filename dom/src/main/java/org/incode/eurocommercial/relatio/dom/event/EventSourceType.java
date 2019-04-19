@@ -210,7 +210,7 @@ public enum EventSourceType {
             Map<AspectType, String> map = Maps.newHashMap();
 
             try {
-                final String[] values = data.split(separator());
+                final String[] values = data.split(separator(), -1);
 
                 map.put(AspectType.DateCollected, DateFormatUtils.toISOLocalDateTime(values[0], "yyyy-MM-dd HH:mm:ss.'0000000'"));
                 map.put(AspectType.FirstName, values[9].trim());
