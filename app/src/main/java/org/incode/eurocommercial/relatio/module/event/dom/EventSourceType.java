@@ -42,7 +42,8 @@ public enum EventSourceType {
     Infopoint_Csv(InfoPointCsv.class),
     GamePlayedEventV1(GamePlayedEventV1.class),
     QuickTapSurveyCarosello(QuickTapSurveyCarosello.class),
-    PTA_CouponingCampaignData(PTA_CouponingCampaignData.class);
+    PTA_CouponingCampaignData(PTA_CouponingCampaignData.class),
+    OceanEvent(OceanEvent.class);
 
 
     @Getter
@@ -194,6 +195,59 @@ public enum EventSourceType {
 
         }
     }
+
+
+    public static class OceanEvent implements EventParserForCsv {
+        public String header() {
+            return "ID;Name;Last Name;City of Birth;birthdate;Address;City ;Zipcode;Email;Cellphone;Marketing By Post;Marketing By Email;Marketing By SMS;Profiling Consent;Third Party Consent";
+        }
+
+        public int headerSize() {
+            return  1;
+        }
+
+        @Override
+        public String separator() {
+            return ";";
+        }
+
+        @Override
+        public Map<AspectType, String> toMap(String data) {
+            Map<AspectType, String> map = Maps.newHashMap();
+            try {
+                final String[] values = data.split(separator(), -1);
+
+                map.put(AspectType.FirstName, values[1].trim());
+                map.put(AspectType.LastName, values[2].trim());
+                map.put(AspectType.CityOfBirth, values[3].trim());
+                map.put(AspectType.DateOfBirth, values[4].trim());
+                map.put(AspectType.Address, values[5].trim());
+                map.put(AspectType.PostalCode, values[7].trim());
+                map.put(AspectType.EmailAccount, values[8].trim());
+                map.put(AspectType.GeneralPhoneNumber, values[9].trim());
+                if(values[11].trim().equals("yes")) {
+                    map.put(AspectType.MarketingConsent, "true");
+                } else {
+                    map.put(AspectType.MarketingConsent, "false");
+                }
+                if(values[13].trim().equals("yes")) {
+                    map.put(AspectType.ProfilingConsent, "true");
+                } else {
+                    map.put(AspectType.ProfilingConsent, "false");
+                }
+                if(values[14].trim().equals("yes")) {
+                    map.put(AspectType.ThirdPartyConsent, "true");
+                } else {
+                    map.put(AspectType.ThirdPartyConsent, "false");
+                }
+
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw e;
+            }
+            return map;
+        }
+    }
+
 
     public static class QuickTapSurveyCarosello implements EventParserForCsv {
         public String header() {

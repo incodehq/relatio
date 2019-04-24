@@ -27,6 +27,7 @@ public enum AspectType {
         }
     },
     YearOfBirth(),
+    CityOfBirth(),
     ApproximateDateOfBirth() {
         @Override public void updateProfile(final Aspect aspect) {
             aspect.getProfile().setApproximateDateOfBirth(LocalDate.parse(aspect.getValue()));
