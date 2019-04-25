@@ -108,7 +108,7 @@ public class EventIntegTest extends RelatioIntegTestAbstract {
 
     public static class OceanEventIntegTest extends EventIntegTest {
         @Test
-        public void can_import_PTA_CouponingCampaign() {
+        public void can_import_Ocean_Event() {
             // given
 
             test( "5;Ramito;Postaeto;;;via Clemea Alwea, 51;Carote;20061;lala.potato@jenkkins.com;;yes;no;no;no;no", 8);
@@ -120,6 +120,28 @@ public class EventIntegTest extends RelatioIntegTestAbstract {
         private void test(final String data, final int expectedAspectSize) {
             // when
             EventSource source = eventSourceRepository.findOrCreate(EventSourceType.OceanEvent, "integ test");
+            Event event = eventRepository.findOrCreate(source, data);
+
+            // then
+            assertThat(event).isNotNull();
+            assertThat(aspectRepository.findByEvent(event)).hasSize(expectedAspectSize);
+        }
+    }
+
+    public static class WifiDataIntegTest extends EventIntegTest {
+        @Test
+        public void can_import_Wifi_Data() {
+            // given
+
+            test( "naranha;pensssd;2018-06-07 00:00:00;clssddy.pes1@gmail.com;+393923666666;;;SMS;SI", 6);
+
+            test("Dooén;Kousa;2018-06-07 00:00:00;kougroaa10.kn@gmail.com;;OVER 21;M;Facebook;", 5);
+
+        }
+
+        private void test(final String data, final int expectedAspectSize) {
+            // when
+            EventSource source = eventSourceRepository.findOrCreate(EventSourceType.WifiData, "integ test");
             Event event = eventRepository.findOrCreate(source, data);
 
             // then

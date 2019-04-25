@@ -43,7 +43,8 @@ public enum EventSourceType {
     GamePlayedEventV1(GamePlayedEventV1.class),
     QuickTapSurveyCarosello(QuickTapSurveyCarosello.class),
     PTA_CouponingCampaignData(PTA_CouponingCampaignData.class),
-    OceanEvent(OceanEvent.class);
+    OceanEvent(OceanEvent.class),
+    WifiData(WifiData.class);
 
 
     @Getter
@@ -193,6 +194,47 @@ public enum EventSourceType {
                 return SocialAccount.valueOf(name.replace("+", "Plus"));
             }
 
+        }
+    }
+
+
+    public static class WifiData implements EventParserForCsv {
+        public String header() {
+            return "MOME;COGNOME;DATA PRIMO ACCESSO;EMAIL;TELEFONO;RANGE ETA';SESSO;ACCESSO SOCIAL;COMUNICAZIONI COMMERCIALI";
+        }
+
+        public int headerSize() {
+            return  1;
+        }
+
+        @Override
+        public String separator() {
+            return ";";
+        }
+
+        @Override
+        public Map<AspectType, String> toMap(String data) {
+            Map<AspectType, String> map = Maps.newHashMap();
+            try {
+                final String[] values = data.split(separator(), -1);
+                map.put(AspectType.FirstName, values[0].trim());
+                map.put(AspectType.LastName, values[1].trim());
+                map.put(AspectType.DateCollected, DateFormatUtils.toISOLocalDateTime(values[2], "yyyy-MM-dd HH:mm:ss"));
+                map.put(AspectType.EmailAccount, values[3].trim());
+                map.put(AspectType.GeneralPhoneNumber, values[4].trim());
+                if(values[6].trim().toUpperCase().equals("F")){
+                    map.put(AspectType.Gender, "FEMALE");
+                }else if(values[6].trim().toUpperCase().equals("M")){
+                    map.put(AspectType.Gender, "MALE");
+                }
+                if(values[8].trim().equals("SI")) {
+                    map.put(AspectType.MarketingConsent, "true");
+                }
+
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw e;
+            }
+            return map;
         }
     }
 
