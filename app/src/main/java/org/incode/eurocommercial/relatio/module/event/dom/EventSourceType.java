@@ -44,7 +44,8 @@ public enum EventSourceType {
     QuickTapSurveyCarosello(QuickTapSurveyCarosello.class),
     PTA_CouponingCampaignData(PTA_CouponingCampaignData.class),
     OceanEvent(OceanEvent.class),
-    WifiData(WifiData.class);
+    WifiData(WifiData.class),
+    WifiData2017LastAccess(WifiData2017LastAccess.class);
 
 
     @Getter
@@ -228,6 +229,46 @@ public enum EventSourceType {
                     map.put(AspectType.Gender, "MALE");
                 }
                 if(values[8].trim().equals("SI")) {
+                    map.put(AspectType.MarketingConsent, "true");
+                }
+
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw e;
+            }
+            return map;
+        }
+    }
+
+    public static class WifiData2017LastAccess implements EventParserForCsv {
+        public String header() {
+            return "MOME;COGNOME;DATA PRIMO ACCESSO;DATA ULTIMO ACCESSO;EMAIL;TELEFONO;RANGE ETA';SESSO;ACCESSO SOCIAL;COMUNICAZIONI COMMERCIALI";
+        }
+
+        public int headerSize() {
+            return  1;
+        }
+
+        @Override
+        public String separator() {
+            return ";";
+        }
+
+        @Override
+        public Map<AspectType, String> toMap(String data) {
+            Map<AspectType, String> map = Maps.newHashMap();
+            try {
+                final String[] values = data.split(separator(), -1);
+                map.put(AspectType.FirstName, values[0].trim());
+                map.put(AspectType.LastName, values[1].trim());
+                map.put(AspectType.DateCollected, DateFormatUtils.toISOLocalDateTime(values[3], "yyyy-MM-dd"));
+                map.put(AspectType.EmailAccount, values[4].trim());
+                map.put(AspectType.GeneralPhoneNumber, values[5].trim());
+                if(values[7].trim().toUpperCase().equals("F")){
+                    map.put(AspectType.Gender, "FEMALE");
+                }else if(values[7].trim().toUpperCase().equals("M")){
+                    map.put(AspectType.Gender, "MALE");
+                }
+                if(values[9].trim().equals("SI")) {
                     map.put(AspectType.MarketingConsent, "true");
                 }
 

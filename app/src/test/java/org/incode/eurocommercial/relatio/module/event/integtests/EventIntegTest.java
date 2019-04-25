@@ -150,4 +150,26 @@ public class EventIntegTest extends RelatioIntegTestAbstract {
         }
     }
 
+    public static class WifiData2017IntegTest extends EventIntegTest {
+        @Test
+        public void can_import_Wifi_Data() {
+            // given
+
+            test( "naranha;pensssd;2018-10-14 00:00:00;2018-10-14;clssddy.pes1@gmail.com;+393923666666;;;SMS;SI", 6);
+
+            test("Dooén;Kousa;2018-10-14 00:00:00;2018-10-14;kougroaa10.kn@gmail.com;;OVER 21;M;Facebook;", 5);
+
+        }
+
+        private void test(final String data, final int expectedAspectSize) {
+            // when
+            EventSource source = eventSourceRepository.findOrCreate(EventSourceType.WifiData2017LastAccess, "integ test");
+            Event event = eventRepository.findOrCreate(source, data);
+
+            // then
+            assertThat(event).isNotNull();
+            assertThat(aspectRepository.findByEvent(event)).hasSize(expectedAspectSize);
+        }
+    }
+
 }
