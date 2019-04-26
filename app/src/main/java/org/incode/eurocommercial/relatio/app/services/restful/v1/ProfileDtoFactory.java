@@ -24,11 +24,19 @@ public class ProfileDtoFactory extends DtoFactoryAbstract {
         dto.setGender(toDto(profile.getGender()));
         dto.setCellPhoneNumber(profile.getCellPhoneNumber());
         dto.setFacebookAccount(profile.getFacebookAccount());
-        dto.setPrivacyConsent(profile.getPrivacyConsent());
-        dto.setMarketingConsent(profile.getMarketingConsent());
+        dto.setPrivacyConsent(falseIfNullForBoolean(profile.getPrivacyConsent()));
+        dto.setMarketingConsent(falseIfNullForBoolean(profile.getMarketingConsent()));
+        dto.setThirdPartyConsent(falseIfNullForBoolean(profile.getThirdPartyConsent()));
         dto.setEmailAccount(profile.getEmailAccount());
+        dto.setPostalCode(profile.getPostalCode());
+        dto.setDogOwner(falseIfNullForBoolean(profile.getDogOwner()));
+        dto.setParent(falseIfNullForBoolean(profile.getParent()));
 
         return dto;
+    }
+
+    private Boolean falseIfNullForBoolean(Boolean bool){
+        return bool == null ? false : bool;
     }
 
     private org.incode.eurocommercial.relatio.canonical.profile.v1.Gender toDto(final Profile.Gender gender) {
