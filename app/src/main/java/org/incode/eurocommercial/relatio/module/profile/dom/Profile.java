@@ -183,7 +183,7 @@ public class Profile implements Comparable<Profile> {
         return this;
     }
 
-    // This is uncommented due to us not filtering on thirdpartyconsent anymore. 
+    // This is uncommented due to us not filtering on thirdpartyconsent anymore.
 //    public String disableUpdateToMailChimp() {
 //        return getThirdPartyConsent() == null | getThirdPartyConsent() == Boolean.FALSE ? "This profile does not have third party consent enabled." : null;
 //    }

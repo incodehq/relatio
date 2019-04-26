@@ -18,24 +18,21 @@
  */
 package org.incode.eurocommercial.relatio.app;
 
-import java.util.Set;
-
-import javax.xml.bind.annotation.XmlRootElement;
-
 import com.google.common.collect.Sets;
-
 import org.apache.isis.applib.Module;
 import org.apache.isis.applib.ModuleAbstract;
-
-import org.isisaddons.module.excel.ExcelModule;
-import org.isisaddons.module.security.SecurityModule;
-import org.isisaddons.module.security.dom.password.PasswordEncryptionServiceUsingJBcrypt;
-
 import org.incode.eurocommercial.relatio.module.aspect.RelatioAspectModule;
 import org.incode.eurocommercial.relatio.module.base.RelatioBaseModule;
 import org.incode.eurocommercial.relatio.module.event.RelatioEventModule;
 import org.incode.eurocommercial.relatio.module.profile.RelatioProfileModule;
 import org.incode.module.settings.SettingsModule;
+import org.isisaddons.module.excel.ExcelModule;
+import org.isisaddons.module.publishmq.PublishMqModule;
+import org.isisaddons.module.security.SecurityModule;
+import org.isisaddons.module.security.dom.password.PasswordEncryptionServiceUsingJBcrypt;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Set;
 
 @XmlRootElement(name = "module")
 public class RelatioAppModule extends ModuleAbstract {
@@ -49,6 +46,7 @@ public class RelatioAppModule extends ModuleAbstract {
                 new SecurityModule(),
                 new ExcelModule(),
                 new SettingsModule(),
+                new PublishMqModule(),
                 new PasswordEncryptionServiceUsingJBcrypt.Module()
                 );
     }
