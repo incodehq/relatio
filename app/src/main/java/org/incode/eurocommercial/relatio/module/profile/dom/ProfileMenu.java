@@ -13,7 +13,6 @@ import org.incode.eurocommercial.relatio.module.aspect.dom.AspectType;
 
 import javax.inject.Inject;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @DomainService(
         nature = NatureOfService.VIEW_MENU_ONLY
@@ -45,7 +44,7 @@ public class ProfileMenu {
 
     public List<Profile> updateMailChimpProfiles(){
         List <Profile> profiles = profileRepository.listAll();
-        profiles = profiles.stream().filter(profile -> profile.getThirdPartyConsent() == Boolean.TRUE).collect(Collectors.toList()); // only want profiles which have consent
+        // profiles = profiles.stream().collect(Collectors.toList()); // only want profiles which have consent
         for(Profile profile : profiles){
             wrapperFactory.wrap(profile).updateToMailChimp();
         }

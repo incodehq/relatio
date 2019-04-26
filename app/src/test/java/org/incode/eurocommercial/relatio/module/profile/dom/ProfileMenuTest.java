@@ -5,15 +5,12 @@ import org.apache.isis.core.unittestsupport.jmocking.JUnitRuleMockery2;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
-
-import org.incode.eurocommercial.relatio.module.profile.dom.Profile;
-import org.incode.eurocommercial.relatio.module.profile.dom.ProfileMenu;
-import org.incode.eurocommercial.relatio.module.profile.dom.ProfileRepository;
 
 public class ProfileMenuTest {
 
@@ -26,6 +23,7 @@ public class ProfileMenuTest {
     @Mock
     WrapperFactory mockWrapperFactory;
 
+    @Ignore //TODO REL-14: possibly switch this back on, now we upload third party consent as a flag
     @Test
     public void updateMailChimpProfiles() {
         //given
