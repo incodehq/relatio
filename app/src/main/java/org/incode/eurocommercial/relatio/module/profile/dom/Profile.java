@@ -159,6 +159,16 @@ public class Profile implements Comparable<Profile> {
     @Getter @Setter
     private String postalCode;
 
+    @Column(allowsNull = "true")
+    @Property()
+    @Getter @Setter
+    private Boolean dogOwner;
+
+    @Column(allowsNull = "true")
+    @Property()
+    @Getter @Setter
+    private Boolean parent;
+
     @Persistent(mappedBy = "profile", dependentElement = "false")
     @Collection
     @CollectionLayout(defaultView = "table")

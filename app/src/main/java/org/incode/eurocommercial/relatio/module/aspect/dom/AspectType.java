@@ -79,7 +79,6 @@ public enum AspectType {
     LiveAccount(true),
     InstagramAccount(true),
 
-
     // Interactions
     Access(false, true),
     MacAddress(),
@@ -114,8 +113,16 @@ public enum AspectType {
 
     // Attributes
     Employee(),
-    DogOwner(),
-    Parent(),
+    DogOwner(){
+        @Override public void updateProfile(final Aspect aspect) {
+            aspect.getProfile().setDogOwner(Boolean.valueOf(aspect.getValue()));
+        }
+    },
+    Parent(){
+        @Override public void updateProfile(final Aspect aspect) {
+            aspect.getProfile().setParent(Boolean.valueOf(aspect.getValue()));
+        }
+    },
     FamilySize(),
     OnlineShopper(),
     CarOwner(),
@@ -141,8 +148,6 @@ public enum AspectType {
 
     // Device
     DeviceId(),
-
-
 
     ;
 
