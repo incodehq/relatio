@@ -1,9 +1,20 @@
 package org.incode.eurocommercial.relatio.module.profile.dom;
 
-import java.util.Comparator;
-import java.util.Optional;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.BookmarkPolicy;
+import org.apache.isis.applib.annotation.Collection;
+import org.apache.isis.applib.annotation.CollectionLayout;
+import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.DomainObjectLayout;
+import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.Publishing;
+import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
+import org.incode.eurocommercial.relatio.module.aspect.dom.Aspect;
+import org.joda.time.LocalDate;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.DatastoreIdentity;
@@ -16,25 +27,10 @@ import javax.jdo.annotations.Query;
 import javax.jdo.annotations.Unique;
 import javax.jdo.annotations.Version;
 import javax.jdo.annotations.VersionStrategy;
-
-import org.joda.time.LocalDate;
-
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.BookmarkPolicy;
-import org.apache.isis.applib.annotation.Collection;
-import org.apache.isis.applib.annotation.CollectionLayout;
-import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.DomainObjectLayout;
-import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.Publishing;
-import org.apache.isis.applib.annotation.Where;
-import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
-
-import org.incode.eurocommercial.relatio.module.aspect.dom.Aspect;
-
-import lombok.Getter;
-import lombok.Setter;
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @PersistenceCapable(
         identityType = IdentityType.DATASTORE,
@@ -187,9 +183,10 @@ public class Profile implements Comparable<Profile> {
         return this;
     }
 
-    public String disableUpdateToMailChimp() {
-        return getThirdPartyConsent() == null | getThirdPartyConsent() == Boolean.FALSE ? "This profile does not have third party consent enabled." : null;
-    }
+    // This is uncommented due to us not filtering on thirdpartyconsent anymore. 
+//    public String disableUpdateToMailChimp() {
+//        return getThirdPartyConsent() == null | getThirdPartyConsent() == Boolean.FALSE ? "This profile does not have third party consent enabled." : null;
+//    }
 
     public Profile updateFromAspects() {
         for (Aspect aspect : getAspects()) {
