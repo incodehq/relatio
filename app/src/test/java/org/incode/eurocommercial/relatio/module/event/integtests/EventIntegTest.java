@@ -172,4 +172,26 @@ public class EventIntegTest extends RelatioIntegTestAbstract {
         }
     }
 
+    public static class NewQuickTapSurveyIntegTest extends EventIntegTest {
+        @Test
+        public void can_import_Wifi_Data() {
+            // given
+
+            test( "2019-04-22 19:00:43 +0200;2019-04-22 19:00:43 +0200;56;ECPIpad10;45,546059999999997;9,3284599999999998;A6tta;Tai;Male;1973-05-23;Yes;No;20139;ana.tde@eni.com;3453666583;ACCONSENTO;ACCONSENTO;ACCONSENTO", 12);
+
+            test("2019-04-22 19:00:43 +0200;2019-04-22 19:00:43 +0200;56;ECPIpad10;45,546059999999997;9,3284599999999998;Ana;Tadi;Male;1973-05-23;Yes;No;20139;andreei@eni.com;;ACCONSENTO;ACCONSENTO;ACCONSENTO", 11);
+
+        }
+
+        private void test(final String data, final int expectedAspectSize) {
+            // when
+            EventSource source = eventSourceRepository.findOrCreate(EventSourceType.NewQuickTapSurveyCarosello, "integ test");
+            Event event = eventRepository.findOrCreate(source, data);
+
+            // then
+            assertThat(event).isNotNull();
+            assertThat(aspectRepository.findByEvent(event)).hasSize(expectedAspectSize);
+        }
+    }
+
 }

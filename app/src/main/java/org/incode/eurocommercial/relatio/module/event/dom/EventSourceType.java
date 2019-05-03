@@ -45,7 +45,9 @@ public enum EventSourceType {
     PTA_CouponingCampaignData(PTA_CouponingCampaignData.class),
     OceanEvent(OceanEvent.class),
     WifiData(WifiData.class),
-    WifiData2017LastAccess(WifiData2017LastAccess.class);
+    WifiData2017LastAccess(WifiData2017LastAccess.class),
+    NewQuickTapSurveyCarosello(NewQuickTapSurveyCarosello.class);
+
 
 
     @Getter
@@ -323,6 +325,76 @@ public enum EventSourceType {
                 } else {
                     map.put(AspectType.ThirdPartyConsent, "false");
                 }
+
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw e;
+            }
+            return map;
+        }
+    }
+
+
+    public static class NewQuickTapSurveyCarosello implements EventParserForCsv {
+        public String header() {
+            return "Date Collected;Date Sent;Duration (seconds);User;Latitude;Longitude;Nome:;Cognome:;Genere:;Data di nascita:;Ci sono bambini di età minore di 12 anni all'interno del Suo nuc;Ha un cane come animale domestico?;CAP di domicilio:;Indirizzo email:;Numero di telefono:; Letta e compresa l’informativa che precede, acconsente al tratt;Letta e compresa l’informativa che precede, acconsente al tratta; Letta e compresa l’informativa che precede, acconsente alla ces";
+        }
+
+        public int headerSize() {
+            return  1;
+        }
+
+        @Override
+        public String separator() {
+            return ";";
+        }
+
+        @Override
+        public Map<AspectType, String> toMap(String data) {
+            Map<AspectType, String> map = Maps.newHashMap();
+
+            try {
+                final String[] values = data.split(separator(), -1);
+
+                //map.put(AspectType.DateCollected, DateFormatUtils.toISOLocalDateTime(values[0], "yyyy-MM-dd HH:mm:ss.'0000000'"));
+                map.put(AspectType.FirstName, values[6].trim());
+                map.put(AspectType.LastName, values[7].trim());
+                if(values[8].trim().equals("Female")) {
+                    map.put(AspectType.Gender, "FEMALE");
+                } else if(values[8].trim().equals("Male")) {
+                    map.put(AspectType.Gender, "MALE");
+                } else if(!values[8].trim().isEmpty()) {
+                    map.put(AspectType.Gender, "OTHER");
+                }
+                map.put(AspectType.DateOfBirth, values[9].trim());
+                if(values[10].trim().equals("Yes")) {
+                    map.put(AspectType.Parent, "true");
+                } else {
+                    map.put(AspectType.Parent, "false");
+                }
+                if(values[11].trim().equals("Yes")) {
+                    map.put(AspectType.DogOwner, "true");
+                } else {
+                    map.put(AspectType.DogOwner, "false");
+                }
+                map.put(AspectType.PostalCode, values[12].trim());
+                map.put(AspectType.EmailAccount, values[13].trim());
+                map.put(AspectType.GeneralPhoneNumber, values[14].trim());
+                if(values[15].trim().equals("ACCONSENTO")) {
+                    map.put(AspectType.MarketingConsent, "true");
+                } else {
+                    map.put(AspectType.MarketingConsent, "false");
+                }
+                if(values[16].trim().equals("ACCONSENTO")) {
+                    map.put(AspectType.ProfilingConsent, "true");
+                } else {
+                    map.put(AspectType.ProfilingConsent, "false");
+                }
+                if(values[17].trim().equals("ACCONSENTO")) {
+                    map.put(AspectType.ThirdPartyConsent, "true");
+                } else {
+                    map.put(AspectType.ThirdPartyConsent, "false");
+                }
+
 
             } catch (ArrayIndexOutOfBoundsException e) {
                 throw e;
