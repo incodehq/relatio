@@ -361,7 +361,7 @@
                 <dependency>
                     <groupId>org.postgresql</groupId>
                     <artifactId>postgresql</artifactId>
-                    <version>9.1-901.jdbc4</version>
+                    <version>${postgresql.version}</version>
                 </dependency>
             </dependencies>
         </profile>
