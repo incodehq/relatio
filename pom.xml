@@ -78,6 +78,8 @@
         <mysql-connector-java.version>5.1.6</mysql-connector-java.version>
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
         <javafaker.version>0.14</javafaker.version>
+
+        <postgresql.version>42.2.8</postgresql.version>
     </properties>
 
     <build>
@@ -173,6 +175,12 @@
                 <groupId>${project.groupId}</groupId>
                 <artifactId>relatio-webapp</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
             </dependency>
 
             <!-- used by DomainAppContentMappingService impl -->
